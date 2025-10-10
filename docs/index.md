@@ -2,11 +2,11 @@
 
 **KREAM 보관 판매 매니저 (KREAM Booking Product Manager)**
 
-![logo](../icon.png)
+![logo](images/icon.png)
 
 ## 사용 방법
 
-![search](../1.png)
+![search](images/1.png)
 
 1. 로그인 버튼으로 KREAM 계정을 인증합니다.
 
@@ -18,13 +18,13 @@
 
 5. 도구 메뉴에서 브라우저를 초기화하거나 로그 수준을 변경할 수 있습니다.
 
-![queue](../2.png)
+![queue](images/2.png)
 
 ## 개발자 후원하기
 
 **개발자에게 후원하여 프로그램 개선에 도움을 주세요!**
 
-![feedme](../FEEDME.jpeg)
+![feedme](images/FEEDME.jpeg)
 
 ## 참고 사항
 

@@ -2,11 +2,11 @@
 
 **KREAM 보관 판매 매니저 (KREAM Booking Product Manager)**
 
-![logo](icon.png)
+![logo](docs/images/icon.png)
 
 ## 사용 방법
 
-![search](1.png)
+![search](docs/images/1.png)
 
 1. 로그인 버튼으로 KREAM 계정을 인증합니다.
 
@@ -18,13 +18,13 @@
 
 5. 도구 메뉴에서 브라우저를 초기화하거나 로그 수준을 변경할 수 있습니다.
 
-![queue](2.png)
+![queue](docs/images/2.png)
 
 ## 개발자 후원하기
 
 **개발자에게 후원하여 프로그램 개선에 도움을 주세요!**
 
-![feedme](FEEDME.jpeg)
+![feedme](docs/images/FEEDME.jpeg)
 
 ## 참고 사항
 
@@ -36,5 +36,13 @@
 - KREAM의 정책 변경에 따라 작동이 중단될 수 있습니다.
 - 이 도구는 KREAM과 무관하며, 사용에 따른 모든 책임은 사용자에게 있습니다.
 - 크림 사업자 계정은 지원하지 않습니다.
+
+## KBPM 다운로드
+
+[Windows EXE](docs/downloads/KBPM.exe)
+
+[macOS DMG (Apple Silicon)](docs/downloads/KBPM-macOS-arm64.dmg)
+
+[macOS DMG (Intel) [준비중]](docs/downloads/KBPM-macOS-intel.dmg)
 
 _Made with 📦 by [@missiletoe](https://github.com/missiletoe)_
