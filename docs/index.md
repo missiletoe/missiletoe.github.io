@@ -37,12 +37,12 @@
 - 이 도구는 KREAM과 무관하며, 사용에 따른 모든 책임은 사용자에게 있습니다.
 - 크림 사업자 계정은 지원하지 않습니다.
 
-## KBPM 다운로드
+## KBPM 다운로드 (v1.0.9 | 2025-11-10)
 
 [Windows EXE](downloads/KBPM.exe)
 
 [macOS DMG (Apple Silicon)](downloads/KBPM-macOS-arm64.dmg)
 
-[macOS DMG (Intel) [준비중]](downloads/KBPM-macOS-intel.dmg)
+[macOS DMG (Intel)](downloads/KBPM-macOS-intel.dmg)
 
 _Made with 📦 by [@missiletoe](https://github.com/missiletoe)_
