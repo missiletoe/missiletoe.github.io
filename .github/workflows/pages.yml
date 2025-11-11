@@ -1,0 +1,102 @@
+name: Sync KBPM site from kream_inventory release
+
+on:
+  # Manual trigger from Actions tab
+  workflow_dispatch:
+
+  # Triggered from kream_inventory via:
+  # POST /repos/missiletoe/KBPM/dispatches
+  # { "event_type": "publish_kbpm_pages" }
+  repository_dispatch:
+    types:
+      - publish_kbpm_pages
+
+permissions:
+  contents: write   # needed to commit & push
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SOURCE_REPO: missiletoe/kream_inventory
+
+    steps:
+      - name: Check out KBPM repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Download latest release assets from kream_inventory
+        env:
+          KBPM_SOURCE_TOKEN: ${{ secrets.KBPM_SOURCE_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${KBPM_SOURCE_TOKEN:-}" ]; then
+            echo "KBPM_SOURCE_TOKEN is not set"; exit 1
+          fi
+
+          api="https://api.github.com/repos/${SOURCE_REPO}/releases/latest"
+
+          echo "Fetching latest release from ${SOURCE_REPO}..."
+          json="$(curl -fsSL \
+            -H "Authorization: token ${KBPM_SOURCE_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "$api")"
+
+          tag="$(printf '%s\n' "$json" | jq -r '.tag_name')"
+          echo "Latest release tag: $tag"
+          echo "LATEST_TAG=$tag" >> "$GITHUB_ENV"
+
+          # Adjust this path to match your site structure.
+          # Example: site/downloads/<tag>/...
+          target_dir="site/downloads/${tag}"
+          mkdir -p "$target_dir"
+
+          echo "$json" | jq -c '.assets[]' | while read -r asset; do
+            name="$(printf '%s\n' "$asset" | jq -r '.name')"
+            url="$(printf '%s\n' "$asset" | jq -r '.browser_download_url')"
+
+            echo "Downloading asset: $name"
+            curl -fsSL -L \
+              -H "Authorization: token ${KBPM_SOURCE_TOKEN}" \
+              -o "${target_dir}/${name}" \
+              "$url"
+          done
+
+      - name: Update site metadata for latest version
+        run: |
+          set -euo pipefail
+
+          mkdir -p site/data
+
+          cat > site/data/latest.json <<EOF
+          {
+            "tag": "${LATEST_TAG}",
+            "updated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+
+          echo "Updated site/data/latest.json:"
+          cat site/data/latest.json
+
+      - name: Commit and push changes
+        run: |
+          set -euo pipefail
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git status --porcelain | grep .; then
+            git add site/downloads site/data/latest.json
+            git commit -m "Update KBPM site for ${LATEST_TAG}"
+            git push origin HEAD
+          else
+            echo "No changes to commit."
+          fi
