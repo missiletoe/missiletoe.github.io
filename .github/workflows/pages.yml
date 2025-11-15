@@ -46,7 +46,7 @@ jobs:
             echo "GH_TOKEN is not configured" >&2
             exit 1
           fi
-          gh release download --repo "$SOURCE_REPO" --latest \
+          gh release download --repo "$SOURCE_REPO" latest \
             --pattern 'KBPM-macOS-arm64.dmg' \
             --pattern 'KBPM-macOS-intel.dmg' \
             --pattern 'KBPM.exe' \
