@@ -96,7 +96,7 @@ jobs:
           </script>
           </html>
           HTML
-          perl -pi -e 's/\$\{SOURCE_REPO\}/'"$SOURCE_REPO"'/g' index.html
+          perl -pi -e 's|\$\{SOURCE_REPO\}|'"$SOURCE_REPO"'|g' index.html
 
       - name: Create manifest.json with checksums
         run: |
