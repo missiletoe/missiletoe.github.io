@@ -161,6 +161,19 @@ jobs:
             }
             .donate{
               margin-top:0.75rem;
+              display:flex;
+              align-items:center;
+              gap:0.75rem;
+            }
+            .donate img{
+              width:64px;
+              height:64px;
+              border-radius:16px;
+              object-fit:cover;
+              flex-shrink:0;
+            }
+            .donate-text{
+              display:block;
             }
             .donate a{
               color:var(--accent);
@@ -198,6 +211,27 @@ jobs:
               font-size:0.9rem;
               color:var(--subtle-text);
               line-height:1.4;
+            }
+            .card-head{
+              display:flex;
+              gap:0.75rem;
+              align-items:flex-start;
+            }
+            .card-icon{
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              width:48px;
+              height:48px;
+              border-radius:14px;
+              background:rgba(16,24,40,.05);
+              color:var(--text-color);
+              flex-shrink:0;
+            }
+            .card-icon svg{
+              display:block;
+              width:32px;
+              height:32px;
             }
             .download-action{
               margin-top:auto;
@@ -305,35 +339,77 @@ jobs:
                 <p class="release-date">출시일: <time datetime="${LATEST_DATE}">${LATEST_DATE}</time></p>
                 <p id="status-line" class="status">사용자 환경을 확인하고 있습니다...</p>
                 <p id="donate-line" class="donate" hidden>
-                  KBPM 이 도움이 되셨다면
-                  <a href="https://qr.kakaopay.com/Ej7mIVNfU138804197" target="_blank" rel="noreferrer">기부로 개발을 응원해주세요.</a>
+                  <span class="donate-text">KBPM 이 도움이 되셨다면 기부로 개발을 응원해주세요.</span>
+                  <img src="FEEDME.jpeg" alt="토스 기부 링크 QR 코드">
+                </p>
+                <p id="intel-hint" class="status" hidden>
+                  만약 앱 아이콘에 🚫 로고가 표시된다면,
+                  <a href="downloads/KBPM-macOS-intel.dmg" class="manual-link">인텔용 설치 프로그램 링크</a>를 클릭해서 설치를 진행해 주세요.
                 </p>
               </div>
             </header>
             <main>
               <div class="downloads">
                 <div class="card">
-                  <div>
-                    <div class="card-title">macOS · Apple Silicon</div>
-                    <p class="card-meta">macOS 12 이상 · arm64 · .dmg 설치 프로그램</p>
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 17" height="46.1396" width="38">
+                        <g clip-path="url(#clip0_3000_6288)">
+                          <path d="M13.3997 5.7953C13.3011 5.8718 11.5603 6.8527 11.5603 9.0338C11.5603 11.5566 13.7754 12.4491 13.8417 12.4712C13.8315 12.5256 13.4898 13.6935 12.6738 14.8835C11.9462 15.9307 11.1863 16.9762 10.0303 16.9762C8.87425 16.9762 8.57675 16.3047 7.24225 16.3047C5.94175 16.3047 5.47935 16.9983 4.42195 16.9983C3.36455 16.9983 2.62675 16.0293 1.77845 14.8393C0.795853 13.4419 0.00195312 11.271 0.00195312 9.2106C0.00195312 5.9058 2.15075 4.1531 4.26555 4.1531C5.38925 4.1531 6.32595 4.8909 7.03145 4.8909C7.70295 4.8909 8.75015 4.1089 10.0286 4.1089C10.5131 4.1089 12.2539 4.1531 13.3997 5.7953ZM9.42165 2.7098C9.95035 2.0825 10.3244 1.2121 10.3244 0.3417C10.3244 0.221 10.3142 0.0986 10.2921 0C9.43185 0.0323 8.40845 0.5729 7.79135 1.2886C7.30685 1.8394 6.85465 2.7098 6.85465 3.5921C6.85465 3.7247 6.87675 3.8573 6.88695 3.8998C6.94135 3.91 7.02975 3.9219 7.11815 3.9219C7.88995 3.9219 8.86065 3.4051 9.42165 2.7098Z" fill="currentColor"></path>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_3000_6288">
+                            <rect fill="currentColor" height="46.1396" width="38"></rect>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="card-title">macOS · Apple Silicon</div>
+                      <p class="card-meta">macOS 12 이상 · arm64 · .dmg 설치 프로그램</p>
+                    </div>
                   </div>
                   <div class="download-action">
                     <a href="downloads/KBPM-macOS-arm64.dmg" target="downloader" class="download-button">다운로드</a>
                   </div>
                 </div>
                 <div class="card">
-                  <div>
-                    <div class="card-title">macOS · Intel</div>
-                    <p class="card-meta">macOS 11 이상 · x64 · .dmg 설치 프로그램</p>
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 17" height="46.1396" width="38">
+                        <g clip-path="url(#clip0_3000_6288)">
+                          <path d="M13.3997 5.7953C13.3011 5.8718 11.5603 6.8527 11.5603 9.0338C11.5603 11.5566 13.7754 12.4491 13.8417 12.4712C13.8315 12.5256 13.4898 13.6935 12.6738 14.8835C11.9462 15.9307 11.1863 16.9762 10.0303 16.9762C8.87425 16.9762 8.57675 16.3047 7.24225 16.3047C5.94175 16.3047 5.47935 16.9983 4.42195 16.9983C3.36455 16.9983 2.62675 16.0293 1.77845 14.8393C0.795853 13.4419 0.00195312 11.271 0.00195312 9.2106C0.00195312 5.9058 2.15075 4.1531 4.26555 4.1531C5.38925 4.1531 6.32595 4.8909 7.03145 4.8909C7.70295 4.8909 8.75015 4.1089 10.0286 4.1089C10.5131 4.1089 12.2539 4.1531 13.3997 5.7953ZM9.42165 2.7098C9.95035 2.0825 10.3244 1.2121 10.3244 0.3417C10.3244 0.221 10.3142 0.0986 10.2921 0C9.43185 0.0323 8.40845 0.5729 7.79135 1.2886C7.30685 1.8394 6.85465 2.7098 6.85465 3.5921C6.85465 3.7247 6.87675 3.8573 6.88695 3.8998C6.94135 3.91 7.02975 3.9219 7.11815 3.9219C7.88995 3.9219 8.86065 3.4051 9.42165 2.7098Z" fill="currentColor"></path>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_3000_6288">
+                            <rect fill="currentColor" height="46.1396" width="38"></rect>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="card-title">macOS · Intel</div>
+                      <p class="card-meta">macOS 11 이상 · x64 · .dmg 설치 프로그램</p>
+                    </div>
                   </div>
                   <div class="download-action">
                     <a href="downloads/KBPM-macOS-intel.dmg" target="downloader" class="download-button">다운로드</a>
                   </div>
                 </div>
                 <div class="card">
-                  <div>
-                    <div class="card-title">Windows · x64</div>
-                    <p class="card-meta">Windows 10/11 · x64 · .exe 설치 프로그램</p>
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" height="50" width="50">
+                        <path d="M17.5009 11.3008H9.19727V17.2941L17.5009 18.4995V11.3008Z" fill="currentColor"></path>
+                        <path d="M8.66077 11.3008H2.5V16.3231L8.66077 17.2171V11.3008Z" fill="currentColor"></path>
+                        <path d="M17.5009 3.5L9.19727 4.68528V10.7657H17.5009V3.5Z" fill="currentColor"></path>
+                        <path d="M8.66077 4.76367L2.5 5.64426V10.7671H8.66077V4.76367Z" fill="currentColor"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="card-title">Windows · x64</div>
+                      <p class="card-meta">Windows 10/11 · x64 · .exe 설치 프로그램</p>
+                    </div>
                   </div>
                   <div class="download-action">
                     <a href="downloads/KBPM.exe" target="downloader" class="download-button">다운로드</a>
@@ -363,12 +439,6 @@ jobs:
             function isMac() {
               return /Mac/.test(platform) || /Macintosh/.test(ua);
             }
-            function isArm64Mac() {
-              if (!isMac()) return false;
-              if (ua.includes("ARM") || ua.includes("arm64") || ua.includes("Apple Silicon")) return true;
-              if (navigator.userAgentData && navigator.userAgentData.architecture === "arm") return true;
-              return false;
-            }
 
             function detectEnvironment() {
               const mobile = isMobile();
@@ -384,15 +454,11 @@ jobs:
                 arch = "x64";
                 binary = "downloads/KBPM.exe";
                 supportedDesktop = true;
-              } else if (isArm64Mac()) {
-                os = "macos";
-                arch = "arm64";
-                binary = "downloads/KBPM-macOS-arm64.dmg";
-                supportedDesktop = true;
               } else if (isMac()) {
                 os = "macos";
-                arch = "x64";
-                binary = "downloads/KBPM-macOS-intel.dmg";
+                // 기본적으로 최신 macOS는 Apple Silicon(arm) 기반이라고 가정
+                arch = "arm64";
+                binary = "downloads/KBPM-macOS-arm64.dmg";
                 supportedDesktop = true;
               }
 
@@ -406,6 +472,7 @@ jobs:
             const statusLine = document.getElementById("status-line");
             const donateLine = document.getElementById("donate-line");
             const iframe = document.querySelector("iframe[name=\"downloader\"]");
+            const intelHint = document.getElementById("intel-hint");
 
             // Expose tracking parameters on DOM
             root.dataset.kbpmOs = env.os;
@@ -422,9 +489,12 @@ jobs:
             } else if (env.supportedDesktop && env.binary && iframe) {
               statusLine.innerHTML =
                 "감지된 환경: <strong>" +
-                (env.os === "windows" ? "Windows · x64" : env.arch === "arm64" ? "macOS · Apple Silicon" : "macOS · Intel") +
+                (env.os === "windows" ? "Windows · x64" : "macOS · Apple Silicon") +
                 "</strong><br>다운로드가 자동으로 시작되었습니다. 잠시만 기다려 주세요.";
               donateLine && (donateLine.hidden = false);
+              if (env.os === "macos" && intelHint) {
+                intelHint.hidden = false;
+              }
               iframe.src = env.binary;
             } else {
               statusLine.textContent =
