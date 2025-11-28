@@ -305,6 +305,20 @@ jobs:
               color:var(--text-color);
               background:transparent;
             }
+            .modal-title{
+              margin:0 0 0.75rem;
+              font-size:1.2rem;
+              font-weight:700;
+            }
+            .modal-body-text{
+              font-size:0.95rem;
+              line-height:1.5;
+              color:var(--subtle-text);
+            }
+            .modal-subtext{
+              font-size:0.85rem;
+              color:var(--subtle-text);
+            }
             .manual-link{
               color:var(--accent);
               font-weight:700;
@@ -312,10 +326,8 @@ jobs:
               border-bottom:1px solid currentColor;
               padding-bottom:0.15rem;
             }
-
-            /* 다운로드 버튼이 포커스되면 모달을 표시 (CSS-only) */
-            body:has(.download-button:focus) .modal,
-            body:has(.download-button:active) .modal{
+            /* JS로 제어되는 모달 표시 상태 */
+            .modal.is-open{
               opacity:1;
               pointer-events:auto;
             }
@@ -338,10 +350,6 @@ jobs:
                 <p class="version">최신 버전: <strong>${LATEST_VERSION}</strong></p>
                 <p class="release-date">출시일: <time datetime="${LATEST_DATE}">${LATEST_DATE}</time></p>
                 <p id="status-line" class="status">사용자 환경을 확인하고 있습니다...</p>
-                <p id="donate-line" class="donate" hidden>
-                  <span class="donate-text">KBPM 이 도움이 되셨다면 기부로 개발을 응원해주세요.</span>
-                  <img src="FEEDME.jpeg" alt="토스 기부 링크 QR 코드">
-                </p>
                 <p id="intel-hint" class="status" hidden>
                   만약 앱 아이콘에 🚫 로고가 표시된다면,
                   <a href="downloads/KBPM-macOS-intel.dmg" class="manual-link">인텔용 설치 프로그램 링크</a>를 클릭해서 설치를 진행해 주세요.
@@ -420,10 +428,13 @@ jobs:
           </div>
           <div class="modal">
             <div class="modal-panel">
-              <img src="FEEDME.jpeg" alt="지원 안내 이미지">
-              <p>다운로드가 진행중입니다...</p>
-              <p>다운로드가 되지 않나요? <a href="#" class="manual-link">여기를 눌러주세요</a></p>
-              <button type="button" class="modal-close">닫기</button>
+              <h2 class="modal-title">다음 아이템도 보관판매를 맡기고 싶으시다면 후원해주세요</h2>
+              <p class="modal-body-text">
+                이 프로그램은 사용자분들의 후원에 따라 무료로 유지보수됩니다. 많은 후원 부탁드립니다! 🙇🏻‍♂️
+              </p>
+              <img src="FEEDME.jpeg" alt="후원 QR 코드">
+              <p class="modal-subtext">카메라로 QR 코드를 스캔해 후원해 주시면 큰 힘이 됩니다.</p>
+              <button type="button" class="modal-close">다음에 할께요</button>
             </div>
           </div>
           <script type="module">
@@ -470,9 +481,32 @@ jobs:
             // DOM references
             const root = document.documentElement;
             const statusLine = document.getElementById("status-line");
-            const donateLine = document.getElementById("donate-line");
             const iframe = document.querySelector("iframe[name=\"downloader\"]");
             const intelHint = document.getElementById("intel-hint");
+            const modal = document.querySelector(".modal");
+            const modalClose = document.querySelector(".modal-close");
+            
+            function openModal() {
+              if (!modal) return;
+              modal.classList.add("is-open");
+            }
+            
+            function closeModal() {
+              if (!modal) return;
+              modal.classList.remove("is-open");
+            }
+            
+            if (modalClose) {
+              modalClose.addEventListener("click", closeModal);
+            }
+            
+            if (modal) {
+              modal.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                  closeModal();
+                }
+              });
+            }
 
             // Expose tracking parameters on DOM
             root.dataset.kbpmOs = env.os;
@@ -491,11 +525,15 @@ jobs:
                 "감지된 환경: <strong>" +
                 (env.os === "windows" ? "Windows · x64" : "macOS · Apple Silicon") +
                 "</strong><br>다운로드가 자동으로 시작되었습니다. 잠시만 기다려 주세요.";
-              donateLine && (donateLine.hidden = false);
               if (env.os === "macos" && intelHint) {
                 intelHint.hidden = false;
               }
               iframe.src = env.binary;
+            
+              // 5초 뒤 후원 안내 모달 표시
+              setTimeout(() => {
+                openModal();
+              }, 5000);
             } else {
               statusLine.textContent =
                 "자동으로 적절한 설치 파일을 선택하지 못했습니다. 아래에서 직접 설치 파일을 선택해 주세요.";
