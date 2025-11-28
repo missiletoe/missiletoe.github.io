@@ -59,41 +59,253 @@ jobs:
           cat > index.html <<'HTML'
           <!doctype html>
           <html lang="ko">
+          <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
           <title>KBPM 다운로드</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap">
           <style>
-            body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:2rem;line-height:1.5}
-            h1{font-size:1.8rem;margin-bottom:1rem}
-            .card{border:1px solid #ddd;border-radius:8px;padding:1rem;margin:.75rem 0}
-            code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-            .center{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:2rem 0;text-align:center}
-            .cta{font-weight:700;font-size:1.25rem;margin-top:.75rem}
-            img{max-width:100%;height:auto}
+            :root{
+              color-scheme:light dark;
+              --page-bg:#f4f6fb;
+              --surface-bg:#ffffff;
+              --card-bg:#f8f9fc;
+              --text-color:#101828;
+              --subtle-text:rgba(16,24,40,.65);
+              --border-color:rgba(16,24,40,.12);
+              --accent:#0f62fe;
+            }
+            @media (prefers-color-scheme: dark){
+              :root{
+                --page-bg:#0f1117;
+                --surface-bg:#161925;
+                --card-bg:#1f2433;
+                --text-color:#f4f4f5;
+                --subtle-text:rgba(244,244,245,.75);
+                --border-color:rgba(244,244,245,.18);
+                --accent:#6ea8fe;
+              }
+            }
+            *{box-sizing:border-box;}
+            body{
+              font-family:'Nanum Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+              background:var(--page-bg);
+              color:var(--text-color);
+              margin:0;
+              min-height:100vh;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              overflow:hidden;
+              padding:1.5rem;
+            }
+            .surface{
+              width:min(960px,100%);
+              height:min(640px,calc(100vh - 3rem));
+              background:var(--surface-bg);
+              border-radius:28px;
+              padding:clamp(1.25rem,3vw,2.5rem);
+              display:flex;
+              flex-direction:column;
+              gap:1.5rem;
+              box-shadow:0 25px 60px rgba(15,17,26,0.18);
+            }
+            header{
+              display:flex;
+              align-items:center;
+              gap:1.25rem;
+            }
+            header img{
+              width:80px;
+              height:80px;
+              border-radius:20px;
+              background:var(--card-bg);
+              padding:0.75rem;
+              object-fit:contain;
+            }
+            h1{
+              font-size:1.9rem;
+              margin:0;
+            }
+            .tagline,.repo-meta{
+              margin:0;
+              font-size:0.95rem;
+              color:var(--subtle-text);
+            }
+            main{
+              flex:1;
+              display:flex;
+              flex-direction:column;
+              gap:1.25rem;
+            }
+            .downloads{
+              flex:1;
+              display:grid;
+              grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+              gap:1rem;
+            }
+            .card{
+              background:var(--card-bg);
+              border:1px solid var(--border-color);
+              border-radius:22px;
+              padding:1.25rem;
+              display:flex;
+              flex-direction:column;
+              gap:0.75rem;
+            }
+            .card-title{
+              font-size:1.1rem;
+              font-weight:700;
+            }
+            .card-meta{
+              font-size:0.9rem;
+              color:var(--subtle-text);
+              line-height:1.4;
+            }
+            label.download-action{
+              margin-top:auto;
+              width:100%;
+            }
+            .download-button{
+              width:100%;
+              border:none;
+              border-radius:999px;
+              padding:0.75rem 1rem;
+              font-size:1rem;
+              font-weight:700;
+              color:#fff;
+              background:var(--accent);
+              cursor:pointer;
+              transition:transform .2s ease,box-shadow .2s ease;
+            }
+            .download-button:hover{
+              transform:translateY(-1px);
+              box-shadow:0 8px 18px rgba(15,98,254,.35);
+            }
+            .download-button:focus-visible{
+              outline:3px solid rgba(15,98,254,.45);
+              outline-offset:2px;
+            }
+            iframe[name="downloader"]{display:none;}
+            .modal-toggle{position:absolute;inset:-9999px;}
+            .modal{
+              position:fixed;
+              inset:0;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              background:rgba(15,17,26,.63);
+              opacity:0;
+              pointer-events:none;
+              transition:opacity .2s ease;
+              padding:1rem;
+            }
+            #download-modal:checked ~ .modal{
+              opacity:1;
+              pointer-events:auto;
+            }
+            .modal-panel{
+              background:var(--surface-bg);
+              border-radius:24px;
+              padding:2rem;
+              max-width:420px;
+              width:100%;
+              text-align:center;
+              box-shadow:0 20px 45px rgba(0,0,0,.35);
+            }
+            .modal-panel img{
+              width:200px;
+              max-width:70%;
+              margin:0 auto 1.5rem;
+              display:block;
+              border-radius:16px;
+            }
+            .modal-panel p{margin:0.5rem 0;}
+            .modal-panel a{
+              color:var(--accent);
+              font-weight:700;
+              text-decoration:none;
+              border-bottom:1px solid currentColor;
+              padding-bottom:0.15rem;
+            }
+            .modal-close{
+              margin-top:1.5rem;
+              display:inline-flex;
+              justify-content:center;
+              align-items:center;
+              padding:0.65rem 1.5rem;
+              border-radius:999px;
+              border:1px solid var(--border-color);
+              cursor:pointer;
+              font-weight:700;
+              color:var(--text-color);
+              background:transparent;
+            }
+            @media (max-width:720px){
+              body{padding:0.75rem;}
+              .surface{height:calc(100vh - 1.5rem);border-radius:18px;}
+              header{flex-direction:column;text-align:center;}
+              .downloads{grid-template-columns:1fr;}
+            }
           </style>
-          <h1>KBPM 다운로드</h1>
-
-          <div class="center">
-            <img src="FEEDME.jpeg" alt="Donate QR or link image">
-            <div class="cta">개발자에게 커피 한 잔 사주기 ☕</div>
+          </head>
+          <body>
+          <iframe name="downloader" title="다운로드 진행창"></iframe>
+          <input type="checkbox" id="download-modal" class="modal-toggle">
+          <form id="mac-arm-form" action="downloads/KBPM-macOS-arm64.dmg" method="get" target="downloader"></form>
+          <form id="mac-intel-form" action="downloads/KBPM-macOS-intel.dmg" method="get" target="downloader"></form>
+          <form id="windows-form" action="downloads/KBPM.exe" method="get" target="downloader"></form>
+          <div class="surface" id="manual-downloads">
+            <header>
+              <img src="icon.png" alt="KBPM 아이콘">
+              <div>
+                <h1>KBPM 다운로드</h1>
+                <p class="repo-meta">최신 릴리스 원본: <code>${SOURCE_REPO}</code></p>
+              </div>
+            </header>
+            <main>
+              <div class="downloads">
+                <div class="card">
+                  <div>
+                    <div class="card-title">macOS · Apple Silicon</div>
+                    <p class="card-meta">macOS 12 이상 · arm64 · .dmg 설치 프로그램</p>
+                  </div>
+                  <label for="download-modal" class="download-action">
+                    <button type="submit" form="mac-arm-form" class="download-button">다운로드</button>
+                  </label>
+                </div>
+                <div class="card">
+                  <div>
+                    <div class="card-title">macOS · Intel</div>
+                    <p class="card-meta">macOS 11 이상 · x64 · .dmg 설치 프로그램</p>
+                  </div>
+                  <label for="download-modal" class="download-action">
+                    <button type="submit" form="mac-intel-form" class="download-button">다운로드</button>
+                  </label>
+                </div>
+                <div class="card">
+                  <div>
+                    <div class="card-title">Windows · x64</div>
+                    <p class="card-meta">Windows 10/11 · x64 · .exe 설치 프로그램</p>
+                  </div>
+                  <label for="download-modal" class="download-action">
+                    <button type="submit" form="windows-form" class="download-button">다운로드</button>
+                  </label>
+                </div>
+              </div>
+            </main>
           </div>
-
-          <p>아래 파일은 <code>${SOURCE_REPO}</code> 최신 릴리스에서 자동으로 동기화됩니다.</p>
-          <div id="list"></div>
-          <script>
-          fetch('downloads/manifest.json').then(r=>r.json()).then(m=>{
-            const $=s=>document.querySelector(s);
-            const wrap=$('#list');
-            m.files.forEach(f=>{
-              const d=document.createElement('div');
-              d.className='card';
-              d.innerHTML=
-                '<strong><a href="'+f.path+'" download>'+f.name+'</a></strong> ('+f.size+')'+
-                '<div>SHA256: <code>'+f.sha256+'</code></div>';
-              wrap.appendChild(d);
-            });
-          });
-          </script>
+          <div class="modal">
+            <div class="modal-panel">
+              <img src="FEEDME.jpeg" alt="지원 안내 이미지">
+              <p>다운로드가 진행중입니다...</p>
+              <p>다운로드가 되지 않나요? <a href="#manual-downloads">여기를 눌러주세요</a></p>
+              <label for="download-modal" class="modal-close">닫기</label>
+            </div>
+          </div>
+          </body>
           </html>
           HTML
           perl -pi -e 's|\$\{SOURCE_REPO\}|'"$SOURCE_REPO"'|g' index.html
