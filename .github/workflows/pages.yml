@@ -38,6 +38,11 @@ jobs:
           elif [ -f "docs/images/FEEDME.jpeg" ]; then
             cp "docs/images/FEEDME.jpeg" "$SITE_DIR/FEEDME.jpeg"
           fi
+          if [ -f "icon.png" ]; then
+            cp "icon.png" "$SITE_DIR/icon.png"
+          elif [ -f "docs/images/icon.png" ]; then
+            cp "docs/images/icon.png" "$SITE_DIR/icon.png"
+          fi
 
       - name: Download latest release assets from kream_inventory
         run: |
@@ -56,6 +61,10 @@ jobs:
         working-directory: ${{ env.SITE_DIR }}
         shell: bash
         run: |
+          set -euo pipefail
+          meta=$(gh release view --repo "$SOURCE_REPO" --json tagName,publishedAt --jq '.tagName + "|" + .publishedAt')
+          IFS='|' read -r LATEST_TAG LATEST_PUBLISHED <<< "$meta"
+          LATEST_DATE=$(date -u -d "$LATEST_PUBLISHED" '+%Y-%m-%d' 2>/dev/null || echo "$LATEST_PUBLISHED")
           cat > index.html <<'HTML'
           <!doctype html>
           <html lang="ko">
@@ -130,10 +139,35 @@ jobs:
               font-size:1.9rem;
               margin:0;
             }
-            .repo-meta{
+            .description{
               margin:0.25rem 0 0;
               font-size:0.95rem;
               color:var(--subtle-text);
+            }
+            .version,
+            .release-date{
+              margin:0.15rem 0 0;
+              font-size:0.9rem;
+              color:var(--subtle-text);
+            }
+            .status{
+              margin-top:0.5rem;
+              font-size:0.95rem;
+              color:var(--subtle-text);
+              line-height:1.4;
+            }
+            .status strong{
+              color:var(--text-color);
+            }
+            .donate{
+              margin-top:0.75rem;
+            }
+            .donate a{
+              color:var(--accent);
+              font-weight:700;
+              text-decoration:none;
+              border-bottom:1px solid currentColor;
+              padding-bottom:0.1rem;
             }
             main{
               flex:1;
@@ -264,10 +298,16 @@ jobs:
           <iframe name="downloader" title="다운로드 진행창"></iframe>
           <div class="surface">
             <header>
-              <img src="docs/images/icon.png" alt="KBPM 아이콘">
+              <img src="icon.png" alt="KBPM 아이콘">
               <div>
                 <h1>KBPM 다운로드</h1>
-                <p class="repo-meta">최신 릴리스 원본: <code>${SOURCE_REPO}</code></p>
+                <p class="version">최신 버전: <strong>${LATEST_VERSION}</strong></p>
+                <p class="release-date">출시일: <time datetime="${LATEST_DATE}">${LATEST_DATE}</time></p>
+                <p id="status-line" class="status">사용자 환경을 확인하고 있습니다...</p>
+                <p id="donate-line" class="donate" hidden>
+                  KBPM 이 도움이 되셨다면
+                  <a href="https://qr.kakaopay.com/Ej7mIVNfU138804197" target="_blank" rel="noreferrer">기부로 개발을 응원해주세요.</a>
+                </p>
               </div>
             </header>
             <main>
@@ -310,10 +350,135 @@ jobs:
               <button type="button" class="modal-close">닫기</button>
             </div>
           </div>
+          <script type="module">
+            const ua = navigator.userAgent || "";
+            const platform = navigator.platform || "";
+
+            function isMobile() {
+              return /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+            }
+            function isWindows() {
+              return /Win/.test(platform) || /Windows/.test(ua);
+            }
+            function isMac() {
+              return /Mac/.test(platform) || /Macintosh/.test(ua);
+            }
+            function isArm64Mac() {
+              if (!isMac()) return false;
+              if (ua.includes("ARM") || ua.includes("arm64") || ua.includes("Apple Silicon")) return true;
+              if (navigator.userAgentData && navigator.userAgentData.architecture === "arm") return true;
+              return false;
+            }
+
+            function detectEnvironment() {
+              const mobile = isMobile();
+              let os = "unknown";
+              let arch = "unknown";
+              let binary = null;
+              let supportedDesktop = false;
+
+              if (mobile) {
+                os = "mobile";
+              } else if (isWindows()) {
+                os = "windows";
+                arch = "x64";
+                binary = "downloads/KBPM.exe";
+                supportedDesktop = true;
+              } else if (isArm64Mac()) {
+                os = "macos";
+                arch = "arm64";
+                binary = "downloads/KBPM-macOS-arm64.dmg";
+                supportedDesktop = true;
+              } else if (isMac()) {
+                os = "macos";
+                arch = "x64";
+                binary = "downloads/KBPM-macOS-intel.dmg";
+                supportedDesktop = true;
+              }
+
+              return { mobile, os, arch, binary, supportedDesktop };
+            }
+
+            const env = detectEnvironment();
+
+            // DOM references
+            const root = document.documentElement;
+            const statusLine = document.getElementById("status-line");
+            const donateLine = document.getElementById("donate-line");
+            const iframe = document.querySelector("iframe[name=\"downloader\"]");
+
+            // Expose tracking parameters on DOM
+            root.dataset.kbpmOs = env.os;
+            root.dataset.kbpmArch = env.arch;
+            if (env.binary) {
+              root.dataset.kbpmBinary = env.binary;
+            }
+
+            // Update status text and possibly trigger download
+            if (!statusLine) {
+              // nothing to do if markup changed
+            } else if (env.mobile) {
+              statusLine.innerHTML = "죄송합니다. KBPM은 현재 <strong>Windows PC 또는 macOS</strong>에서만 사용 가능합니다.";
+            } else if (env.supportedDesktop && env.binary && iframe) {
+              statusLine.innerHTML =
+                "감지된 환경: <strong>" +
+                (env.os === "windows" ? "Windows · x64" : env.arch === "arm64" ? "macOS · Apple Silicon" : "macOS · Intel") +
+                "</strong><br>다운로드가 자동으로 시작되었습니다. 잠시만 기다려 주세요.";
+              donateLine && (donateLine.hidden = false);
+              iframe.src = env.binary;
+            } else {
+              statusLine.textContent =
+                "자동으로 적절한 설치 파일을 선택하지 못했습니다. 아래에서 직접 설치 파일을 선택해 주세요.";
+            }
+
+            // ---- Firebase Analytics tracking (optional) ----
+            // 1) Firebase 콘솔에서 프로젝트 및 Web App 생성
+            // 2) 아래 firebaseConfig 값을 본인 프로젝트 설정으로 교체
+            // 3) measurementId 가 있을 경우 Analytics 이벤트가 GA4로 전송됩니다.
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+            import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
+
+            const firebaseConfig = {
+              apiKey: "AIzaSyCdYmDv2QDkhK42b8Vi9c521_OtT771bpg",
+              authDomain: "kbpm-web.firebaseapp.com",
+              projectId: "kbpm-web",
+              storageBucket: "kbpm-web.firebasestorage.app",
+              messagingSenderId: "159499222428",
+              appId: "1:159499222428:web:3157717182dbaf62cadc59",
+              measurementId: "G-631V6S8WLZ"
+            };
+
+            try {
+              const app = initializeApp(firebaseConfig);
+              const analytics = getAnalytics(app);
+
+              logEvent(analytics, "kbpm_download_page_view", {
+                os: env.os,
+                arch: env.arch,
+                binary: env.binary || "none",
+                is_mobile: env.mobile,
+                supported_desktop: env.supportedDesktop
+              });
+
+              // 다운로드 자동 시작이 된 경우 별도 이벤트도 전송
+              if (env.supportedDesktop && env.binary) {
+                logEvent(analytics, "kbpm_download_auto_start", {
+                  os: env.os,
+                  arch: env.arch,
+                  binary: env.binary
+                });
+              }
+            } catch (e) {
+              // Firebase 설정이 아직 안 되어 있거나, 로드 실패 시 조용히 무시
+              console.warn("Firebase initialization / analytics failed:", e);
+            }
+          </script>
           </body>
           </html>
           HTML
           perl -pi -e 's|\$\{SOURCE_REPO\}|'"$SOURCE_REPO"'|g' index.html
+          perl -pi -e 's|\$\{LATEST_VERSION\}|'"$LATEST_TAG"'|g' index.html
+          perl -pi -e 's|\$\{LATEST_DATE\}|'"$LATEST_DATE"'|g' index.html
 
       - name: Create manifest.json with checksums
         run: |
