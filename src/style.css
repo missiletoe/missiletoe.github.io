@@ -1,0 +1,335 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --wallpaper-bg: #f4f1ea;
+  --wallpaper-ink: #11110f;
+  --wallpaper-muted: #6f6b64;
+  --corner-space: clamp(1.5rem, 3.9vw, 3.5rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --wallpaper-bg: #0a0a0a;
+    --wallpaper-ink: #f4f1ea;
+    --wallpaper-muted: #77736d;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  background: var(--wallpaper-bg);
+}
+
+body {
+  min-width: 320px;
+  overflow: hidden;
+  background: var(--wallpaper-bg);
+  color: var(--wallpaper-ink);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--wallpaper-bg);
+  color: var(--wallpaper-ink);
+}
+
+.page-scroller {
+  width: 100%;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+
+.page-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.wallpaper-panel {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: var(--wallpaper-bg);
+}
+
+.opening-panel {
+  display: block;
+}
+
+.about-panel {
+  display: grid;
+  place-items: center;
+  padding: clamp(8.5rem, 18vh, 12rem) var(--corner-space) clamp(7.5rem, 16vh, 10rem);
+}
+
+.intro-copy {
+  width: min(100%, 47rem);
+  margin-inline: auto;
+}
+
+.intro-kicker {
+  margin: 0 0 1.35rem;
+  color: var(--wallpaper-muted);
+  font-size: clamp(0.82rem, 0.8vw, 0.95rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.intro-copy h2 {
+  max-width: 19ch;
+  margin: 0 0 2rem;
+  font-size: clamp(2.15rem, 4.6vw, 4.75rem);
+  font-weight: 480;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.intro-copy p:not(.intro-kicker) {
+  max-width: 57ch;
+  margin: 0 0 1rem;
+  color: var(--wallpaper-muted);
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.intro-copy p:last-child {
+  color: var(--wallpaper-ink);
+}
+
+.corner-frame {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  pointer-events: none;
+}
+
+.brand-mark {
+  position: absolute;
+  top: var(--corner-space);
+  left: var(--corner-space);
+  margin: 0;
+  color: var(--wallpaper-ink);
+  font-family: "Edu NSW ACT Cursive", cursive;
+  font-size: clamp(1.9rem, 2.5vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.social-links {
+  position: absolute;
+  top: var(--corner-space);
+  right: var(--corner-space);
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  pointer-events: auto;
+}
+
+.social-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--wallpaper-ink);
+  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+  font-weight: 450;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.32rem;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.social-link:hover {
+  color: var(--wallpaper-muted);
+  text-decoration-color: currentColor;
+}
+
+.social-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: 0 0 auto;
+}
+
+.appearance-status,
+.scroll-control {
+  position: absolute;
+  bottom: var(--corner-space);
+  margin: 0;
+  color: var(--wallpaper-muted);
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.appearance-status {
+  left: var(--corner-space);
+  width: 2.75rem;
+  min-height: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: auto;
+}
+
+.appearance-status:hover {
+  background: transparent;
+  color: var(--wallpaper-ink);
+}
+
+.appearance-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.scroll-control {
+  right: var(--corner-space);
+  min-height: 2.75rem;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  pointer-events: auto;
+  text-transform: none;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.scroll-control:hover {
+  background: transparent;
+  color: var(--wallpaper-ink);
+  transform: translateY(-2px);
+}
+
+.social-link:focus-visible,
+.scroll-control:focus-visible,
+.skip-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0.45rem;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 30;
+  top: 1rem;
+  left: 50%;
+  padding: 0.65rem 1rem;
+  transform: translate(-50%, -180%);
+  background: var(--wallpaper-ink);
+  color: var(--wallpaper-bg);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: transform 140ms ease;
+}
+
+.skip-link:focus {
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --corner-space: clamp(1.15rem, 5vw, 1.75rem);
+  }
+
+  .brand-mark {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+  }
+
+  .social-links {
+    gap: 0.65rem;
+  }
+
+  .social-link {
+    width: 2.75rem;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .social-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .about-panel {
+    place-items: center start;
+    padding-top: 9rem;
+    padding-bottom: 7rem;
+  }
+
+  .intro-copy {
+    width: min(100%, 32rem);
+  }
+
+  .scroll-control {
+    max-width: 10.5rem;
+    justify-content: flex-end;
+    text-align: right;
+  }
+}
+
+@media (max-width: 430px) {
+  .brand-mark {
+    max-width: 12rem;
+    white-space: normal;
+  }
+
+  .intro-copy h2 {
+    font-size: clamp(2.15rem, 12vw, 3.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
