@@ -1,6 +1,38 @@
-.DS_Store
-.vscode/
-node_modules/
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 .npm-cache/
-dist/
-artifacts/
+
+# Next.js
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Production
+/build
+/dist
+
+# Environment variables
+.env*.local
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / Editor
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# Firebase
+.firebase/
+.firebaserc
+
+.agents/
+.re0/
