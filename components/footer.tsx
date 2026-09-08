@@ -59,7 +59,7 @@ export function Footer() {
           <p>
             본 포트폴리오의 모든 서술은 Git 커밋, 릴리스, 저장소 코드 등 검증 가능한 증거를 기반으로 작성되었습니다.
           </p>
-          <p className="font-mono">Next.js · Firebase Hosting</p>
+          <p className="font-mono">Next.js · GitHub Pages</p>
         </div>
       </div>
     </footer>
