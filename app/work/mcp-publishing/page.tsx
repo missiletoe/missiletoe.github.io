@@ -59,7 +59,7 @@ export default function McpPublishingPage() {
                 <strong>원클릭 발행:</strong> 카테고리 ID, 태그, 공개/비공개 설정을 포함해 Tistory API로 직접 발행합니다.
               </li>
               <li>
-                <strong>발행 URL 검증:</strong> 실제 배포된 웹 주소의 정상 응답을 확인하고 완료를 알립니다.
+                <strong>결과 확인:</strong> API의 발행 결과와 공개 페이지의 응답·렌더링을 구분해 확인합니다.
               </li>
             </ul>
           </div>

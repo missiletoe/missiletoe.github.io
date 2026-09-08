@@ -23,10 +23,10 @@
 ### 2.1 라우트 구조
 
 - `/` : 전체 경력과 핵심 역량을 10초 안에 파악할 수 있는 홈 (대표 사례 및 작업 방식, 기술 선택, 로드맵)
-- `/work/kbpm` : **KBPM** 데스크톱 자동화와 운영 신뢰성 심층 사례 연구
+- `/work/kbpm` : **KBPM** 네이티브 거래 작업공간과 거래 안전성 사례 연구
 - `/work/mcp-publishing` : **YouTube & Tistory MCP** 자동 배포 파이프라인 사례 연구
-- `/work/game-promotion` : **에버리프(EverLeaf)** 게임 홍보 자산 및 공식 웹 포털 제작 사례 연구
-- `/work/ios-prototyping` : **찍술(ZzikSool)** 온디바이스 음주 기록 iOS 프로토타입 사례 연구
+- `/work/game-promotion` : **에버리프(EverLeaf)** 공식 웹사이트와 EverWiki CMS 사례 연구
+- `/work/ios-prototyping` : **찍술(ZzikSool)** 온디바이스 기록 앱과 다중 사진 인식 실험 사례 연구
 - `/robots.txt` & `/sitemap.xml` : 검색 엔진 최적화 메타데이터
 - `/_not-found` (`404.html`) : 정적 404 안내 페이지
 
@@ -123,6 +123,8 @@ npm run check
 ### 4.1 새 프로젝트 추가 또는 수정
 
 모든 프로젝트 데이터는 [`data/projects.ts`](data/projects.ts)에서 타입 안전하게 관리됩니다.
+
+홈의 목차·사례 카드·상태 배지는 같은 프로젝트 데이터를 사용합니다. `portfolioUpdatedAt`에는 GitHub 확인일을, 확인된 최근 작업에는 `recentUpdate: { date, summary }`를 기록합니다. 최근 작업과 현재 진행 목록은 `recentUpdate`가 있는 프로젝트만 표시합니다. 상세 페이지의 심층 본문·메타데이터와 [`docs/content-evidence.md`](docs/content-evidence.md)의 근거도 함께 갱신합니다.
 
 1. `Project` 인터페이스 규격에 맞춰 새로운 프로젝트 객체를 추가합니다.
 2. 상태(`status`)는 다음 중 하나로 명확히 분리합니다:

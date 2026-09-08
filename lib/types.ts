@@ -44,6 +44,10 @@ export interface Project {
   nextSteps: string[]
   stack: TechChoice[]
   evidence: ProjectEvidence[]
+  recentUpdate?: {
+    date: string
+    summary: string
+  }
   diagram?: {
     title?: string
     beforeTitle?: string

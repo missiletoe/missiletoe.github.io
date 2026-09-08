@@ -1,137 +1,104 @@
-# 콘텐츠 사실 검증 및 증거 목록 (Content Evidence)
+# 콘텐츠 사실 검증 및 증거 목록
 
-기준일: 2026-09-02  
-조사 대상 기간: 2025-09-02 ~ 2026-09-02  
-상태 구분:
-- `verified`: 로컬 저장소 코드, Git 커밋/PR, 릴리스 아티팩트, 공식 문서로 직접 확인됨
-- `user-provided`: 사용자 요구사항에서 명시적으로 제공된 방향 및 맥락
-- `planned`: 향후 구현 계획 또는 진행 중인 설계
-- `omit`: 확인할 수 없거나 과장될 위험이 있어 포트폴리오에서 제외
+확인일: 2026-09-08 (Asia/Seoul)
 
----
+이번 갱신은 GitHub 기본 브랜치, 최근 PR 상태와 저장소의 검증 기록을 확인해 작성했다. GitHub 커넥터는 프로필을 반환했지만 비공개 저장소 접근은 404/빈 목록이어서, 이미 인증된 GitHub CLI의 읽기 전용 조회를 사용했다.
 
-## 1. 프로필 및 기본 정보
+## 판정 원칙
 
-| 항목 | 내용 | 상태 | 확인 근거 |
-|---|---|---|---|
-| 직함 / 역할 | Software Engineer | `user-provided` | 요구사항 정의 |
-| 핵심 가치관 | 반복 업무를 실제 제품과 운영 흐름으로 연결, 사용자 환경의 실패를 구조 개편으로 해결 | `verified` | KBPM, ZzikSool, MCP, EverLeaf 저장소 커밋 및 아키텍처 문서 |
-| GitHub 프로필 | `https://github.com/missiletoe` | `verified` | Git 커밋 작성자 및 원격 저장소 URL |
-| LinkedIn 프로필 | `https://www.linkedin.com/in/yong-suk-heo/` | `verified` | 기존 `src/components/CornerFrame.vue` |
-| 블로그 | `https://max-dev.tistory.com/` | `verified` | Tistory MCP 산출물 및 이전 블로그 글 |
-| 임의의 이메일/전화번호 | 개인정보 보호 및 미확인 연락처 노출 방지 | `omit` | GitHub 프로필 및 LinkedIn을 공식 소통 채널로 사용 |
+- **병합·구현**: GitHub의 현재 기본 브랜치와 병합 상태로 확인한다.
+- **실행 기록**: 저장소 문서나 PR에 기록된 당시 결과다. 이번 포트폴리오 작업에서 해당 제품 테스트를 재실행했다는 뜻이 아니다.
+- **진행 중**: 열린 PR, 비활성 기능, 미검증 실환경을 완료 기능과 구분한다.
+- **공개 접근**: 저장소가 비공개이면 방문자용 GitHub 증거 버튼을 제공하지 않는다. 아래 소스 링크는 관리자를 위한 내부 근거다.
+- **기존 사례**: 새 GitHub 근거가 없는 사례의 기간과 내용을 최근 작업으로 표시하지 않는다.
 
----
+기존 GitHub 프로필·LinkedIn·블로그와 담당 역할은 유지했다. 새 이메일, 전화번호, 사용자 수, 처리 시간 절감률, 제품 인식 정확도는 추가하지 않았다.
 
-## 2. 프로젝트별 사실 및 증거 검증
+## GitHub 확인 범위
 
-### 2.1 KBPM (데스크톱 자동화 및 운영 신뢰성)
+| 프로젝트 | 기본 브랜치 HEAD | 최근 확인 상태 |
+|---|---|---|
+| KBPM | `9803a43bf7ace26cc75e6f2ffa211258a8aefada` | PR #111 병합, 2026-09-08 17:03 KST |
+| everleaf_web | `f02f2ef18c05457e7dabfe65bbff01ed96b32aa8` | PR #4 병합, 2026-09-08 07:23 KST |
+| zziksool | `7335cfc3366fe7f95cd888861b930b041e60336f` | PR #1–6 병합, 다중 사진 PR #7은 OPEN |
+| missiletoe.github.io | `5c5d55a` | 이번 변경 전 Next.js 포트폴리오 기준 버전 |
 
-- **상황 및 핵심 문제**:
-  - KREAM 보관판매 신청 및 재고 관리를 위해 시작된 데스크톱 자동화 도구.
-  - 내 컴퓨터에서는 작동하던 스크립트가 실제 사용자 환경에 배포되자 CSR 렌더링 타이밍, 로그인 세션 유지 실패, macOS Gatekeeper/Windows SmartScreen 보안 경고, 브라우저 프로세스 고립 등 수많은 런타임 제약에 직면함.
-- **아키텍처 및 구현**:
-  - **v1 배포본 (`verified`)**: Python + Selenium + PySide6 GUI + PyInstaller 패키징 + GitHub Actions 자동 릴리스. macOS (.dmg) 및 Windows (.exe) v1.0.10 배포 완료.
-  - **v2/현재 네이티브 아키텍처 (`verified`)**: macOS SwiftUI 및 Windows WinUI 3 네이티브 셸이 Python sidecar를 child process로 소유하는 구조.
-  - **브라우저 제어 정책 (`verified`)**: 백그라운드 브라우저는 항상 headless Chrome for Testing (CDP UA 및 client hints 완벽 일치). 로그인 창과 상품 검색(`/search/stock`)만 제한된 headful 창으로 열고, 세션 완료 후 headless가 `/my` 경로를 이중 검증.
-- **상태 구분**:
-  - `verified`:
-    - Python sidecar 프로세스 라이프사이클 및 IPC 통신
-    - Chrome for Testing + matching ChromeDriver 로컬 런타임 잠금
-    - KREAM 로그인 세션 계약 (`/my` 검증 및 cold login handoff)
-    - macOS .dmg / Windows .exe 릴리스 아티팩트 및 GitHub Actions 워크플로
-    - PR #105, #106, #107, #108, #109 머지 및 테스트 슈트
-  - `planned`:
-    - 실제 KREAM 상태 변경을 수행하는 `queue.run.start` 프로덕션 실행 엔진 (현재 `QUEUE_RUN_NOT_IMPLEMENTED`로 안전 차단 중)
-    - 가격 및 거래 데이터 시각화 차트
-    - 실시간 원격 텔레메트리 및 자동 복구 고도화
-  - `omit`:
-    - 미확인 거래액, 자동화로 절감한 시간 수치, 비공식 API 크롤링 과장
+세 제품 저장소와 포트폴리오는 조회 당시 비공개였다. 예전 EverLeaf 게임 저장소 `MSW_EverLeaf`는 보관 상태여서 현재 웹사이트 근거를 `everleaf_web`로 교체했다.
 
----
+## KBPM
 
-### 2.2 MCP Publishing (외부 서비스 연결 및 콘텐츠 배포 자동화)
+근거:
 
-- **상황 및 핵심 문제**:
-  - 플레이리스트 구성과 기술 블로그 게시 과정에서 조사, 정리, 메타데이터 입력, 웹 브라우저 복사·붙여넣기가 반복됨.
-  - 단순 텍스트 생성이 아니라, 실제 API 및 배포 단계와 연결된 도구 제어가 필요함.
-- **구현 및 아키텍처**:
-  - **YouTube MCP (`verified`)**:
-    - TypeScript 기반 stdio MCP 서버 (`@modelcontextprotocol/sdk`).
-    - YouTube Data API v3 및 Live Streaming API 전면 지원.
-    - 데스크톱 OAuth 2.0 PKCE + `127.0.0.1` 루프백 리다이렉트 인증.
-    - 안전한 대량 재생목록 편집 워크플로: `snapshot` -> `plan` -> `apply` -> `journal / conflict detection` -> `inverse plan (undo)`.
-    - 할당량(Quota) 추정 및 경고 임계값 제어.
-  - **Tistory MCP (`verified`)**:
-    - Tistory Open API 및 WebMCP 기반 기술 블로그 포스팅 자동화.
-    - 구조화된 마크다운 초안을 Tistory CDM 포맷(코드 블록, 이미지 업로드)으로 변환 후 배포.
-    - 게시 후 실제 URL 및 상태 검증.
-- **상태 구분**:
-  - `verified`:
-    - Plan/Apply 기반 재생목록 편집 및 역계획(Rollback) 아키텍처
-    - 로컬 인증 및 토큰 보안 격리
-    - Tistory 마크다운/CDM 렌더링 및 자동 배포 파이프라인
-  - `planned`:
-    - 멀티 플랫폼(Medium, Substack) 동시 배포 파이프라인
-  - `omit`:
-    - 절감된 시간의 임의 비율 수치("작업 시간 90% 단축" 등)
+- [현재 README](https://github.com/missiletoe/KBPM/blob/9803a43bf7ace26cc75e6f2ffa211258a8aefada/README.md)
+- [PR #111](https://github.com/missiletoe/KBPM/pull/111)
+- [배포 계획](https://github.com/missiletoe/KBPM/blob/9803a43bf7ace26cc75e6f2ffa211258a8aefada/docs/v2-deployment-plan.md)
+- [KREAM API·네이티브 검증 기록](https://github.com/missiletoe/KBPM/blob/9803a43bf7ace26cc75e6f2ffa211258a8aefada/docs/evidence/kream-api-native-2026-09-07.md)
+- [거래 작업공간 검증 기록](https://github.com/missiletoe/KBPM/blob/9803a43bf7ace26cc75e6f2ffa211258a8aefada/docs/evidence/trade-workspace-2026-09-08.md)
 
----
+현재 제품은 무료 네이티브 거래 작업공간 개발 단계다. SwiftUI·WinUI 3 셸과 Python sidecar, KREAM API 기반 상품·계정 조회, 관심 상품, 페이지 조회·상태 복원, 비용·약관 미리보기가 현재 설명의 중심이다. GitHub Actions는 비활성이고 로컬 검증 기록을 사용한다.
 
-### 2.3 Game Promotion (게임 홍보 및 출시 엔드투엔드 파이프라인 - EverLeaf)
+9월 8일 문서에는 실제 macOS 계정 목록·검색·페이지 이동·거래 상세·상태 복원·창 수명주기 결과가 있다. 이 문서는 **미커밋 작업 트리에서 수행한 검증 기록**을 포함하므로 main의 exact-head 전체 통과라고 쓰지 않는다. 테스트 수는 웹사이트에서 생략했다.
 
-- **상황 및 핵심 문제**:
-  - MapleStory Worlds(MSW) 기반 게임 "에버리프(EverLeaf)" 프로젝트.
-  - 게임 실행 파일만으로는 사용자에게 규칙과 분위기를 전달하기 어렵고, 커뮤니티 유입과 출시 후 상태 운영이 어려움.
-- **구현 및 아키텍처**:
-  - **공식 웹 포털 (`verified`)**:
-    - Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4.
-    - 카드 도감(전사/도적), 몬스터 도감, 게임 가이드, 업데이트 소식 및 RSS 피드.
-    - MSW 런타임 Heartbeat 기반 실시간 서비스 상태 (`/api/status` v2) 및 Upstash Redis 원자적 Lua 스크립트 집계.
-    - GitHub OAuth 관리자 점검 관리 화면 (`/admin/status`, 관리자 GitHub ID `116016950` 제한).
-    - 소셜 유입 채널(`Instagram`, `Threads`, `X`, `YouTube`, `Discord`)별 맞춤 랜딩 (`/from/[source]`).
-  - **홍보 영상 및 그래픽 자산 (`verified`)**:
-    - 씬(Scene)별 스토리보드 수립 및 게임플레이 캡처.
-    - 레트로 야구 폰트 및 클래식 MMORPG 감성을 살린 타이틀 카드/배너 제작.
-- **상태 구분**:
-  - `verified`:
-    - 공식 웹사이트 아키텍처 및 도감/뉴스 시스템
-    - MSW 인스턴스 Heartbeat 기반 실시간 헬스체크 및 점검 관리
-    - 홍보 영상 및 타이틀 그래픽 에셋
-  - `planned`:
-    - 게임 내 실시간 경매장 시세 웹 연동
-  - `omit`:
-    - 미확인 게임 접속자 수치, 매출 지표
+자동 입찰 worker, 실제 입찰 제출·변경, 보관판매 최종 신청은 비활성이다. `queue.run.start`는 `QUEUE_RUN_NOT_IMPLEMENTED`다. 실제 Windows 실행·서명·공증·v2 공개 배포를 완료로 표시하지 않는다.
 
----
+과거 최신 release 목록에는 v1.1.3(2025-12-17)이 있으나 비공개이고 v2 배포가 아니다. 기존 v1.0.10을 현재 대표 상태로 표시하던 문구를 제거했다. `public/images/1.png`는 v1 검색, `2.png`는 v1 대기열 화면으로 직접 확인해 역사 이미지라고 표시했다.
 
-### 2.4 iOS Prototyping (아이디어의 네이티브 검증 - 찍술 ZzikSool)
+방문자용 링크는 공개 응답을 확인한 [KBPM 프로젝트 소개·개발 소식](https://max-dev.tistory.com/17)이다. 글 상단에 2026-09-02 v2 개발 공지가 있고 사용법 본문은 v1이다.
 
-- **상황 및 핵심 문제**:
-  - 사진 1~5장으로 술자리에서 마신 주류를 판별하고 캘린더에 기록하는 음주 기록 iOS MVP.
-  - 한국 술병의 곡면 라벨, 난반사, 물방울, 저조도 환경에서 클라우드 AI 없이 온디바이스로 정확하고 안전하게 동작해야 함.
-- **구현 및 아키텍처**:
-  - **스택 (`verified`)**: Swift 6, SwiftUI, Observation, SwiftData, Apple Vision, PhotosUI, AppIntents.
-  - **온디바이스 비전 파이프라인 (`verified`)**: 2,560px 씬 및 타일링 Vision OCR + 다중 바코드 감지 (EAN-13, EAN-8, QR 등).
-  - **휴먼 인 더 루프 설계 (`verified`)**: 사진 관찰 수량은 '추정치'일 뿐 사용자가 실제 마신 양을 명시적으로 확인·선택하기 전에는 저장을 차단하는 휴먼 게이트.
-  - **테스트 및 검증 (`verified`)**: Swift Testing 232개/38 suites, UI 테스트 20개, 접근성(Accessibility) 감사 4개 무결점 통과. Xcode 자동 서명 기반 TestFlight 1.1 (26) 내부 배포 완료.
-- **상태 구분**:
-  - `verified`:
-    - Swift 6 & Vision 기반 온디바이스 라벨/바코드 인식
-    - 11개 검증 SKU 로컬 카탈로그 및 불확실 시 약한 추정 기권(Abstention) 메커니즘
-    - SwiftData 트랜잭션 기반 일괄 저장/보상 삭제
-    - TestFlight 1.1 (26) 내부 배포
-  - `planned`:
-    - Core ML 기반 고도화 분류 모델 학습 및 온디바이스 탑재
-    - 다중 병 잔량(Fill level) 정밀 추정 모델
-  - `omit`:
-    - App Store 정식 출시 완료 주장 (TestFlight 내부 테스트 단계임)
-    - 미확인 정확도 백분율
+## EverLeaf 공식 사이트와 EverWiki
 
----
+근거:
 
-## 3. 포트폴리오 적용 원칙
+- [현재 README](https://github.com/missiletoe/everleaf_web/blob/f02f2ef18c05457e7dabfe65bbff01ed96b32aa8/README.md)
+- [CMS 통합 PR #4](https://github.com/missiletoe/everleaf_web/pull/4)
+- [Sky Portal·미디어 PR #3](https://github.com/missiletoe/everleaf_web/pull/3)
+- [상태 서비스 종료 PR #2](https://github.com/missiletoe/everleaf_web/pull/2)
+- [CMS 검증 기록](https://github.com/missiletoe/everleaf_web/blob/f02f2ef18c05457e7dabfe65bbff01ed96b32aa8/docs/cms/verification.md)
 
-1. **상태 배지 명확화**: 각 프로젝트 상세 및 요약에서 `배포 완료 (Shipped)`, `진행 중 (Ongoing)`, `개편 계획 (Planned)`을 명확히 표기한다.
-2. **증거 링크 필수**: 실제 코드 저장소, 릴리스, 커밋, 데모가 존재하는 경우에만 외부 버튼을 렌더링한다.
-3. **숫자 조작 금지**: 검증된 커밋 수, 테스트 통과 수, 지원 OS 버전 외의 가짜 사용자 수나 비즈니스 지표를 생성하지 않는다.
+Next.js 16·React 19·Supabase 기반 공식 웹사이트와 EverWiki CMS를 반영했다. 일곱 분류의 위키, GitHub 관리자·영역별 편집 권한, 초안·공개 개정본 분리, 원자적 발행과 충돌 검사, 주소·이력 보존, 검토형 가져오기 흐름이 병합됐다. 히어로·갤러리의 반응형 동작과 모션·네트워크 조건, 링크 클릭 분석도 최근 작업이다.
+
+기존 Heartbeat·Redis 상태 서비스와 관리자 점검 기능은 종료됐다. 이번 HTTP 확인에서 `/status`와 `/api/status`는 410을 반환했다. 이를 현재 제공 기능으로 설명하던 홈·상세·기술 표를 수정했다.
+
+저장소 문서에는 GitHub 로그인과 CMS 공개 작업 결과가 있으나 이번 작업에서 로그인·발행을 다시 실행하지 않았다. Notion 원본 이관과 Discord 실제 알림 전송은 완료로 표시하지 않는다. 과거 문서의 PR OPEN 문구보다 현재 GitHub의 MERGED 상태를 우선했다.
+
+공개 확인: [EverWiki](https://project-dol-everleaf.vercel.app/everwiki)와 [업데이트 목록](https://project-dol-everleaf.vercel.app/news?type=update)은 HTTP 200. 홈페이지 `/`는 한 차례 HTTP 500이 관측되어 사이트 전체 정상 또는 현재 HEAD 배포 완료로 확대하지 않는다. 방문자용 링크는 확인된 EverWiki 경로를 사용한다.
+
+## 찍술 ZzikSool
+
+근거:
+
+- [기본 브랜치 README](https://github.com/missiletoe/zziksool/blob/7335cfc3366fe7f95cd888861b930b041e60336f/README.md)
+- [기본 브랜치 현재 검증 범위](https://github.com/missiletoe/zziksool/blob/7335cfc3366fe7f95cd888861b930b041e60336f/Docs/VALIDATION.md#current-revision)
+- [기록 경험 개선 PR #6](https://github.com/missiletoe/zziksool/pull/6)
+- [워드마크 PR #5](https://github.com/missiletoe/zziksool/pull/5)
+- [다중 사진 인식 PR #7](https://github.com/missiletoe/zziksool/pull/7), OPEN, HEAD `d4093811794618d48c777524182d1229829fa1b3`
+
+기본 브랜치는 Swift 6·SwiftUI·SwiftData·Vision 기반 한 장 입력, 제품·실제 음용량 확인 후 저장, Today·캘린더·수정·삭제·내보내기, 한국어·영어 UI다. 제품별 공식 출처를 가진 작은 로컬 카탈로그를 사용한다. 기본 브랜치와 미병합 인식 기능을 같은 완료 상태로 묶지 않는다.
+
+PR #7에는 1~5장 세션, 타일 OCR·바코드, 사진 간 중복 처리, 보수적 제품 판정, 제품별 확인·원자적 일괄 저장이 포함된다. 카탈로그 11개 SKU와 232 Swift Testing/38 suites·20 UI·4 접근성 감사 기록은 이 PR의 특정 소스에 속하며 기본 브랜치 전체나 현재 실기기 성공 수치가 아니다. 홈페이지의 고정 테스트 숫자와 무결점 표현은 삭제했다.
+
+PR에 TestFlight 1.1 (26) 업로드·App Store Connect 처리·내부 테스터 그룹 연결 기록이 있다. 바이너리 소스는 `4f0a7b26f015aa1d18feb84bb61d037935157904`이고 이후 문서 커밋과 구분된다. 테스터 초대 수락·설치·실행은 NOT RUN이다. 실제 사진 4장은 회귀·수용 자료이며 독립 정확도 holdout이 아니다.
+
+따라서 App Store 출시, 실제 iPhone 실행 완료, 제품 인식 정확도, 무조건적인 식별 성공, 제로 지연을 주장하지 않는다. 방문자에게는 기존 앱 아이콘을 보여 주고 비공개 저장소 링크는 추가하지 않는다.
+
+## MCP Publishing: 기존 사례 유지
+
+이번 GitHub 소유 저장소 목록에서는 MCP 작업에 해당하는 새 저장소·커밋을 확인하지 못했다. 따라서 기존 포트폴리오의 승인형 Plan/Apply, 재생목록 스냅샷·역계획, 마크다운/CDM 발행 사례는 유지하되 최근 작업 목록에는 넣지 않았다. 기간은 2026.01–2026.08로 유지한다.
+
+과거 자료에 기반한 기존 사례이며 이번에 API를 실행하거나 운영 상태를 재확인한 것이 아니다. API 전면 지원·임의 시간 절감 표현을 제거하고, API 결과와 공개 페이지 응답·렌더링을 구분하도록 정리했다.
+
+## 콘텐츠 유지 관리
+
+- `data/projects.ts`의 `projects`가 홈 목차·카드·상세 정보의 기준이다.
+- `portfolioUpdatedAt`은 GitHub 확인일, 프로젝트별 `recentUpdate.date`는 해당 작업일이다.
+- `recentUpdate`가 있는 프로젝트만 최근 작업과 현재 진행 항목에 표시한다.
+- 상태 배지·요약·현재 작업은 홈에 별도로 복사하지 않는다. 심층 본문과 메타데이터는 `app/work/*/page.tsx`도 함께 확인한다.
+- 변경 후 `npm run check`와 영향받은 화면·앵커·라이트/다크·모바일 탐색을 검증한다.
+
+## 이번 포트폴리오 변경 검증
+
+- `npm run check`: TypeScript 검사, 기존 콘텐츠 무결성 검사, Next.js 정적 export 빌드 통과.
+- 정적 산출물을 로컬 서버에서 열어 홈과 네 개 상세 경로를 확인했다. 브라우저 페이지 오류가 보고되지 않았다.
+- 1440px 데스크톱, 390px 모바일에서 홈과 변경된 콘텐츠의 배치를 확인했다. 검사한 페이지에서 가로 넘침이 없었다.
+- 홈 목차의 EverLeaf 앵커와 상세 링크, 모바일 메뉴의 현재 진행 항목 이동·닫힘, 라이트→다크 전환을 확인했다.
+- 제품 저장소의 테스트, 실제 KREAM 거래, CMS 발행, iPhone 실행을 이번 작업에서 재실행하지 않았다.

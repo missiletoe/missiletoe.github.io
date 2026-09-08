@@ -4,9 +4,9 @@ import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
 
 export const metadata: Metadata = {
-  title: '에버리프(EverLeaf) 게임 홍보 및 공식 포털 제작 | Max',
+  title: '에버리프(EverLeaf) 공식 웹사이트와 EverWiki CMS | Max',
   description:
-    '게임 빌드뿐만 아니라 스토리보드 영상, 타이틀 그래픽, Next.js 기반 공식 웹 포털과 실시간 서비스 상태 모니터링을 구축한 출시 사례 연구입니다.',
+    'Next.js 기반 에버리프 공식 웹사이트와 게임 도감, 공지·업데이트를 운영하는 EverWiki CMS를 구축했습니다. 반응형 게임 소개부터 권한별 편집과 검토 후 게시까지 연결한 사례입니다.',
 }
 
 export default function GamePromotionPage() {
@@ -15,19 +15,22 @@ export default function GamePromotionPage() {
 
   return (
     <ProjectLayout project={project} nextProject={nextProject}>
-      {/* Deep Dive on Promotion & Web Infrastructure */}
+      {/* Deep Dive on the Official Website and Content Operations */}
       <section className="flex flex-col gap-6 my-4">
         <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-emerald-600 dark:text-emerald-400 text-base font-bold">[출시 인프라]</span>
-          <span>공식 웹 포털과 MapleStory Worlds 실시간 텔레메트리</span>
+          <span className="font-mono text-emerald-600 dark:text-emerald-400 text-base font-bold">[웹사이트 운영]</span>
+          <span>게임 소개부터 EverWiki 콘텐츠 관리까지</span>
         </h3>
 
         <div className="rounded-xl border border-border bg-card p-6 sm:p-7 flex flex-col gap-4 text-base text-foreground/90 leading-relaxed">
           <p>
-            게임 '에버리프(EverLeaf)'는 단순한 게임 클라이언트 제작을 넘어, 유저가 유입되고 유지되는 전체 라이프사이클을 설계했습니다.
+            게임 '에버리프(EverLeaf)'를 처음 만나는 방문자가 게임플레이를 살펴보고, 필요한 정보를 찾고, 최신 소식을 확인할 수 있도록 공식 웹사이트를 만들었습니다.
           </p>
           <p>
-            <strong>Next.js 16 App Router</strong> 기반으로 전사/도적 카드 도감과 몬스터 도감을 구현하고, MSW 인스턴스에서 전송하는 <strong>Heartbeat 신호</strong>를 수신하여 서비스 가동 상태 및 실시간 점검 공지를 표시하는 텔레메트리 파이프라인을 구축했습니다.
+            <strong>Next.js 16 App Router</strong>와 React 19로 반응형 Sky Portal 메인 화면, 게임플레이 미디어, 직업별 카드·몬스터 도감을 구성했습니다. 기기와 모션 설정에 맞춰 메인 영상 재생을 제한하고, <strong>EverWiki 폴더 탐색</strong>으로 게임 정보를 분류했습니다.
+          </p>
+          <p>
+            <strong>Supabase 기반 CMS</strong>에서 위키, 공지, 업데이트를 함께 관리합니다. GitHub 계정에 관리자·영역별 편집 권한을 부여하고, 초안과 공개본을 분리해 게시 전 변경이 공개 페이지에 노출되지 않도록 했습니다. 외부 자료는 운영자가 기존 문서와 비교하고 검토한 뒤 게시하며, 수정 이력과 기존 주소를 보존합니다.
           </p>
         </div>
 
@@ -52,13 +55,15 @@ export default function GamePromotionPage() {
 
           <div className="flex flex-col gap-3.5 rounded-xl border border-border bg-muted/30 p-6 justify-center">
             <h4 className="text-base font-bold text-foreground">
-              제작된 홍보 및 출시 자산
+              구현한 웹사이트와 콘텐츠 운영 기능
             </h4>
             <ul className="list-disc list-inside flex flex-col gap-2.5 text-sm text-foreground/90 leading-relaxed">
-              <li>씬 1~4 단계별 게임플레이 스토리보드 및 캡처 영상</li>
-              <li>전사·도적 카드 도감 및 몬스터 정보 데이터베이스</li>
-              <li>YouTube, Discord, X, Instagram 유입 전용 랜딩 페이지</li>
-              <li>GitHub ID 기반 관리자 인증 점검 관리 시스템 (/admin/status)</li>
+              <li>반응형 게임 소개와 키보드·터치로 탐색하는 미디어 목록</li>
+              <li>카드·몬스터 등 일곱 분류로 구성한 EverWiki</li>
+              <li>공지·업데이트 상세 페이지, RSS, 사이트맵</li>
+              <li>GitHub 계정별 편집 권한, 초안 복구, 게시·휴지통·복원</li>
+              <li>Discord 업데이트 자료의 검토·가져오기와 이미지 보존</li>
+              <li>소셜 채널별 랜딩 페이지와 개인정보를 최소화한 링크 분석</li>
             </ul>
           </div>
         </div>

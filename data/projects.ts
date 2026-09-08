@@ -1,103 +1,64 @@
 import { Project, TechChoice } from '@/lib/types'
 
+export const portfolioUpdatedAt = '2026-09-08'
+
 export const projects: Project[] = [
   {
     slug: 'kbpm',
-    title: 'KBPM: 데스크톱 자동화와 운영 신뢰성',
+    title: 'KBPM: KREAM 네이티브 거래 작업공간',
     shortTitle: 'KBPM',
-    period: '2025.10 – 2026.08',
-    status: 'shipped',
-    statusLabel: 'v1.0.10 배포 완료 · v2 네이티브 개편 진행 중',
-    category: '데스크톱 자동화 · 시스템 신뢰성',
-    heroKicker: '사용자 환경의 실패를 겪고 제품 구조를 다시 고친 데스크톱 자동화 도구',
+    period: '2025.10 – 현재',
+    status: 'ongoing',
+    statusLabel: 'v2 개발 중 · 최종 거래 실행 비활성',
+    category: '네이티브 데스크톱 · 거래 안전성',
+    heroKicker: '거래 정보를 읽고 비교하는 화면부터, 실행을 멈추는 조건까지 설계',
     summary:
-      'KREAM 보관판매 신청 및 재고 관리를 위해 시작된 데스크톱 자동화 도구입니다. 개인 스크립트에서 출발해 CSR 타이밍, 로그인 세션 유지, macOS/Windows 패키징 및 보안 경고를 겪으며 배포 가능한 데스크톱 제품으로 고도화했습니다.',
+      'KREAM 보관판매 자동화에서 시작해 거래·보유·발매 정보를 모아 보는 무료 네이티브 데스크톱 작업공간으로 발전시키고 있습니다. SwiftUI와 WinUI 3 화면에 Python sidecar를 연결하고, 상품 검색·계정 내역·관심 상품·수수료 미리보기를 구현했습니다.',
+    recentUpdate: {
+      date: '2026-09-08',
+      summary: 'v2 거래 제어와 네이티브 조회 화면을 통합했습니다. macOS의 목록·페이지 이동·창 수명주기 검증 기록을 남기고, 최종 거래 실행은 비활성 상태로 유지했습니다.',
+    },
     role: [
-      '단독 설계 및 풀스택 개발',
-      'macOS/Windows 크로스 플랫폼 배포 및 GitHub Actions 파이프라인 구축',
-      '헤드리스 브라우저 세션 제어 아키텍처 및 세션 검증 계약 수립',
+      '제품 설계, macOS·Windows 네이티브 UI 및 Python 엔진 개발',
+      '상품·계정 데이터를 네이티브 화면으로 전달하는 계약과 프로세스 수명주기 설계',
+      '거래 미리보기, 승인 조건, 실행 차단 및 로컬 검증 체계 구축',
     ],
     context: [
-      'KREAM 보관판매 신청 및 재고 관리 작업의 번거로운 반복을 줄이기 위해 시작된 프로젝트입니다.',
-      '개인 로컬 환경에서 잘 동작하던 자동화 코드가 다른 사용자의 PC에 배포되자 수많은 사용자 환경 차이와 보안 제약에 직면했습니다.',
-      '단순히 기능을 추가하는 것보다, 다양한 OS와 브라우저 환경에서 멈추지 않고 예측 가능하게 실행되는 제품 신뢰성이 핵심 과제가 되었습니다.',
+      '보관판매 신청과 재고 확인을 반복하는 수고를 줄이기 위해 Python 기반 데스크톱 도구로 시작했습니다.',
+      '사용자 PC마다 다른 브라우저 세션, 운영체제, 패키징 제약을 겪으며 기능뿐 아니라 조회 결과의 정확성과 거래 안전성을 제품의 중심으로 옮겼습니다.',
     ],
     constraints: [
-      'CSR(클라이언트 사이드 렌더링) 페이지 구조로 인한 요소 렌더링 및 동적 로딩 타이밍 불일치',
-      'KREAM 로그인 세션 유지 및 헤드리스 환경과 실제 브라우저 렌더링 차이',
-      '사용자 운영체제(macOS / Windows)별 환경 격리 및 바이너리 패키징 차이',
-      'macOS Gatekeeper, Apple Notarization, Windows SmartScreen 등 배포 신뢰성 및 보안 경고',
-      '브라우저 프로세스 고립 및 비정상 종료 시 좀비 프로세스 누수 방지',
+      '로그인 성공과 실제 계정 데이터 조회·화면 표시의 성공을 각각 확인해야 하는 외부 서비스 연동',
+      '입찰·보관판매 등 실제 거래는 비용과 상태 변경을 수반하므로 불확실한 결과를 자동 재시도할 수 없음',
+      'macOS와 Windows의 UI·프로세스·서명 환경 차이',
     ],
     decisions: [
-      'v1 배포본: Python + Selenium + PySide6 GUI + PyInstaller를 결합하여 macOS(.dmg) 및 Windows(.exe)로 패키징하고 GitHub Actions로 자동 릴리스',
-      'v2 아키텍처 개편: macOS SwiftUI, Windows WinUI 3 네이티브 셸이 Python sidecar를 자식 프로세스(child process)로 소유·감시하는 IPC 구조 채택',
-      '브라우저 분리 정책: 백그라운드 작업은 항상 헤드리스 Chrome for Testing(CDP User Agent 및 client hints 동기화)으로 실행하고, 사용자가 필요한 로그인 화면과 상품 검색(/search/stock)만 제한된 헤드풀 창으로 실행',
-      '이중 세션 검증: 로그인 창 완료 후 헤드리스 드라이버가 "/my" 엔드포인트를 다시 확인하여 세션의 유효성을 확정한 뒤에만 다음 단계로 전환',
-      '런타임 잠금: Stable Chrome for Testing과 매칭 ChromeDriver를 앱 내부에 고정하여 브라우저 자동 업데이트로 인한 파괴적 중단 방지',
+      'macOS SwiftUI와 Windows WinUI 3 셸이 Python sidecar를 자식 프로세스로 소유하고 IPC로 조회 결과와 상태를 전달하도록 구성',
+      'KREAM API 조회와 브라우저 세션을 연결하되, 상품·옵션·계정 근거가 부족하면 거래 단계로 진행하지 않도록 설계',
+      '조회·수수료 미리보기와 실제 제출을 분리하고, 현재 버전에서는 최종 거래 worker를 비활성 상태로 유지',
+      'GitHub Actions를 통한 자동 배포 대신, 소스 버전과 연결된 로컬 검증 기록으로 공통·macOS·Windows·실서비스·서명 상태를 구분',
     ],
     outputs: [
-      'KBPM v1.0.10 바이너리 배포 (macOS Apple Silicon/Intel dmg, Windows exe)',
-      'GitHub Actions 기반 크로스 플랫폼 자동 빌드 및 릴리스 배포 파이프라인',
-      '결정론적 상태 머신 기반의 KREAM 로그인 확인 및 보관판매 신청 대기열 구성',
-      'Xcode 및 .NET SDK exact 버전 고정 기반의 결정론적 로컬 빌드 환경',
+      '상품 검색, 계정 내역, 관심 상품과 보관판매·입찰 비용 미리보기 화면 구현',
+      'SwiftUI·WinUI 3 네이티브 셸과 Python sidecar 연결',
+      '9월 8일 macOS 목록·페이지 이동·창 수명주기 확인 기록',
     ],
     limitations: [
-      '실제 KREAM 상태를 변경하는 queue.run.start 프로덕션 실행 엔진은 안전성 보장을 위해 QUEUE_RUN_NOT_IMPLEMENTED로 의도적 차단 상태',
-      '외부 사이트(KREAM)의 비공개 UI/구조 변경 시 셀렉터 동기화가 필요한 의존성',
+      '최종 거래 제출은 비활성 상태이며, 일부 macOS 확인 결과를 Windows·전체 KREAM 거래·공개 배포 검증으로 확대하지 않습니다.',
+      '외부 서비스의 로그인·데이터 구조가 바뀌면 조회 계약과 화면 표시를 다시 확인해야 합니다.',
     ],
     nextSteps: [
-      '신뢰성 중심 상태 머신 및 작업별 이벤트 로깅 체계 고도화',
-      '에러 발생 시 사용자 환경의 문제를 신속히 재현할 수 있는 진단 로그 포맷 개선',
-      '가격 및 거래량 데이터 시각화 차트 추가 검토',
-      '오래된 레거시 자동화 코드 완전 정리 및 상태 전환 보증',
+      '실제 Windows와 KREAM 주요 흐름의 검증 범위를 넓히고, 최종 제출 활성화에 필요한 근거를 확보',
+      '서명·공증·공개 배포 결과를 기능 구현과 별도로 확인',
     ],
     stack: [
-      {
-        name: 'Python 3.14',
-        reason: '자동화 로직 및 백그라운드 데이터 처리 sidecar 구현',
-        constraintOrLearning: '단독 GUI보다 네이티브 셸과 연동할 때 OS 통합성이 크게 향상됨',
-      },
-      {
-        name: 'Selenium & Chrome for Testing',
-        reason: 'CSR 동적 렌더링 페이지 탐색 및 브라우저 세션 정밀 제어',
-        constraintOrLearning: 'CDP UA와 client hints를 모두 일치시켜야 봇 탐지 및 불일치 회피 가능',
-      },
-      {
-        name: 'Swift / SwiftUI & WinUI 3',
-        reason: 'macOS와 Windows 플랫폼별 네이티브 셸 UI 및 프로세스 라이프사이클 관리',
-        constraintOrLearning: '각 OS의 네이티브 툴체인(Xcode SDK 27, .NET 10 SDK)을 엄격히 고정해 빌드 재현성 확보',
-      },
-      {
-        name: 'PyInstaller & uv',
-        reason: '의존성 없는 단일 바이너리 데스크톱 패키지 생성 및 가상환경 격리',
-        constraintOrLearning: '동결된 환경에서 번들된 ChromeDriver와 바이너리 크기 최적화 필요',
-      },
-      {
-        name: 'GitHub Actions',
-        reason: '태그 푸시 시 크로스 플랫폼 바이너리 자동 빌드 및 릴리스 배포',
-        constraintOrLearning: 'macOS 및 Windows 매트릭스 빌드로 배포 아티팩트 자동 검증',
-      },
+      { name: 'Python', reason: '조회·거래 제어 엔진과 네이티브 셸을 연결하는 sidecar', constraintOrLearning: '프로세스 종료와 불완전한 조회 결과를 UI 상태에 반영' },
+      { name: 'Swift / SwiftUI & WinUI 3', reason: 'macOS·Windows의 네이티브 화면과 창 수명주기 관리', constraintOrLearning: '공통 계약을 사용하되 OS별 실행 증거는 따로 확인' },
+      { name: 'KREAM API & Browser Session', reason: '상품·계정 조회와 로그인 세션 연계', constraintOrLearning: '세션 보유만으로 조회나 거래 성공을 판정하지 않음' },
+      { name: 'Local Validation', reason: '현재 소스 버전과 연결된 기능·실행·배포 검증 기록', constraintOrLearning: '실행하지 않은 플랫폼과 거래는 미검증 상태로 유지' },
     ],
     evidence: [
-      {
-        type: 'repository',
-        label: 'GitHub 저장소 (KBPM 배포)',
-        href: 'https://github.com/missiletoe/KBPM',
-        verified: true,
-      },
-      {
-        type: 'repository',
-        label: 'GitHub 코드 저장소 (kream_inventory)',
-        href: 'https://github.com/missiletoe/kream_inventory',
-        verified: true,
-      },
-      {
-        type: 'article',
-        label: 'Tistory 기술 블로그 (KBPM 관련 기록)',
-        href: 'https://max-dev.tistory.com/17',
-        verified: true,
-      },
+      { type: 'article', label: 'KBPM 프로젝트 소개와 개발 소식', href: 'https://max-dev.tistory.com/17', verified: true },
     ],
   },
   {
@@ -106,7 +67,7 @@ export const projects: Project[] = [
     shortTitle: 'MCP Publishing',
     period: '2026.01 – 2026.08',
     status: 'shipped',
-    statusLabel: '배포 및 운영 완료',
+    statusLabel: '기존 콘텐츠 자동화 사례',
     category: '외부 서비스 연동 · 업무 자동화',
     heroKicker: '복사와 업로드를 반복하던 작업을 실제 배포 흐름으로 연결',
     summary:
@@ -121,7 +82,7 @@ export const projects: Project[] = [
       '단순히 AI에게 텍스트를 생성하게 하는 것을 넘어, 사람이 대화 안에서 검토하고 승인하면 실제 외부 서비스 API를 통해 안전하게 발행되는 엔드투엔드 흐름이 필요했습니다.',
     ],
     constraints: [
-      'YouTube Data API v3의 엄격한 일일 할당량(Quota) 제한 (기본 10,000 units)',
+      'YouTube Data API 호출별 할당량과 외부 인증 제약',
       '재생목록 일괄 변경 시 누락·중복 발생 시 복구가 어려운 문제',
       '데스크톱 로컬 환경에서의 안전한 OAuth 2.0 PKCE 인증 및 토큰 보안 보관',
       'Tistory의 고유 에디터 CDM 포맷 및 이미지 블록 렌더링 규격 호환',
@@ -130,16 +91,16 @@ export const projects: Project[] = [
       'YouTube MCP: TypeScript와 @modelcontextprotocol/sdk를 사용하여 Data API v3 및 Live Streaming API를 다루는 stdio 서버 구현',
       'Plan / Apply 워크플로: 재생목록 변경 시 즉시 수정하지 않고 snapshot -> plan -> 사용자 승인 -> apply -> journal 기록 순으로 안전 실행하며, 문제 시 inverse plan으로 롤백 지원',
       'OAuth 루프백: 127.0.0.1 로컬 포트와 PKCE를 결합한 데스크톱 OAuth 플로우를 구축하고, 토큰은 환경 변수나 tool 인자로 전달하지 않고 로컬 보안 파일에만 격리',
-      'Tistory MCP: 마크다운 초안을 Tistory CDM 문법으로 자동 변환하고 태그/카테고리/슬러그를 함께 전달해 즉시 발행 및 URL 검증',
+      'Tistory MCP: 마크다운 초안을 Tistory CDM 문법으로 자동 변환하고 태그/카테고리/슬러그를 함께 전달해 발행 결과 확인',
     ],
     outputs: [
-      'YouTube Data API v3 전면 지원 로컬 TypeScript stdio MCP 서버',
+      'YouTube 동영상·재생목록 작업을 연결한 로컬 TypeScript stdio MCP 서버',
       '재생목록 스냅샷, diff 계산, Quota 추정, 일괄 편집 및 역계획 롤백 엔진',
       'Tistory 마크다운/CDM 변환 및 원클릭 기술 블로그 포스팅 파이프라인',
     ],
     limitations: [
       'YouTube Music 전용 라이브러리나 Google 비공개 API(시청 기록 등)는 공식 Data API 범위 밖으로 지원 불가',
-      'Google OAuth 앱이 Testing 모드일 경우 테스트 유저 인증 토큰 7일 만료 제약',
+      '외부 서비스의 인증·할당량·에디터 변경에 따라 실행 흐름을 다시 확인해야 합니다.',
     ],
     nextSteps: [
       'Medium 및 Substack 등 멀티 플랫폼 동시 발행 어댑터 확장',
@@ -170,7 +131,7 @@ export const projects: Project[] = [
     evidence: [
       {
         type: 'article',
-        label: 'Tistory WebMCP 소개 포스트',
+        label: 'Max 기술 블로그',
         href: 'https://max-dev.tistory.com/',
         verified: true,
       },
@@ -192,7 +153,7 @@ export const projects: Project[] = [
         'MCP가 API Quota 및 Diff를 포함한 Plan 생성',
         '사람이 Plan 및 변경 목록 검토 후 명시적 승인',
         'MCP stdio 서버가 API 직접 호출로 일괄 배포',
-        '발행 결과 URL 및 스냅샷 즉시 검증 (필요 시 Undo)',
+        'API 결과와 공개 화면을 각각 확인 (필요 시 Undo)',
       ],
       humanGateNote:
         '모든 변경은 AI의 임의 실행이 아닌 사람의 Plan 검토 및 승인을 거쳐서만 배포됩니다.',
@@ -200,205 +161,132 @@ export const projects: Project[] = [
   },
   {
     slug: 'game-promotion',
-    title: '에버리프(EverLeaf) 홍보 자산 및 공식 포털 제작',
-    shortTitle: 'Game Promotion',
-    period: '2026.06 – 2026.08',
-    status: 'shipped',
-    statusLabel: '배포 및 운영 완료',
-    category: '출시 인프라 · 홍보 파이프라인',
-    heroKicker: '게임 파일 완성에서 멈추지 않고, 유저가 이해하고 유입되는 전체 출시 과정 구축',
+    title: '에버리프: 공식 웹사이트와 EverWiki CMS',
+    shortTitle: 'EverLeaf',
+    period: '2026.06 – 현재',
+    status: 'ongoing',
+    statusLabel: '공식 사이트 공개 · EverWiki CMS 확장',
+    category: '풀스택 웹 · 콘텐츠 운영',
+    heroKicker: '게임을 소개하는 랜딩에서 운영자가 직접 고치는 도감까지',
     summary:
-      '게임 실행 파일 제작에 머무르지 않고, 스토리보드 기반 영상·타이틀 그래픽·Next.js 기반 공식 웹 포털과 실시간 서비스 상태 모니터링을 결합해 하나의 출시 흐름으로 완성했습니다.',
+      'MapleStory Worlds 게임 에버리프의 소개·게임플레이 미디어·도감을 담은 공식 웹사이트를 만들었습니다. 최근에는 흩어진 게임 정보를 EverWiki로 정리하고, 운영자가 초안을 편집하고 발행할 수 있는 Supabase 기반 CMS로 확장했습니다.',
+    recentUpdate: {
+      date: '2026-09-08',
+      summary: 'EverWiki와 통합 CMS 변경을 병합했습니다. GitHub 역할별 권한, 초안·발행본 분리, 발행 충돌 방지와 검토형 가져오기 흐름을 추가했습니다.',
+    },
     role: [
-      '공식 웹 포털 풀스택 개발 (Next.js App Router, Tailwind CSS)',
-      'MSW 인스턴스 Heartbeat 실시간 상태 텔레메트리 파이프라인 설계',
-      '씬(Scene)별 스토리보드 수립, 게임플레이 캡처, 타이틀 그래픽 디자인',
+      'Next.js 공식 웹사이트와 EverWiki CMS 설계·개발',
+      'GitHub 로그인, 편집 권한, 콘텐츠 개정 이력과 발행 흐름 구현',
+      '게임플레이 미디어 구성, 반응형 랜딩과 소셜 유입 경험 개선',
     ],
     context: [
-      'MapleStory Worlds 기반 횡스크롤 덱빌딩 게임 "에버리프(EverLeaf)" 프로젝트에서, 게임 빌드만으로는 유저에게 독특한 규칙과 세계관을 온전히 전달하기 어려웠습니다.',
-      '플레이어가 게임을 시작하기 전에 분위기를 체감할 수 있는 홍보 미디어와 함께, 공지사항·카드 도감·실시간 서버 상태를 확인할 수 있는 공식 웹 인프라가 필요했습니다.',
+      '게임의 규칙과 분위기를 플레이 전에 이해할 수 있도록 공식 소개 페이지와 홍보 미디어를 함께 구성했습니다.',
+      '도감과 가이드가 늘면서 코드 수정 없이 운영자가 콘텐츠를 관리하고, 검토 전 초안이 공개되지 않는 편집 흐름이 필요해졌습니다.',
     ],
     constraints: [
-      'MapleStory Worlds(MSW)의 내부 인스턴스 수명주기와 웹 서버 간의 비동기 통신 격리',
-      '소셜 플랫폼(YouTube, Discord, X, Instagram) 유입 채널별 최적화된 랜딩 경험 제공',
-      '서버 점검 및 긴급 공지 시 관리자 권한의 안전한 제어 필요',
+      '편집 중인 초안과 현재 공개된 문서를 분리하고 동시 편집으로 인한 덮어쓰기를 방지해야 함',
+      '외부 문서·이미지를 가져올 때 출처와 첨부 파일을 확인하고 발행 전에 검토해야 함',
+      '모바일·저속 네트워크·모션 감소 설정에서 영상이 탐색을 방해하지 않아야 함',
     ],
     decisions: [
-      '공식 포털 풀스택 구축: Next.js 16 App Router, React 19, Tailwind CSS 4를 적용하고 전사/도적 카드 도감, 몬스터 도감, RSS 피드 뉴스 시스템 구현',
-      'Heartbeat 상태 파이프라인: 출시된 MSW 인스턴스가 전용 Bearer 토큰으로 300초 주기의 Heartbeat를 전송하고, Upstash Redis의 원자적 Lua 스크립트로 활성 인스턴스 및 상태를 집계하여 /api/status v2로 제공',
-      '관리자 점검 시스템: GitHub OAuth를 연동하여 특정 관리자(GitHub ID 116016950)만 접근할 수 있는 /admin/status 화면에서 점검 선언 및 공지 등록 구현',
-      '통일된 시각 자산: 클래식 MMORPG 감성과 레트로 야구 타이포그래피를 결합한 타이틀 카드 및 씬별 스토리보드 기반 게임플레이 영상 제작',
+      'Next.js 16과 Supabase로 EverWiki·공지·게임 데이터를 관리하는 통합 CMS 구성',
+      'GitHub 계정에 역할별 편집 권한을 부여하고 초안·발행 개정본을 분리해 발행 시점에 공개 데이터를 갱신',
+      '가져온 콘텐츠는 운영자가 검토한 뒤 반영하고 동시 발행 충돌을 검사',
+      '랜딩 영상과 갤러리를 화면·접근성 조건에 맞게 조정하고 일반 링크 클릭 분석 추가',
+      '이전 Heartbeat·Redis 상태 모니터링을 종료하고 관련 경로는 410 Gone으로 정리',
     ],
     outputs: [
-      '에버리프 반응형 공식 웹사이트 (도감, 뉴스, 가이드, 상태 모니터링)',
-      'MSW 런타임 연동 실시간 서버 헬스체크 및 관리자 점검 시스템',
-      '씬 1~4 단계별 스토리보드 및 게임플레이 홍보 영상 자산',
+      '공개 EverWiki와 게임 소개·뉴스를 연결한 공식 웹사이트',
+      '역할별 권한, 초안·발행본 분리, 개정 이력과 발행 충돌 방지를 포함한 CMS',
+      '반응형 히어로·갤러리와 개인정보를 최소화한 링크 클릭 분석',
     ],
     limitations: [
-      'MSW 공식 비공개 API(월드 관리 콘솔)를 직접 제어할 수 없어 인스턴스 전송 기반 Heartbeat로 상태 감지',
-      '로컬 개발 환경에서는 실제 Redis 연결이 없을 경우 의도적으로 unknown 상태로 안전 폴백',
+      'CMS 병합과 공개 페이지 응답은 확인했으며, 실제 관리자 계정의 전체 편집·발행 흐름 검증과 외부 문서 이관 완료 여부는 별도입니다.',
+      '종료한 상태 모니터링은 현재 제공 기능에 포함하지 않습니다.',
     ],
     nextSteps: [
-      '게임 내 경매장 실시간 시세 조회 및 랭킹 시스템 웹 연동',
-      '커뮤니티 덱 시뮬레이터 빌더 기능 확장',
+      '검토를 거친 문서 이관과 운영자 편집·발행 흐름의 실제 사용 검증',
+      '도감·가이드 콘텐츠의 출처와 개정 이력 보완',
     ],
     stack: [
-      {
-        name: 'Next.js 16 (App Router)',
-        reason: '고성능 정적 도감 페이지 생성 및 상태 API 라우트 통합',
-        constraintOrLearning: '정적 콘텐츠와 동적 상태 엔드포인트를 깔끔하게 분리',
-      },
-      {
-        name: 'React 19 & TypeScript',
-        reason: '타입 안전한 컴포넌트 구조 및 최신 리액트 런타임 활용',
-        constraintOrLearning: '데이터 모델(도감, 몬스터, 뉴스)의 컴파일 타임 무결성 검증',
-      },
-      {
-        name: 'Tailwind CSS 4',
-        reason: '클래식 레트로 감성과 모던 다크 테마를 아우르는 전역 디자인 토큰',
-        constraintOrLearning: '일관된 타이포그래피와 반응형 레이아웃 구성',
-      },
-      {
-        name: 'Upstash Redis',
-        reason: 'MSW 인스턴스 Heartbeat의 원자적 상태 집계 및 점검 플래그 관리',
-        constraintOrLearning: 'Lua 스크립트를 통한 단일 트랜잭션 상태 갱신',
-      },
-      {
-        name: 'GitHub OAuth',
-        reason: '별도 비밀번호 DB 없이 관리자 권한을 안전하게 인증',
-        constraintOrLearning: '숫자 ID 기반 화이트리스트로 관리자 권한 엄격 제한',
-      },
+      { name: 'Next.js 16 & React 19', reason: '공식 사이트와 CMS의 공개·관리자 화면 구성', constraintOrLearning: '공개 콘텐츠와 편집 중인 상태를 분리' },
+      { name: 'Supabase / PostgreSQL', reason: '문서·개정 이력·역할과 발행 상태 저장', constraintOrLearning: '권한 검사와 원자적 발행으로 일관성 유지' },
+      { name: 'GitHub OAuth', reason: '운영자 로그인과 역할별 편집 권한', constraintOrLearning: '로그인 성공과 콘텐츠 수정 권한을 별도로 확인' },
+      { name: 'Tailwind CSS & Vercel Analytics', reason: '반응형 레이아웃과 링크 사용 흐름 확인', constraintOrLearning: '모션·네트워크 조건과 개인정보 최소화 고려' },
     ],
     evidence: [
-      {
-        type: 'repository',
-        label: 'GitHub 저장소 (MSW_EverLeaf)',
-        href: 'https://github.com/missiletoe/MSW_EverLeaf',
-        verified: true,
-      },
+      { type: 'demo', label: 'EverWiki 공개 사이트', href: 'https://project-dol-everleaf.vercel.app/everwiki', verified: true },
     ],
   },
   {
     slug: 'ios-prototyping',
-    title: '찍술(ZzikSool) 온디바이스 음주 기록 iOS 프로토타입',
-    shortTitle: 'iOS Prototyping',
-    period: '2026.07 – 2026.09',
-    status: 'shipped',
-    statusLabel: 'TestFlight 1.1 내부 빌드 배포 완료',
-    category: '네이티브 앱 개발 · 온디바이스 AI',
-    heroKicker: '아이디어를 긴 설명으로 남겨두지 않고 실행 가능한 Apple 네이티브 빌드로 전환',
+    title: '찍술: 기기 안에서 분석하고 직접 확인하는 음주 기록',
+    shortTitle: 'ZzikSool',
+    period: '2026.07 – 현재',
+    status: 'ongoing',
+    statusLabel: 'iOS MVP · 다중 사진 인식 실험 중',
+    category: 'iOS 네이티브 · 온디바이스 인식',
+    heroKicker: '사진에서 읽은 제품 정보와 실제로 마신 양을 구분하는 기록 경험',
     summary:
-      '술자리 사진 1~5장의 라벨과 바코드를 기기 안에서 직접 분석하고 캘린더에 기록하는 온디바이스 음주 기록 iOS MVP를 Swift 6와 Apple Vision으로 구축하고 TestFlight로 배포했습니다. 환각 없는 온디바이스 비전 처리와 엄격한 휴먼 인 더 루프 기록을 실현했습니다.',
+      '술병·술캔의 라벨과 바코드를 기기 안에서 분석하고, 사용자가 제품과 실제 마신 양을 확인한 뒤 캘린더에 저장하는 iPhone 앱입니다. 기록 경험 개선을 기본 브랜치에 반영했고, 여러 사진의 관찰 결과를 모으는 인식 기능은 별도 PR에서 검증하고 있습니다.',
+    recentUpdate: {
+      date: '2026-08-31',
+      summary: 'Today·캘린더·확인 화면과 워드마크 개선을 병합했습니다. 다중 사진 인식 PR은 열려 있으며, 내부 TestFlight 업로드 기록과 실기기 설치·실행 검증을 구분했습니다.',
+    },
     role: [
-      'iOS 네이티브 앱 아키텍처 및 전면 개발 (Swift 6, SwiftUI, SwiftData)',
-      'Apple Vision 기반 2,560px 씬 및 다중 바코드 공간 분석 파이프라인 구현',
-      'TestFlight 1.1 (26) 자동 서명 빌드 배포 및 230+개 테스트 슈트 작성',
+      'SwiftUI·SwiftData 기반 iOS 앱 설계와 개발',
+      'Vision OCR·바코드 분석, 제품 후보 확인과 명시적 저장 흐름 구현',
+      '한국어·영어 UI, 접근성 검사와 내부 TestFlight 배포 절차 구축',
     ],
     context: [
-      '한국 술자리의 맥주·소주·막걸리 병은 표면 결로(물방울), 곡면 왜곡, 조명 반사, 라벨 가림 현상이 빈번하여 범용 클라우드 OCR만으로는 정확한 식별이 어려웠습니다.',
-      '민감한 개인 사진을 외부 서버로 전송하지 않고 온디바이스에서 즉각 분석하며, AI가 수량을 자의적으로 단정하지 않고 사람이 실제 마신 양을 명시적으로 확인한 뒤 저장하는 안전한 MVP가 필요했습니다.',
+      '사진만으로는 실제로 마신 양을 알 수 없고, 곡면 라벨·반사·물방울 때문에 제품 식별도 불확실할 수 있습니다.',
+      '사진을 외부 서버로 보내지 않고 분석하되, 부족한 근거를 사용자가 확인하고 수정할 수 있는 기록 앱을 만들고자 했습니다.',
     ],
     constraints: [
-      '외부 서버/클라우드 API 없는 100% 온디바이스 프라이버시 원칙 준수',
-      '저조도, 곡면 라벨, 난반사 환경에서의 OCR 오인식 및 환각(Hallucination) 방지',
-      '사진에 찍힌 용기 수가 개인 음용량과 일치하지 않는 술자리 특성 반영',
-      'Swift 6 Strict Concurrency 환경에서의 멀티스레드 비전 분석 안정성',
+      '사진 속 제품·용기 수를 사용자의 실제 음용량으로 간주할 수 없음',
+      '제품 카탈로그와 OCR 근거가 부족할 때 확정 대신 후보·미확인 상태를 유지해야 함',
+      '시뮬레이터 검사와 실제 iPhone 카메라·Vision 검증의 차이',
     ],
     decisions: [
-      '온디바이스 비전 파이프라인: Apple Vision 프레임워크를 활용해 2,560px 고해상도 씬과 타일 단위에서 한글/영문 OCR 및 5종 바코드(EAN-13, EAN-8, QR 등)를 병렬 분석',
-      '보수적 카탈로그 매칭: 검증된 11개 SKU에 대해 exactSKU, familyOnly, unknown으로 분류하고, 증거가 상충되거나 부족할 경우 자의적으로 확정하지 않고 더 약한 단계로 안전 기권(Abstention)',
-      '명시적 휴먼 게이트: 사진 분석 결과는 "관찰 추정"일 뿐이며, 사용자가 실제 마신 양과 제품을 직접 확인하고 선택하기 전에는 DB 저장 버튼을 비활성화',
-      '단일 트랜잭션 일괄 저장: SwiftData를 통해 여러 주류 기록을 원자적으로 저장하고, 취소 시 중간 이미지 캐시를 안전하게 보상 삭제',
+      'Vision OCR·바코드와 출처를 확인한 로컬 카탈로그로 제품 후보를 만들고 실제 음용량은 사용자가 입력하도록 구성',
+      '촬영·사진 선택·직접 입력 모두 확인 화면을 거쳐 명시적으로 저장할 때만 기록 생성',
+      '기본 브랜치의 한 장 입력과 개발 중인 1~5장 세션 인식을 구분하고, 다중 사진의 중복·불확실한 후보는 보수적으로 처리',
+      'SwiftData 기록·수정·삭제·내보내기와 한국어·영어, Dynamic Type 접근성 흐름을 함께 검증',
     ],
     outputs: [
-      'Apple Developer TestFlight 1.1 (26) 내부 빌드 배포 완료',
-      'Swift Testing 232개 (38 suites), UI 테스트 20개, 접근성 감사 4개 무결점 통과',
-      'App Shortcuts, Siri, Action Button 연동 및 한국어/영어 String Catalog 지원',
+      'Today·캘린더·제품 확인·직접 입력·내보내기를 연결한 iOS MVP',
+      '기본 브랜치에 기록 경험, Xcode Canvas 프리뷰, App Intents와 워드마크 개선 병합',
+      '별도 다중 사진 PR에 내부 TestFlight 1.1 (26) 업로드·처리·테스터 그룹 연결 기록',
     ],
     limitations: [
-      '현재 공용 타깃에는 Core ML 커스텀 분류 모델이 탑재되지 않았으며 Vision 공간 리졸버 기반으로 동작',
-      'App Store 일반 공개 전 단계이며 현재 TestFlight 내부 테스터 대상 검증 진행',
+      '다중 사진 인식은 미병합 PR이며, 내부 TestFlight 업로드를 테스터의 설치·실행 성공이나 App Store 출시로 간주하지 않습니다.',
+      '기존 실제 사진 검사는 독립된 정확도 평가셋이 아니므로 제품 식별 정확도 수치를 주장하지 않습니다.',
+      '실제 기기 카메라·Apple Intelligence·iOS 18 동작은 별도 검증이 필요합니다.',
     ],
     nextSteps: [
-      '한국 주류 전용 온디바이스 경량 Core ML 분류기 학습 및 통합',
-      '다양한 용기 잔량(Fill level) 정밀 추정 모델 고도화',
+      '실제 iPhone 설치·촬영 흐름과 독립된 촬영 세션에서 제품 식별·중복 처리 검증',
+      '다중 사진 PR의 검증 결과를 정리한 뒤 기본 기록 흐름에 통합',
     ],
     stack: [
-      {
-        name: 'Swift 6 & SwiftUI',
-        reason: '최신 Swift 언어 기능과 반응형 선언적 UI 구축',
-        constraintOrLearning: 'Strict Concurrency 기반 안전한 비동기 상태 격리',
-      },
-      {
-        name: 'Apple Vision Framework',
-        reason: '온디바이스 한글/영문 OCR 및 바코드(EAN/QR) 고속 감지',
-        constraintOrLearning: '클라우드 비용 및 지연 시간 없이 100% 기기 내에서 처리',
-      },
-      {
-        name: 'SwiftData & Observation',
-        reason: '로컬 퍼시스턴스 트랜잭션 관리 및 상태 반응형 바인딩',
-        constraintOrLearning: '원자적 트랜잭션으로 부분 실패 시 롤백 보장',
-      },
-      {
-        name: 'AppIntents & PhotosUI',
-        reason: '시스템 액션 버튼, 단축어 및 순서가 보장된 1~5장 다중 사진 선택',
-        constraintOrLearning: '시스템 네이티브 인터페이스와 완벽한 일체감 제공',
-      },
-      {
-        name: 'Xcode Automatic Distribution',
-        reason: 'CI 환경에서 TestFlight 내부 릴리스 자동 서명 및 배포',
-        constraintOrLearning: '빌드 번호 및 프로비저닝 프로파일 검증 자동화',
-      },
+      { name: 'Swift 6 & SwiftUI', reason: 'iPhone 앱 UI와 비동기 분석 상태 관리', constraintOrLearning: '분석 취소·화면 전환·오래된 결과의 반영을 제어' },
+      { name: 'Apple Vision', reason: '기기 내 한글·영문 라벨 OCR과 바코드 분석', constraintOrLearning: '사진 조건에 따른 오인식을 후보 확인 흐름으로 처리' },
+      { name: 'SwiftData & Observation', reason: '로컬 기록과 캘린더 상태 관리', constraintOrLearning: '저장·삭제 실패 시 일관성과 복구 확인' },
+      { name: 'AppIntents & PhotosUI', reason: '촬영·사진 선택·직접 입력으로 연결하는 시스템 진입점', constraintOrLearning: '단축어 진입이 기록 저장을 대신하지 않도록 분리' },
+      { name: 'Xcode & TestFlight', reason: '빌드·접근성 검사와 내부 배포', constraintOrLearning: '업로드·처리·설치·실행 상태를 각각 기록' },
     ],
     evidence: [
-      {
-        type: 'image',
-        label: 'ZzikSool 앱 아이콘 및 헤더 로고 자산',
-        image: '/images/zziksool-icon.png',
-        caption: 'ZzikSool 네이티브 앱 아이콘 및 그래픽 에셋',
-        verified: true,
-      },
+      { type: 'image', label: 'ZzikSool 앱 아이콘', image: '/images/zziksool-icon.png', caption: '찍술 iOS 앱을 위해 제작한 아이콘 자산', verified: true },
     ],
   },
 ]
 
 export const allTechChoices: TechChoice[] = [
-  {
-    name: 'Python',
-    reason: 'KBPM의 실행 로직, 브라우저 제어 및 백그라운드 데이터 처리 sidecar',
-    constraintOrLearning:
-      'Selenium 및 Chrome for Testing과의 호환성을 위해 런타임을 고정하고 네이티브 셸과 IPC로 통신하도록 설계',
-  },
-  {
-    name: 'Selenium & Chrome for Testing',
-    reason: 'CSR 페이지 렌더링 동기화 및 정밀한 로그인 세션 제어',
-    constraintOrLearning:
-      'CDP 헤더 및 Client Hints를 JavaScript userAgentData와 정확히 일치시켜 세션 끊김을 방지',
-  },
-  {
-    name: 'Swift / SwiftUI',
-    reason: '찍술(ZzikSool) iOS 네이티브 앱 및 KBPM macOS 셸 UI',
-    constraintOrLearning:
-      'Swift 6 Strict Concurrency와 Apple Vision을 결합해 네트워크 없이 온디바이스에서 즉각적인 비전 처리',
-  },
-  {
-    name: 'TypeScript & Node.js',
-    reason: 'YouTube MCP stdio 서버 및 본 포트폴리오 웹사이트 구축',
-    constraintOrLearning:
-      'MCP stdio 통신 규격을 준수하고 정적 타입 검증을 통해 런타임 오류 방지',
-  },
-  {
-    name: 'Next.js 15 & Tailwind CSS',
-    reason: '본 포트폴리오 및 에버리프(EverLeaf) 공식 웹 포털',
-    constraintOrLearning:
-      'App Router와 정적 내보내기(Static Export)를 활용해 빠르고 안정적인 GitHub Pages / Firebase Hosting 배포 달성',
-  },
-  {
-    name: 'GitHub Actions',
-    reason: '크로스 플랫폼 바이너리 릴리스, CI 검증 및 자동 배포 파이프라인',
-    constraintOrLearning:
-      'macOS/Windows 빌드 매트릭스 검사로 릴리스 배포의 안정성 확보',
-  },
+  { name: 'Python & IPC', reason: 'KBPM 조회·거래 제어 엔진과 네이티브 셸 연결', constraintOrLearning: '프로세스 수명주기와 불완전한 응답을 명시적인 상태로 전달' },
+  { name: 'Swift / SwiftUI & WinUI 3', reason: 'KBPM 데스크톱 셸과 찍술 iPhone 앱', constraintOrLearning: '공통 기능 구현과 OS·실기기 검증을 구분' },
+  { name: 'Apple Vision & SwiftData', reason: '찍술의 기기 내 제품 분석과 개인 기록 저장', constraintOrLearning: '인식 결과와 실제 음용량 확인을 분리' },
+  { name: 'TypeScript & Node.js', reason: 'MCP 서버와 웹사이트의 데이터·도구 계약', constraintOrLearning: '외부 서비스 변경과 실패를 처리할 경계 설계' },
+  { name: 'Next.js & Tailwind CSS', reason: '포트폴리오의 정적 배포와 에버리프 공식 사이트·CMS', constraintOrLearning: '포트폴리오는 Next.js 15 정적 export, 에버리프는 Next.js 16 기반 서버 기능 사용' },
+  { name: 'Supabase & GitHub OAuth', reason: 'EverWiki 콘텐츠·개정 이력과 운영자 권한', constraintOrLearning: '로그인·편집·발행 권한과 공개 버전을 구분' },
 ]
 
 export const operatingPrinciples = [
@@ -430,7 +318,7 @@ export const operatingPrinciples = [
     step: '04',
     title: '다른 환경에서 실행해 본다',
     description:
-      '개발자의 PC를 벗어나 macOS, Windows, 실기기 iPhone 등 다양한 실행 환경에서 예외를 확인합니다.',
+      '시뮬레이터와 실제 기기, macOS와 Windows의 확인 결과를 나누어 기록하고 미검증 범위를 남깁니다.',
     linkedProject: 'KBPM',
     projectSlug: 'kbpm',
   },
@@ -439,15 +327,15 @@ export const operatingPrinciples = [
     title: '배포와 업데이트 방법을 함께 만든다',
     description:
       '코드를 작성하는 것으로 끝내지 않고 GitHub Actions 릴리스, TestFlight, GitHub Pages 등 실제 전달 경로를 구축합니다.',
-    linkedProject: 'KBPM & 포트폴리오',
-    projectSlug: 'kbpm',
+    linkedProject: '찍술 & 포트폴리오',
+    projectSlug: 'ios-prototyping',
   },
   {
     step: '06',
     title: '사용자가 이해할 설명과 홍보물까지 준비한다',
     description:
       '소프트웨어만 완성해 두지 않고, 스토리보드 기반 영상, 타이틀 그래픽, 공식 웹페이지로 제품의 가치를 온전히 전달합니다.',
-    linkedProject: 'Game Promotion (에버리프)',
+    linkedProject: 'EverLeaf',
     projectSlug: 'game-promotion',
   },
   {

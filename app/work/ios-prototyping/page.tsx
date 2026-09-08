@@ -4,9 +4,9 @@ import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
 
 export const metadata: Metadata = {
-  title: '찍술(ZzikSool) 온디바이스 음주 기록 iOS 프로토타입 | Max',
+  title: '찍술(ZzikSool): 온디바이스 인식과 음주 기록 | Max',
   description:
-    'Swift 6와 Apple Vision을 활용해 클라우드 의존 없는 온디바이스 음주 기록 MVP를 구축하고 TestFlight로 배포한 사례 연구입니다.',
+    'SwiftUI와 Apple Vision으로 제품 확인·음용량 입력·캘린더 저장을 연결하고, 다중 사진 인식을 별도 검증하는 iOS 앱 개발 사례입니다.',
 }
 
 export default function IosPrototypingPage() {
@@ -24,18 +24,18 @@ export default function IosPrototypingPage() {
 
         <div className="rounded-xl border border-border bg-card p-6 sm:p-7 flex flex-col gap-4 text-base text-foreground/90 leading-relaxed">
           <p>
-            찍술(ZzikSool)은 프라이버시 보호와 즉각적인 오프라인 사용성을 위해 <strong>100% 온디바이스 처리</strong>를 기본 원칙으로 설계했습니다.
+            찍술(ZzikSool)은 사진을 외부 서버에 전송하지 않고 <strong>기기 안에서 라벨과 바코드를 분석</strong>하도록 설계했습니다. 사용자가 제품 후보를 수정하고 실제 마신 양을 입력한 뒤 저장하면 Today와 캘린더에 반영됩니다.
           </p>
           <p>
-            Apple Vision 프레임워크를 통해 2,560px 고해상도 이미지와 타일링 영역에서 한글/영문 라벨 OCR과 바코드를 감지합니다. 모델의 환각(Hallucination)으로 잘못된 음용량이 기록되는 문제를 방지하기 위해, AI 분석 결과는 '관찰 추정'으로만 제시하며 사용자가 실제 제품과 마신 양을 직접 확인하고 승인해야만 저장이 활성화되는 <strong>휴먼 게이트</strong>를 강제했습니다.
+            기본 브랜치에는 한 장 입력과 기록 경험 개선을 반영했습니다. 별도 PR에서는 1~5장의 사진을 순서대로 분석하고, 사진 사이에 반복해서 등장하는 병과 불확실한 제품 후보를 보수적으로 처리하는 기능을 개발하고 있습니다. 사진 속 용기 수가 실제 음용량을 대신하지 않도록 <strong>사용자 확인 전 저장을 차단</strong>합니다.
           </p>
 
           <div className="rounded-lg border border-border/80 bg-muted/40 p-4 text-sm font-mono flex flex-col gap-2">
-            <div className="text-muted-foreground font-semibold">// Swift 6 및 엔지니어링 계약</div>
-            <div>• Swift 6 Strict Concurrency 적용 (데이터 레이스 컴파일 타임 차단)</div>
-            <div>• SwiftData 단일 트랜잭션 일괄 저장 및 취소 시 캐시 보상 삭제</div>
-            <div>• Swift Testing 232개 (38개 suites) 및 UI/접근성 감사 0 failure</div>
-            <div>• TestFlight 1.1 (26) 자동 서명 기반 내부 배포 완료</div>
+            <div className="text-muted-foreground font-semibold">구현과 검증 범위</div>
+            <div>• 기본 브랜치: 기록·수정·삭제·내보내기, 한국어·영어 UI</div>
+            <div>• 진행 중인 PR: 다중 사진 인식, 제품별 확인과 일괄 저장</div>
+            <div>• 해당 PR 기록: 내부 TestFlight 1.1 (26) 업로드·처리·그룹 연결</div>
+            <div>• 남은 확인: 테스터 설치·실행, 실제 촬영, 독립된 사진 평가</div>
           </div>
         </div>
 
@@ -64,13 +64,13 @@ export default function IosPrototypingPage() {
             </h4>
             <ul className="list-disc list-inside flex flex-col gap-2.5 text-sm text-foreground/90 leading-relaxed">
               <li>
-                <strong>Vision Framework:</strong> 기기 내 하드웨어 가속을 활용한 제로 레이턴시 라벨/바코드 인식
+                <strong>Vision Framework:</strong> 기기 내 라벨·바코드 분석과 근거에 따른 제품 후보 제시
               </li>
               <li>
-                <strong>AppIntents & Shortcuts:</strong> 액션 버튼 및 시리(Siri)를 통한 '술 사진 찍기' 즉시 진입
+                <strong>AppIntents & Shortcuts:</strong> 촬영·사진 선택·직접 입력 화면으로 연결하는 진입점. 실제 시스템 화면에서의 동작은 별도 확인
               </li>
               <li>
-                <strong>SwiftData & Observation:</strong> 최신 스위프트 반응형 모델링으로 부드러운 캘린더 인터랙션
+                <strong>SwiftData & Observation:</strong> 로컬 기록 변경과 Today·캘린더 상태 연결
               </li>
             </ul>
           </div>
