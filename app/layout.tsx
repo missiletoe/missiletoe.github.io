@@ -5,13 +5,13 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 
 export const metadata: Metadata = {
-  title: 'Max — Software Engineer | 포트폴리오',
+  title: '허용석 · AI Engineer | Max Portfolio',
   description:
-    '반복 업무를 실제 자동화 흐름으로 연결하고 배포, 운영, 패키징, 홍보, 문서화까지 완결하는 소프트웨어 엔지니어 Max의 포트폴리오입니다.',
+    'MCP와 브라우저 자동화로 AI 도구를 실제 업무에 연결하는 허용석의 AI Engineer 포트폴리오입니다.',
   metadataBase: new URL('https://missiletoe.github.io'),
   openGraph: {
-    title: 'Max — Software Engineer',
-    description: '반복 업무를 실제 제품과 운영 흐름으로 바꿉니다.',
+    title: '허용석 · AI Engineer',
+    description: '도구를 연결해 실제 업무를 바꿉니다.',
     url: 'https://missiletoe.github.io',
     siteName: 'Max Portfolio',
     locale: 'ko_KR',
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Max — Software Engineer',
-    description: '반복 업무를 실제 제품과 운영 흐름으로 바꿉니다.',
+    title: '허용석 · AI Engineer',
+    description: 'MCP와 브라우저 자동화로 AI 도구를 실제 업무에 연결합니다.',
   },
   robots: {
     index: true,

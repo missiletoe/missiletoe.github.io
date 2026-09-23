@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { useTheme } from 'next-themes'
+import { Monitor, Moon, Sun } from 'lucide-react'
 
 export const THEME_OPTIONS = [
   {
@@ -47,35 +48,6 @@ export function createThemeSelectHandler(
   }
 }
 
-/**
- * Contrast Theme Icon (Tabler contrast / half-shaded circle)
- */
-export function ContrastThemeIcon({ className = 'size-4.5', ...props }: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-      {...props}
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-      <path d="M12 3l0 18" />
-      <path d="M12 9l4.65 -4.65" />
-      <path d="M12 14.3l7.37 -7.37" />
-      <path d="M12 19.6l8.85 -8.85" />
-    </svg>
-  )
-}
-
 interface ThemeToggleProps {
   onThemeSelect?: (theme: ThemeMode) => void
   className?: string
@@ -105,11 +77,11 @@ export function ThemeToggle({ onThemeSelect, className = '' }: ThemeToggleProps)
         data-variant="ghost"
         data-size="icon"
         className={buttonClasses}
-        aria-label="Toggle theme"
+        aria-label="테마 변경"
         disabled
       >
-        <ContrastThemeIcon className="size-4.5 opacity-60" />
-        <span className="sr-only">Toggle theme</span>
+        <Monitor className="h-4 w-4 opacity-60" aria-hidden="true" />
+        <span className="sr-only">테마 변경</span>
       </button>
     )
   }
@@ -125,11 +97,16 @@ export function ThemeToggle({ onThemeSelect, className = '' }: ThemeToggleProps)
       data-size="icon"
       className={buttonClasses}
       onClick={handleToggle}
-      aria-label={`테마 모드 전환 (현재: ${currentLabel})`}
+      aria-label={`${resolvedTheme === 'dark' ? '라이트' : '다크'} 모드로 변경 (현재: ${currentLabel})`}
+      title={`${resolvedTheme === 'dark' ? '라이트' : '다크'} 모드로 변경`}
       data-analytics-step="theme_toggle"
     >
-      <ContrastThemeIcon className="size-4.5 transition-transform duration-300 group-hover/toggle:rotate-45" />
-      <span className="sr-only">Toggle theme</span>
+      {resolvedTheme === 'dark' ? (
+        <Sun className="h-4 w-4 transition-transform duration-300 group-hover/toggle:rotate-45" aria-hidden="true" />
+      ) : (
+        <Moon className="h-4 w-4 transition-transform duration-300 group-hover/toggle:-rotate-12" aria-hidden="true" />
+      )}
+      <span className="sr-only">테마 변경</span>
     </button>
   )
 }

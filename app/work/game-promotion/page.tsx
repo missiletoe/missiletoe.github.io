@@ -34,6 +34,13 @@ export default function GamePromotionPage() {
           </p>
         </div>
 
+        <div className="rounded-xl border border-border bg-muted/30 p-6 sm:p-7">
+          <h4 className="text-base font-bold text-foreground">Codex 스킬 연결부터 배포까지</h4>
+          <p className="mt-2 text-sm sm:text-base leading-relaxed text-foreground/85">
+            디자인·프론트엔드 구현·브라우저 검증·배포에 필요한 스킬을 Codex 작업 흐름에 연결한 뒤, 공식 사이트를 구현하고 브라우저에서 확인해 Vercel에 배포했습니다.
+          </p>
+        </div>
+
         {/* Media Assets Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-2 rounded-xl border border-border bg-card p-3.5">
@@ -65,6 +72,24 @@ export default function GamePromotionPage() {
               <li>Discord 업데이트 자료의 검토·가져오기와 이미지 보존</li>
               <li>소셜 채널별 랜딩 페이지와 개인정보를 최소화한 링크 분석</li>
             </ul>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-border bg-card p-6 sm:p-7">
+            <h4 className="text-base font-bold text-foreground">Notion 자료 이관과 검토</h4>
+            <p className="mt-2 text-sm leading-relaxed text-foreground/85">
+              2026년 9월 17일 기록 기준으로 문서 114개와 커버 이미지 106개를 반영했습니다. 누락되거나 불완전한 자료는 자동 공개하지 않고 검토 대기로 남겼습니다.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-6 sm:p-7">
+            <h4 className="text-base font-bold text-foreground">MapleStory Worlds UI 공동 작업</h4>
+            <p className="mt-2 text-sm leading-relaxed text-foreground/85">
+              웹사이트·CMS 작업과 구분되는 팀 기여입니다. 인벤토리·상태창과 HUD, 팝업 표시 순서, 직업 선택 피드백, 단축키 안내와 카드 상세 UX를 동료와 함께 다듬었습니다.
+            </p>
+            <a className="mt-3 inline-flex text-sm font-semibold text-foreground underline underline-offset-4" href="https://scandalous-sunfish-d36.notion.site/ui-3de545198ca080acb09fdb9655cc34ea?pvs=25" target="_blank" rel="noopener noreferrer">
+              2026.09.18 UI 병합 기록 보기
+            </a>
           </div>
         </div>
       </section>

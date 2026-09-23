@@ -4,9 +4,9 @@ import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
 
 export const metadata: Metadata = {
-  title: '찍술(ZzikSool): 온디바이스 인식과 음주 기록 | Max',
+  title: '찍술(ZzikSool): iOS 앱과 앱인토스 미니앱 | Max',
   description:
-    'SwiftUI와 Apple Vision으로 제품 확인·음용량 입력·캘린더 저장을 연결하고, 다중 사진 인식을 별도 검증하는 iOS 앱 개발 사례입니다.',
+    'SwiftUI iOS 앱과 별도의 React 기반 앱인토스 미니앱을 개발하고, Toss 실기기·심사 전 상태를 구분한 사례입니다.',
 }
 
 export default function IosPrototypingPage() {
@@ -73,6 +73,21 @@ export default function IosPrototypingPage() {
                 <strong>SwiftData & Observation:</strong> 로컬 기록 변경과 Today·캘린더 상태 연결
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border bg-card p-6 sm:p-7">
+          <h3 className="text-xl font-bold tracking-tight text-foreground">앱인토스 선출시를 준비한 별도 미니앱</h3>
+          <div className="mt-4 flex flex-col gap-4 text-sm sm:text-base leading-relaxed text-foreground/85">
+            <p>
+              기존 SwiftUI iOS 앱을 유지하면서, 앱인토스에서 먼저 기록을 시작하고 이후 네이티브 iOS 앱으로 확장하는 별도 React·TypeScript·Vite 미니앱을 만들었습니다. Toss SDK 카메라·사진 선택·저장소 API를 연결하고, 사진 선택 → 인식 후보 검토 → 실제 마신 양 확인 → 명시적 저장으로 이어지게 했습니다.
+            </p>
+            <p>
+              앱 등록과 `.ait` 로컬 패키지 생성까지 진행했습니다. Toss 비공개 테스트 QR로 실기기 검증하거나 콘솔에 빌드를 업로드·심사 제출·출시하지는 않았습니다. iOS 앱과 미니앱은 저장소가 분리되어 있으며, 기록 동기화는 구현되지 않았습니다.
+            </p>
+            <p>
+              클라우드 이미지 분석은 기본 비활성 상태입니다. 인식 후보나 사진 속 병 수를 확정 데이터로 취급하지 않고, 사용자가 직접 확인한 뒤에만 기록하도록 설계했습니다.
+            </p>
           </div>
         </div>
       </section>

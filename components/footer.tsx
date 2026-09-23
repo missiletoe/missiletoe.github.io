@@ -9,7 +9,7 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <p className="font-mono text-base font-bold text-foreground">
-              Max — Software Engineer
+              허용석 — AI Engineer
             </p>
             <p className="text-sm text-foreground/80 mt-1">
               반복 업무를 실제 제품과 운영 흐름으로 연결합니다.

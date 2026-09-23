@@ -1,4 +1,28 @@
 import React from 'react'
+import {
+  Apple,
+  AppWindow,
+  BookOpenText,
+  Bot,
+  Braces,
+  Cloud,
+  Code2,
+  Database,
+  FileText,
+  Clapperboard,
+  Layers,
+  KeyRound,
+  Monitor,
+  Network,
+  Package,
+  PanelsTopLeft,
+  Paintbrush,
+  Plug,
+  ScanLine,
+  Smartphone,
+  SquareTerminal,
+  Workflow,
+} from 'lucide-react'
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number | string
@@ -526,66 +550,34 @@ export interface TechIconProps extends IconProps {
  */
 export function TechIcon({ name, className = 'h-4 w-4', ...props }: TechIconProps) {
   const normalized = name.toLowerCase()
+  const matches: Array<[string[], React.ComponentType<IconProps>]> = [
+    [['youtube'], YoutubeIcon],
+    [['mcp'], Plug],
+    [['oauth', 'authentication'], KeyRound],
+    [['python', 'xcode', 'terminal'], SquareTerminal],
+    [['selenium', 'chrome', 'cdp', 'browser'], AppWindow],
+    [['swiftdata', 'coredata', 'database', 'supabase', 'postgres', ' data'], Database],
+    [['vision', 'ocr', 'recognition'], ScanLine],
+    [['next', 'react', 'website', 'cms'], PanelsTopLeft],
+    [['swift', 'typescript', 'javascript', 'node'], Code2],
+    [['tailwind', 'figma', 'photoshop', 'design'], Paintbrush],
+    [['github', 'action', 'workflow'], Workflow],
+    [['ipc', 'json-rpc', 'protocol'], Network],
+    [['markdown', 'frontmatter', 'document'], FileText],
+    [['video', 'premiere', 'effects'], Clapperboard],
+    [['appintent', 'photosui', 'ios', 'iphone'], Smartphone],
+    [['winui', 'windows', 'macos', 'native'], Monitor],
+    [['pyinstaller', 'packaging', 'package', 'uv'], Package],
+    [['claude', ' ai', 'model'], Bot],
+    [['cloud', 'vercel', 'deployment', 'hosting'], Cloud],
+    [['cms', 'next.js'], Layers],
+    [['apple'], Apple],
+    [['content', 'blog'], BookOpenText],
+  ]
+  const match = matches.find(([keywords]) => keywords.some((keyword) => normalized.includes(keyword)))
+  const Icon = match?.[1] ?? Braces
 
-  if (normalized.includes('python')) {
-    return <PythonIcon className={className} {...props} />
-  }
-  if (normalized.includes('selenium') || normalized.includes('chrome')) {
-    return <SeleniumIcon className={className} {...props} />
-  }
-  if (normalized.includes('swift')) {
-    return <SwiftIcon className={className} {...props} />
-  }
-  if (normalized.includes('typescript')) {
-    return <TypescriptIcon className={className} {...props} />
-  }
-  if (normalized.includes('node')) {
-    return <NodejsIcon className={className} {...props} />
-  }
-  if (normalized.includes('next')) {
-    return <NextjsIcon className={className} {...props} />
-  }
-  if (normalized.includes('tailwind')) {
-    return <TailwindIcon className={className} {...props} />
-  }
-  if (normalized.includes('action') || normalized.includes('workflow')) {
-    return <GithubActionsIcon className={className} {...props} />
-  }
-  if (normalized.includes('mcp') || normalized.includes('claude') || normalized.includes('ai')) {
-    return <ClaudeIcon className={className} {...props} />
-  }
-  if (normalized.includes('youtube')) {
-    return <YoutubeIcon className={className} {...props} />
-  }
-  if (normalized.includes('markdown') || normalized.includes('frontmatter')) {
-    return <MarkdownIcon className={className} {...props} />
-  }
-  if (normalized.includes('premiere') || normalized.includes('video') || normalized.includes('effects')) {
-    return <PremiereIcon className={className} {...props} />
-  }
-  if (normalized.includes('figma') || normalized.includes('photoshop')) {
-    return <FigmaIcon className={className} {...props} />
-  }
-  if (normalized.includes('apple vision') || normalized.includes('photos') || normalized.includes('appintent')) {
-    return <AppleIcon className={className} {...props} />
-  }
-  if (normalized.includes('coredata') || normalized.includes('swiftdata') || normalized.includes('data')) {
-    return <DatabaseIcon className={className} {...props} />
-  }
-  if (normalized.includes('xcode')) {
-    return <XcodeIcon className={className} {...props} />
-  }
-  if (normalized.includes('pyinstaller') || normalized.includes('uv') || normalized.includes('packaging')) {
-    return <PackageIcon className={className} {...props} />
-  }
-  if (normalized.includes('winui') || normalized.includes('windows')) {
-    return <WindowsIcon className={className} {...props} />
-  }
-  if (normalized.includes('github')) {
-    return <GithubIcon className={className} {...props} />
-  }
-
-  return <DefaultTechIcon className={className} {...props} />
+  return <Icon className={className} aria-hidden="true" {...props} />
 }
 
 export interface CompanyIconProps extends IconProps {

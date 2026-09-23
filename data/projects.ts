@@ -1,22 +1,22 @@
 import { Project, TechChoice } from '@/lib/types'
 
-export const portfolioUpdatedAt = '2026-09-08'
+export const portfolioUpdatedAt = '2026-09-24'
 
 export const projects: Project[] = [
   {
     slug: 'kbpm',
     title: 'KBPM: KREAM 네이티브 거래 작업공간',
     shortTitle: 'KBPM',
-    period: '2025.10 – 현재',
+    period: '2025.05 – 현재',
     status: 'ongoing',
     statusLabel: 'v2 개발 중 · 최종 거래 실행 비활성',
     category: '네이티브 데스크톱 · 거래 안전성',
     heroKicker: '거래 정보를 읽고 비교하는 화면부터, 실행을 멈추는 조건까지 설계',
     summary:
-      'KREAM 보관판매 자동화에서 시작해 거래·보유·발매 정보를 모아 보는 무료 네이티브 데스크톱 작업공간으로 발전시키고 있습니다. SwiftUI와 WinUI 3 화면에 Python sidecar를 연결하고, 상품 검색·계정 내역·관심 상품·수수료 미리보기를 구현했습니다.',
+      '기존 보관판매 자동화 도구를 운영한 뒤, 현재는 거래·보유·발매 정보를 확인하는 무료 네이티브 데스크톱 작업공간 v2를 재설계하고 있습니다. SwiftUI와 WinUI 3 화면에 Python sidecar를 연결하고, 상품 검색·계정 내역·관심 상품·수수료 미리보기를 구현했습니다.',
     recentUpdate: {
-      date: '2026-09-08',
-      summary: 'v2 거래 제어와 네이티브 조회 화면을 통합했습니다. macOS의 목록·페이지 이동·창 수명주기 검증 기록을 남기고, 최종 거래 실행은 비활성 상태로 유지했습니다.',
+      date: '2026-09-21',
+      summary: '첫 출시 범위와 요구사항·검증 순서를 다시 정리했습니다. 이 작업은 계획·문서 정비이며, 최종 거래 제출은 계속 비활성 상태입니다.',
     },
     role: [
       '제품 설계, macOS·Windows 네이티브 UI 및 Python 엔진 개발',
@@ -63,48 +63,53 @@ export const projects: Project[] = [
   },
   {
     slug: 'mcp-publishing',
-    title: 'YouTube & Tistory MCP 자동 배포 파이프라인',
+    title: 'YouTube MCP와 Tistory 글쓰기 흐름',
     shortTitle: 'MCP Publishing',
-    period: '2026.01 – 2026.08',
-    status: 'shipped',
-    statusLabel: '기존 콘텐츠 자동화 사례',
+    period: '2026.08 – 현재',
+    status: 'ongoing',
+    statusLabel: 'YouTube MCP 직접 개발 · Tistory 기존 MCP 연결',
     category: '외부 서비스 연동 · 업무 자동화',
-    heroKicker: '복사와 업로드를 반복하던 작업을 실제 배포 흐름으로 연결',
+    heroKicker: '계획 확인과 복구 절차를 갖춘 콘텐츠 작업 도구',
     summary:
-      '플레이리스트 정리와 기술 블로그 발행에서 반복되던 수동 복사·붙여넣기 업무를 Model Context Protocol(MCP) 기반의 승인형 배포 파이프라인으로 전환했습니다. 단순한 AI 텍스트 생성이 아니라 사람의 Plan 검토를 거쳐 실제 API로 배포되는 안전한 자동화를 구축했습니다.',
+      'TypeScript로 YouTube 로컬 MCP 서버를 구현해 영상 검색과 플레이리스트 편집을 연결했습니다. Tistory에는 오픈소스 tistory-mcp를 개인 환경과 글쓰기 방식에 맞춰 연결했습니다. 직접 만든 YouTube 서버와 기존 Tistory MCP 활용을 구분하고, 실제 서비스 변경은 검토와 명시적 확인을 거치도록 구성했습니다.',
+    recentUpdate: {
+      date: '2026-09-23',
+      summary: '실제 플레이리스트 정리에 사용했습니다. API 할당량이 소진된 뒤 남은 변경은 YouTube 화면에서 마무리하고, 부분 반영 상태를 다시 확인하는 흐름을 기록했습니다.',
+    },
     role: [
-      'TypeScript 기반 YouTube MCP stdio 서버 개발',
-      'Tistory API / WebMCP 연동 및 CDM 마크다운 변환기 구현',
-      'Plan/Apply 및 롤백 안전성 검증 설계',
+      'TypeScript 기반 YouTube MCP stdio 서버 설계·개발',
+      '기존 오픈소스 Tistory MCP 연결과 개인 문체·Markdown 작성 흐름 구성',
+      '계획 확인, 중복·충돌 검사와 실패 뒤 현재 상태를 다시 확인하는 절차 설계',
     ],
     context: [
       '플레이리스트 구성과 기술 블로그 게시물 발행은 한 번 작성하는 것보다 조사, 정리, 메타데이터 입력, 웹 콘솔 복사·붙여넣기, 발행 상태 확인을 반복하는 데 더 많은 시간이 소요되었습니다.',
       '단순히 AI에게 텍스트를 생성하게 하는 것을 넘어, 사람이 대화 안에서 검토하고 승인하면 실제 외부 서비스 API를 통해 안전하게 발행되는 엔드투엔드 흐름이 필요했습니다.',
     ],
     constraints: [
-      'YouTube Data API 호출별 할당량과 외부 인증 제약',
+      'YouTube Data API 할당량과 외부 인증 제약',
       '재생목록 일괄 변경 시 누락·중복 발생 시 복구가 어려운 문제',
       '데스크톱 로컬 환경에서의 안전한 OAuth 2.0 PKCE 인증 및 토큰 보안 보관',
-      'Tistory의 고유 에디터 CDM 포맷 및 이미지 블록 렌더링 규격 호환',
+      'Tistory 도구는 직접 구현한 MCP 서버가 아니라 공개된 기존 MCP를 연결해 사용',
     ],
     decisions: [
       'YouTube MCP: TypeScript와 @modelcontextprotocol/sdk를 사용하여 Data API v3 및 Live Streaming API를 다루는 stdio 서버 구현',
-      'Plan / Apply 워크플로: 재생목록 변경 시 즉시 수정하지 않고 snapshot -> plan -> 사용자 승인 -> apply -> journal 기록 순으로 안전 실행하며, 문제 시 inverse plan으로 롤백 지원',
+      'Plan / Apply 워크플로: snapshot -> 변경 목록·할당량 확인 -> 사용자 승인 -> apply -> 작업 기록 순으로 진행하고, 실패 뒤 현재 목록을 다시 조회해 반영 상태를 재조정',
       'OAuth 루프백: 127.0.0.1 로컬 포트와 PKCE를 결합한 데스크톱 OAuth 플로우를 구축하고, 토큰은 환경 변수나 tool 인자로 전달하지 않고 로컬 보안 파일에만 격리',
-      'Tistory MCP: 마크다운 초안을 Tistory CDM 문법으로 자동 변환하고 태그/카테고리/슬러그를 함께 전달해 발행 결과 확인',
+      'Tistory 글쓰기: 공개 저장소 kim-se-hee/tistory-mcp를 개인 문체, Markdown, 이미지·출처 확인 절차에 맞춰 연결',
     ],
     outputs: [
       'YouTube 동영상·재생목록 작업을 연결한 로컬 TypeScript stdio MCP 서버',
-      '재생목록 스냅샷, diff 계산, Quota 추정, 일괄 편집 및 역계획 롤백 엔진',
-      'Tistory 마크다운/CDM 변환 및 원클릭 기술 블로그 포스팅 파이프라인',
+      '재생목록 스냅샷·diff·Quota 추정·승인 실행·작업 기록과 부분 실패 뒤 상태 재조회',
+      'Tistory 개인화 흐름에서 초안 작성·수정과 발행 전 검토 수행',
     ],
     limitations: [
-      'YouTube Music 전용 라이브러리나 Google 비공개 API(시청 기록 등)는 공식 Data API 범위 밖으로 지원 불가',
+      '할당량 소진이나 부분 적용 상황에서는 자동 완료로 간주하지 않고, 서비스의 현재 상태를 확인한 뒤 남은 작업을 직접 마무리합니다.',
+      'Tistory API, CDM 변환기, WebMCP를 직접 구현했다고 주장하지 않습니다.',
       '외부 서비스의 인증·할당량·에디터 변경에 따라 실행 흐름을 다시 확인해야 합니다.',
     ],
     nextSteps: [
-      'Medium 및 Substack 등 멀티 플랫폼 동시 발행 어댑터 확장',
-      '발행 후 트래픽 및 독자 반응 지표 피드백 루프 자동화',
+      '실제 운영에서 확인된 복구·재개 조건을 YouTube MCP 문서와 공개 예제에 반영',
+      'Tistory 발행은 기존 MCP 도구의 제공 범위와 직접 만든 서버의 범위를 명확히 유지',
     ],
     stack: [
       {
@@ -131,13 +136,19 @@ export const projects: Project[] = [
     evidence: [
       {
         type: 'article',
-        label: 'Max 기술 블로그',
-        href: 'https://max-dev.tistory.com/',
+        label: 'Tistory MCP를 활용해 발행한 기술 글',
+        href: 'https://max-dev.tistory.com/28',
+        verified: true,
+      },
+      {
+        type: 'repository',
+        label: 'Tistory MCP 원본 저장소 (기존 오픈소스)',
+        href: 'https://github.com/kim-se-hee/tistory-mcp',
         verified: true,
       },
     ],
     diagram: {
-      title: '콘텐츠 배포 작업 흐름 비교',
+      title: '계획에서 서비스 반영 확인까지',
       beforeTitle: '자동화 이전 (수동 반복 방식)',
       before: [
         '자료 조사 및 초안 작성',
@@ -147,16 +158,16 @@ export const projects: Project[] = [
         '수동 업로드 및 레이아웃 깨짐 확인',
         '수정 필요 시 콘솔에서 다시 수동 편집',
       ],
-      afterTitle: '자동화 이후 (MCP 파이프라인)',
+      afterTitle: '도구 연결 이후 (승인형 작업 흐름)',
       after: [
         '대화 컨텍스트 안에서 자료 조사 및 구조화',
-        'MCP가 API Quota 및 Diff를 포함한 Plan 생성',
+        '직접 개발한 YouTube MCP가 변경 목록과 할당량을 포함한 Plan 생성',
         '사람이 Plan 및 변경 목록 검토 후 명시적 승인',
-        'MCP stdio 서버가 API 직접 호출로 일괄 배포',
-        'API 결과와 공개 화면을 각각 확인 (필요 시 Undo)',
+        '확인된 변경만 API로 실행하고 저널에 기록',
+        '부분 실패 뒤 상태를 재조회하고 필요하면 화면에서 마무리',
       ],
       humanGateNote:
-        '모든 변경은 AI의 임의 실행이 아닌 사람의 Plan 검토 및 승인을 거쳐서만 배포됩니다.',
+        '직접 구현한 YouTube 서버의 기능과 기존 Tistory 오픈소스 MCP 활용을 나누어 기록합니다.',
     },
   },
   {
@@ -169,10 +180,10 @@ export const projects: Project[] = [
     category: '풀스택 웹 · 콘텐츠 운영',
     heroKicker: '게임을 소개하는 랜딩에서 운영자가 직접 고치는 도감까지',
     summary:
-      'MapleStory Worlds 게임 에버리프의 소개·게임플레이 미디어·도감을 담은 공식 웹사이트를 만들었습니다. 최근에는 흩어진 게임 정보를 EverWiki로 정리하고, 운영자가 초안을 편집하고 발행할 수 있는 Supabase 기반 CMS로 확장했습니다.',
+      'Codex에 디자인·프론트엔드·브라우저 검증·배포 스킬을 연결해 MapleStory Worlds 게임 에버리프의 공식 웹사이트를 제작하고 Vercel에 배포했습니다. EverWiki CMS를 확장하고, MapleStory Worlds 게임 UI 개선에는 동료와 함께 참여했습니다.',
     recentUpdate: {
-      date: '2026-09-08',
-      summary: 'EverWiki와 통합 CMS 변경을 병합했습니다. GitHub 역할별 권한, 초안·발행본 분리, 발행 충돌 방지와 검토형 가져오기 흐름을 추가했습니다.',
+      date: '2026-09-18',
+      summary: 'Notion 문서 114개와 표지 이미지 106개를 CMS에 반영하고 불완전한 자료는 검토 대기 상태로 남겼습니다. 게임 UI 병합에도 동료와 함께 참여했습니다.',
     },
     role: [
       'Next.js 공식 웹사이트와 EverWiki CMS 설계·개발',
@@ -199,6 +210,8 @@ export const projects: Project[] = [
       '공개 EverWiki와 게임 소개·뉴스를 연결한 공식 웹사이트',
       '역할별 권한, 초안·발행본 분리, 개정 이력과 발행 충돌 방지를 포함한 CMS',
       '반응형 히어로·갤러리와 개인정보를 최소화한 링크 클릭 분석',
+      'MapleStory Worlds 인벤토리·상태창, HUD, 팝업 순서, 직업 선택 피드백과 단축키·카드 상세 UX 공동 개선',
+      'Notion 문서·표지 이관 시 누락 자료는 자동 발행하지 않고 검토 대기 처리',
     ],
     limitations: [
       'CMS 병합과 공개 페이지 응답은 확인했으며, 실제 관리자 계정의 전체 편집·발행 흐름 검증과 외부 문서 이관 완료 여부는 별도입니다.',
@@ -216,31 +229,34 @@ export const projects: Project[] = [
     ],
     evidence: [
       { type: 'demo', label: 'EverWiki 공개 사이트', href: 'https://project-dol-everleaf.vercel.app/everwiki', verified: true },
+      { type: 'demo', label: '최종 공개 게임 웹사이트', href: 'https://project-dol-everleaf.vercel.app/', verified: true },
+      { type: 'article', label: 'MapleStory Worlds UI 공동 작업 기록 (Notion)', href: 'https://scandalous-sunfish-d36.notion.site/ui-3de545198ca080acb09fdb9655cc34ea?pvs=25', verified: true },
     ],
   },
   {
     slug: 'ios-prototyping',
-    title: '찍술: 기기 안에서 분석하고 직접 확인하는 음주 기록',
+    title: '찍술: iOS와 앱인토스로 이어지는 음주 기록',
     shortTitle: 'ZzikSool',
     period: '2026.07 – 현재',
     status: 'ongoing',
-    statusLabel: 'iOS MVP · 다중 사진 인식 실험 중',
-    category: 'iOS 네이티브 · 온디바이스 인식',
-    heroKicker: '사진에서 읽은 제품 정보와 실제로 마신 양을 구분하는 기록 경험',
+    statusLabel: '앱인토스 .ait 생성 · 실기기 검증 전',
+    category: 'iOS 네이티브 · 앱인토스 미니앱',
+    heroKicker: '미니앱으로 먼저 기록을 시작하고 iOS 경험으로 잇는 흐름',
     summary:
-      '술병·술캔의 라벨과 바코드를 기기 안에서 분석하고, 사용자가 제품과 실제 마신 양을 확인한 뒤 캘린더에 저장하는 iPhone 앱입니다. 기록 경험 개선을 기본 브랜치에 반영했고, 여러 사진의 관찰 결과를 모으는 인식 기능은 별도 PR에서 검증하고 있습니다.',
+      'SwiftUI 사진 음주 기록 앱을 먼저 만들고, 앱인토스에서 기록을 시작한 뒤 iOS 앱으로 확장하는 별도의 미니앱을 개발하고 있습니다. React·TypeScript·Vite로 Toss 카메라·앨범·저장소 연동, 인식 후보 검토, 실제 음용량 확인과 저장 흐름을 구성하고 `.ait` 패키지를 생성했습니다. Toss 실기기 검증과 심사 제출은 아직 진행하지 않았습니다.',
     recentUpdate: {
-      date: '2026-08-31',
-      summary: 'Today·캘린더·확인 화면과 워드마크 개선을 병합했습니다. 다중 사진 인식 PR은 열려 있으며, 내부 TestFlight 업로드 기록과 실기기 설치·실행 검증을 구분했습니다.',
+      date: '2026-09-20',
+      summary: '앱인토스 앱을 콘솔에 등록하고 별도 React 미니앱과 로컬 .ait 패키지를 만들었습니다. 심사·출시·실기기 테스트는 진행 전이며, iOS와 미니앱 간 기록 동기화도 구현하지 않았습니다.',
     },
     role: [
       'SwiftUI·SwiftData 기반 iOS 앱 설계와 개발',
       'Vision OCR·바코드 분석, 제품 후보 확인과 명시적 저장 흐름 구현',
       '한국어·영어 UI, 접근성 검사와 내부 TestFlight 배포 절차 구축',
+      '앱인토스 미니앱 구조, Toss SDK 기기·저장소 연결과 `.ait` 패키징 구현',
     ],
     context: [
       '사진만으로는 실제로 마신 양을 알 수 없고, 곡면 라벨·반사·물방울 때문에 제품 식별도 불확실할 수 있습니다.',
-      '사진을 외부 서버로 보내지 않고 분석하되, 부족한 근거를 사용자가 확인하고 수정할 수 있는 기록 앱을 만들고자 했습니다.',
+      'iOS 앱은 제품 후보와 실제 마신 양을 확인해 기록하는 경험을 제공하고, 앱인토스 미니앱은 별도 저장소와 진입 흐름으로 먼저 배포할 계획입니다.',
     ],
     constraints: [
       '사진 속 제품·용기 수를 사용자의 실제 음용량으로 간주할 수 없음',
@@ -252,13 +268,18 @@ export const projects: Project[] = [
       '촬영·사진 선택·직접 입력 모두 확인 화면을 거쳐 명시적으로 저장할 때만 기록 생성',
       '기본 브랜치의 한 장 입력과 개발 중인 1~5장 세션 인식을 구분하고, 다중 사진의 중복·불확실한 후보는 보수적으로 처리',
       'SwiftData 기록·수정·삭제·내보내기와 한국어·영어, Dynamic Type 접근성 흐름을 함께 검증',
+      '웹뷰 미니앱은 React 18·Toss SDK를 사용하고 iOS 앱과 저장·로그인 경계를 분리; 두 앱 사이 동기화는 구현 범위에 포함하지 않음',
     ],
     outputs: [
       'Today·캘린더·제품 확인·직접 입력·내보내기를 연결한 iOS MVP',
       '기본 브랜치에 기록 경험, Xcode Canvas 프리뷰, App Intents와 워드마크 개선 병합',
       '별도 다중 사진 PR에 내부 TestFlight 1.1 (26) 업로드·처리·테스터 그룹 연결 기록',
+      'Toss 앱 등록, 카메라·사진 선택·SDK 저장소 흐름과 zziksool.ait 로컬 산출물',
     ],
     limitations: [
+      '앱인토스 미니앱은 Toss 실기기 흐름·비공개 테스트 QR·콘솔 업로드·심사 제출을 아직 수행하지 않았으며 출시된 앱이 아닙니다.',
+      'iOS와 미니앱은 별도 저장소를 사용하며 기록 동기화는 구현되지 않았습니다.',
+      '인식 기능은 기본 앱의 처리 범위와 별도 실험 기능, 미니앱의 로컬 OCR 범위를 나누어 보며 외부 인식 기능은 비활성 상태입니다.',
       '다중 사진 인식은 미병합 PR이며, 내부 TestFlight 업로드를 테스터의 설치·실행 성공이나 App Store 출시로 간주하지 않습니다.',
       '기존 실제 사진 검사는 독립된 정확도 평가셋이 아니므로 제품 식별 정확도 수치를 주장하지 않습니다.',
       '실제 기기 카메라·Apple Intelligence·iOS 18 동작은 별도 검증이 필요합니다.',
@@ -279,6 +300,30 @@ export const projects: Project[] = [
     ],
   },
 ]
+
+export const additionalWork = [
+  {
+    date: '2026-09-21',
+    title: 'Codex 개발 스킬 구성과 검증',
+    icon: 'MCP tools',
+    summary:
+      'Apple·웹·문서·미디어 작업에 필요한 개인 스킬을 정리하고, 중복 진입점을 줄였습니다. 당시 활성화된 21개 스킬과 프로젝트별 검색 흐름의 로컬 검증을 마쳤습니다.',
+  },
+  {
+    date: '2026-09-16',
+    title: '제품 문서와 실행 근거 정리',
+    icon: 'Markdown',
+    summary:
+      'KBPM 개발 문서를 현재 구조, 작업 절차, 과거 기록으로 나누고, 코드에서 확인한 동작과 실제 플랫폼·거래 검증 상태를 구분했습니다.',
+  },
+  {
+    date: '2026-09-05',
+    title: 'Python 입문 수업 자료 제작',
+    icon: 'Python',
+    summary:
+      '초보자용 60분 수업을 위해 Thonny 설치, print·input·변수, 오류 읽기와 작은 실습을 23장 슬라이드와 3쪽 활동지·PDF로 구성하고 렌더링을 확인했습니다.',
+  },
+] as const
 
 export const allTechChoices: TechChoice[] = [
   { name: 'Python & IPC', reason: 'KBPM 조회·거래 제어 엔진과 네이티브 셸 연결', constraintOrLearning: '프로세스 수명주기와 불완전한 응답을 명시적인 상태로 전달' },

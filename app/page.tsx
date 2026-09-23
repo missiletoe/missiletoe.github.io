@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, GitBranch, Sparkles } from 'lucide-react'
-import { projects, allTechChoices, operatingPrinciples, portfolioUpdatedAt } from '@/data/projects'
+import { projects, additionalWork, allTechChoices, operatingPrinciples, portfolioUpdatedAt } from '@/data/projects'
 import type { Project } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -21,7 +21,12 @@ function statusVariant(status: Project['status']) {
 }
 
 export default function HomePage() {
-  const recentProjects = projects.filter((project) => project.recentUpdate)
+  const featuredProjects = (['mcp-publishing', 'kbpm', 'game-promotion', 'ios-prototyping'] as const)
+    .map((slug) => projects.find((project) => project.slug === slug))
+    .filter((project): project is Project => Boolean(project))
+  const recentProjects = projects
+    .filter((project) => project.recentUpdate)
+    .sort((a, b) => (b.recentUpdate?.date ?? '').localeCompare(a.recentUpdate?.date ?? ''))
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 py-12 sm:py-16 flex flex-col gap-20">
@@ -30,13 +35,13 @@ export default function HomePage() {
           <div className="lg:col-span-7 flex flex-col gap-5">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-300 w-fit">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              <span>Max · Software Engineer</span>
+              <span>허용석 · AI Engineer</span>
             </div>
             <h1 id="hero-title" className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground leading-[1.2]">
-              반복 업무를 실제 제품과<br />운영 흐름으로 바꿉니다.
+              도구를 연결해<br />실제 업무를 바꿉니다.
             </h1>
             <p className="text-lg sm:text-xl text-foreground/85 leading-relaxed">
-              데스크톱 도구와 웹 서비스, iOS 앱을 만들고 반복되는 작업을 자동화합니다. 각 프로젝트에서 <strong>어떤 제약을 풀었고, 어디까지 구현하고 확인했는지</strong>를 기록합니다.
+              TypeScript와 Python으로 AI 도구와 외부 서비스를 연결하고, 인증·오류 복구·사용자 확인 절차를 설계합니다. 현업의 문제 발견부터 도입과 운영까지 이어가는 <strong>AI Engineer</strong>로 일하며 AX Engineer로 성장하고 있습니다.
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
               {['데스크톱 엔지니어링', '자동화 & 서비스 연동', '웹 포털 & 콘텐츠 운영', '온디바이스 iOS 앱'].map((label) => (
@@ -53,17 +58,17 @@ export default function HomePage() {
             </div>
             <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <GitBranch className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>GitHub 작업 확인 · <time dateTime={portfolioUpdatedAt}>{portfolioUpdatedAt.replaceAll('-', '.')}</time></span>
+              <span>포트폴리오 업데이트 · <time dateTime={portfolioUpdatedAt}>{portfolioUpdatedAt.replaceAll('-', '.')}</time></span>
             </p>
           </div>
 
           <div className="lg:col-span-5 rounded-xl border border-border bg-card p-5 flex flex-col gap-3.5 shadow-sm">
             <div className="flex items-center justify-between gap-3 pb-3 border-b border-border">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground font-mono">주요 작업 목차 ({projects.length})</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground font-mono">주요 작업 목차 ({featuredProjects.length})</span>
               <span className="text-xs text-muted-foreground">클릭 시 바로 이동</span>
             </div>
             <nav aria-label="최근 작업 목차" className="flex flex-col gap-2.5">
-              {projects.map((project) => (
+              {featuredProjects.map((project) => (
                 <a key={project.slug} href={'#' + projectSections[project.slug].id} className="group rounded-lg border border-border/80 bg-background/60 p-3.5 hover:border-foreground/40 hover:bg-muted/40 transition-colors flex flex-col gap-2" data-analytics-step={'toc_' + projectSections[project.slug].analyticsSuffix}>
                   <span className="text-sm sm:text-base font-bold text-foreground group-hover:underline">{project.shortTitle}</span>
                   <Badge variant={statusVariant(project.status)} className="text-[11px] py-0 px-2 w-fit">{project.statusLabel}</Badge>
@@ -84,7 +89,7 @@ export default function HomePage() {
           <p className="text-base sm:text-lg text-foreground/80 max-w-3xl leading-relaxed">프로젝트의 시작점부터 주요 판단, 구현한 결과와 남은 한계까지 정리했습니다.</p>
         </div>
 
-        {projects.map((project, index) => (
+        {featuredProjects.map((project, index) => (
           <article key={project.slug} id={projectSections[project.slug].id} className="rounded-2xl border border-border bg-card p-6 sm:p-9 flex flex-col gap-7 shadow-sm">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-5">
               <div className="flex flex-col gap-2.5">
@@ -146,8 +151,8 @@ export default function HomePage() {
       <section aria-labelledby="recent-title" className="flex flex-col gap-6">
         <div className="flex flex-col gap-2.5">
           <div className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">Recent Work</div>
-          <h2 id="recent-title" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">최근 GitHub 작업</h2>
-          <p className="text-base text-foreground/80 leading-relaxed">저장소에서 확인한 최근 변경을 프로젝트별로 모았습니다.</p>
+          <h2 id="recent-title" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">최근 Codex 작업 기록</h2>
+          <p className="text-base text-foreground/80 leading-relaxed">최근 1년간 제품 개발·운영과 연결된 구현, 문서 작업과 실제 사용 기록입니다. 계획과 출시 상태는 프로젝트별로 구분했습니다.</p>
         </div>
         <div className="flex flex-col divide-y divide-border rounded-xl border border-border bg-card shadow-sm">
           {recentProjects.map((project) => {
@@ -169,6 +174,28 @@ export default function HomePage() {
               </div>
             )
           })}
+        </div>
+      </section>
+
+      <Separator />
+
+      <section aria-labelledby="additional-work-title" className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2.5">
+          <div className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">Supporting Work</div>
+          <h2 id="additional-work-title" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">개발을 이어 주는 도구와 설명</h2>
+          <p className="max-w-3xl text-base text-foreground/80 leading-relaxed">제품을 만드는 과정에서 도구 사용법을 정리하고, 확인한 내용을 다른 사람이 이해할 수 있는 자료로 남겼습니다.</p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {additionalWork.map((item) => (
+            <article key={item.title} className="flex flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm transition-colors hover:bg-muted/20">
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-base font-bold leading-snug text-foreground">{item.title}</h3>
+                <TechIcon name={item.icon} className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
+              </div>
+              <time dateTime={item.date} className="font-mono text-xs text-muted-foreground">{item.date.replaceAll('-', '.')}</time>
+              <p className="text-sm leading-relaxed text-foreground/85">{item.summary}</p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -234,7 +261,7 @@ export default function HomePage() {
       <section aria-labelledby="contact-title" className="flex flex-col gap-6 py-6">
         <div className="flex flex-col gap-2.5">
           <h2 id="contact-title" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">소개와 연결</h2>
-          <p className="text-base sm:text-lg text-foreground/85 max-w-3xl leading-relaxed">도구를 기존 작업 흐름에 붙여 실제 결과를 만든 경험을 중요하게 봅니다. 개발이 끝난 뒤에도 배포, 운영, 설명과 홍보가 남는다는 전제로 작업합니다.</p>
+          <p className="text-base sm:text-lg text-foreground/85 max-w-3xl leading-relaxed">콘텐츠와 커머스 운영에서 발견한 반복 업무를 도구와 제품으로 바꾸어 왔습니다. 실행 안전성과 사용자의 확인을 설계하고, 현업의 문제를 도입·운영까지 잇는 AX Engineer로 성장하고자 합니다.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3 pt-2">
           <Button asChild variant="outline" className="text-sm font-semibold h-10 px-4" aria-label="Max의 GitHub 프로필 방문 (새 창에서 열림)" data-analytics-step="contact_github">
