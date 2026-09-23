@@ -243,7 +243,7 @@ export const projects: Project[] = [
     category: 'iOS 네이티브 · 앱인토스 미니앱',
     heroKicker: '미니앱으로 먼저 기록을 시작하고 iOS 경험으로 잇는 흐름',
     summary:
-      'SwiftUI 사진 음주 기록 앱을 먼저 만들고, 앱인토스에서 기록을 시작한 뒤 iOS 앱으로 확장하는 별도의 미니앱을 개발하고 있습니다. React·TypeScript·Vite로 Toss 카메라·앨범·저장소 연동, 인식 후보 검토, 실제 음용량 확인과 저장 흐름을 구성하고 `.ait` 패키지를 생성했습니다. Toss 실기기 검증과 심사 제출은 아직 진행하지 않았습니다.',
+      'SwiftUI 사진 음주 기록 앱을 먼저 만들고, 앱인토스에서 기록을 시작한 뒤 iOS 앱으로 확장하는 별도의 미니앱을 개발하고 있습니다. React·TypeScript·Vite로 Toss 카메라·앨범·저장소 연동, 인식 후보 검토, 실제 음용량 확인과 저장 흐름을 구성하고 .ait 패키지를 생성했습니다. Toss 실기기 검증과 심사 제출은 아직 진행하지 않았습니다.',
     recentUpdate: {
       date: '2026-09-20',
       summary: '앱인토스 앱을 콘솔에 등록하고 별도 React 미니앱과 로컬 .ait 패키지를 만들었습니다. 심사·출시·실기기 테스트는 진행 전이며, iOS와 미니앱 간 기록 동기화도 구현하지 않았습니다.',
@@ -252,7 +252,7 @@ export const projects: Project[] = [
       'SwiftUI·SwiftData 기반 iOS 앱 설계와 개발',
       'Vision OCR·바코드 분석, 제품 후보 확인과 명시적 저장 흐름 구현',
       '한국어·영어 UI, 접근성 검사와 내부 TestFlight 배포 절차 구축',
-      '앱인토스 미니앱 구조, Toss SDK 기기·저장소 연결과 `.ait` 패키징 구현',
+      '앱인토스 미니앱 구조, Toss SDK 기기·저장소 연결과 .ait 패키징 구현',
     ],
     context: [
       '사진만으로는 실제로 마신 양을 알 수 없고, 곡면 라벨·반사·물방울 때문에 제품 식별도 불확실할 수 있습니다.',
