@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { GalleryArtwork } from '@/components/gallery-artwork'
 import { galleryProjects } from '@/data/gallery'
 import { projects } from '@/data/projects'
+import { contactLinks } from '@/data/contact-links'
 
 export const metadata: Metadata = {
   title: 'About Max | Max, the Software Engineer',
@@ -22,15 +23,17 @@ export default function AboutPage() {
             MCP와 브라우저 자동화, 데스크톱·모바일 앱을 개발합니다. 콘텐츠와 커머스 운영에서 겪은 반복 작업을 소프트웨어로 구현해 왔습니다.
           </p>
           <nav className="about-contact" aria-label="연락처 링크">
-            <a href="https://github.com/missiletoe" target="_blank" rel="noopener noreferrer">
-              GitHub <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-            <a href="https://www.linkedin.com/in/yong-suk-heo/" target="_blank" rel="noopener noreferrer">
-              LinkedIn <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-            <a href="https://max-dev.tistory.com/" target="_blank" rel="noopener noreferrer">
-              Blog <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+            {contactLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.label + ' (새 창에서 열림)'}
+              >
+                {link.label} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            ))}
           </nav>
         </section>
 

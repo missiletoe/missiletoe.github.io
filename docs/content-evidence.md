@@ -91,14 +91,20 @@ PR에 TestFlight 1.1 (26) 업로드·App Store Connect 처리·내부 테스터 
 
 ## 현재 콘텐츠 유지 관리 (2026-09-29)
 
-- `data/projects.ts`의 `projects`가 `/about` 그리드와 세 상세 페이지의 사실 기준이다. YouTube MCP는 현재 목록과 상세 경로에서 제거했다. 위 MCP 절은 과거 조사 기록이다. KBPM 갤러리 이미지는 2025년 v1 화면이다.
-- `/`는 KBPM → 메이플스토리월드 에버리프 → 찍술 순서의 세로 스크롤 갤러리다. Apple iPhone Duo 페이지의 큰 이미지와 섹션 간 여백을 참고하고, 미리보기 아래 로고와 이름을 묶어 상세 페이지에 직접 연결한다. 중앙 제목, 별도 프로젝트 보기 링크, 좌우 버튼, 최하단 이동 안내와 설명 부제목을 표시하지 않는다. `/about` 카드에도 설명 부제목을 표시하지 않는다.
+- `data/projects.ts`의 `projects`가 `/about` 그리드와 세 상세 페이지의 사실 기준이다. YouTube MCP는 현재 목록과 상세 경로에서 제거했다. 위 MCP 절은 과거 조사 기록이다. KBPM은 제공된 v2 스크린샷과 로컬 `KBPMv2` README·구현 문서 기준의 Electron 구조를 소개하며, v1 화면은 상세 페이지의 이전 버전 영역에만 둔다.
+- `/`는 KBPM → 메이플스토리월드 에버리프 → 찍술 순서의 세로 스크롤 갤러리다. Apple iPhone Duo 페이지를 참고해 데스크톱에서 프로젝트별 화면을 고정하며 펼친다. KBPM 작업창은 스크롤에 따라 정면으로 전환하고, EverLeaf는 타이틀 아트에서 게임 화면으로 전환하며, 찍술은 밝은 배경의 세로 앱 화면으로 소개한다. 포인터 반응은 작은 스프링 기울기로 제한하고 제목·아이콘·미리보기는 상세 링크로 유지한다. 모바일과 모션 감소 설정에서는 고정·기울기·덮개 전환을 제거해 실제 화면을 바로 보여준다. 별도 프로젝트 보기 링크, 좌우 버튼, 최하단 안내와 설명 부제목은 표시하지 않는다.
 - 메이플스토리월드 에버리프는 게임과 기존 공식 웹사이트·EverWiki CMS를 한 프로젝트로 통합한다. 게임 설명은 로컬 `everleaf_web/lib/site.ts`의 덱빌딩 플랫포머 소개와 `everleaf/RootDesk/MyDesk/Tutorial/TutorialFlow.mlua`의 이동·MP·카드·턴 안내를 근거로 한다. 게임 UI 공동 작업 범위와 웹사이트 개발 범위를 구분하며 게임 출시나 전체 플레이 검증을 추가로 주장하지 않는다.
 - `public/images/project-icons/`의 로고는 사용자가 제공한 EverLeaf·KBPM·찍술 PNG에서 비율과 투명도를 유지해 크기를 줄인 WebP다.
 - 제공된 파비콘은 `app/favicon.ico`, `app/icon0.svg`, `app/icon1.png`, `app/apple-icon.png`와 `app/manifest.json`에 배치한다. manifest의 192px·512px 아이콘은 `public/` 루트에 두며 사이트 이름과 어두운 배경색을 반영한다.
-- 갤러리 미리보기는 정리된 KBPM v1 스크린샷과 작업 중 추가된 `everleaf-screenshot.png`, `zziksool-screenshot.png`를 사용한다. 이미지 연결은 게임·앱의 실행이나 출시 검증을 의미하지 않는다.
-- 고정 헤더에는 홈으로 돌아가는 이름과 오른쪽 About 링크를 둔다. 스크롤에 따라 헤더 크기나 위치를 바꾸지 않는다. 상세 페이지의 목록 링크는 `/`를 가리키며 README는 홈·소개·세 사례의 링크만 유지한다.
+- 갤러리 미리보기는 `kbpm-v2-screenshot-2.png`, `everleaf-screenshot.png`, `zziksool-screenshot.png`를 사용한다. 이미지 연결은 게임·앱의 실행이나 출시 검증을 의미하지 않는다.
+- 고정 헤더의 Contact 버튼은 외부 링크를 강조하는 상단 모달 메뉴를 연다. `data/contact-links.ts`의 GitHub·LinkedIn·Blog·About Me 링크를 메뉴와 `/about`에서 공유한다. About Me는 Blog 다음에 둔다. 이메일·BotID 요청은 취소되어 이메일 주소나 BotID 코드는 추가하지 않는다. 상세 페이지의 목록 링크는 `/`를 가리킨다.
 - 문안을 바꾸면 정적 빌드와 영향받는 화면·링크·모바일 메뉴를 확인한다.
+
+### 인터랙티브 갤러리 확인
+
+- `npm run check`의 타입 검사·콘텐츠 검사·정적 빌드와 최종 CSS 수정 후 빌드가 통과했다.
+- 로컬 Chromium에서 1440×900, 390×844, 1024×280 화면을 확인했다. 커서 기울기, 스크롤 변형, EverLeaf 이미지 전환, 모바일 일반 스크롤, 모션 감소 설정, KBPM v2 상세 이동과 About Me 링크 연결을 검사했다.
+- Contact의 마우스·키보드 열기, 초기 포커스, 포커스 순환·복원, Escape·닫기 버튼·바깥 클릭 닫기와 배경 스크롤 잠금을 확인했다. 최종 검사에서 페이지·콘솔 오류는 없었다. 실제 모바일 기기 검사와 공개 배포는 수행하지 않았다.
 
 ## 2026-09-08 포트폴리오 변경 검증
 

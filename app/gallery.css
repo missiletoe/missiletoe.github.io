@@ -18,8 +18,7 @@
   padding-inline: clamp(1.25rem, 4vw, 4rem);
 }
 
-.site-header__brand,
-.site-header__about {
+.site-header__brand {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
@@ -29,105 +28,198 @@
   cursor: pointer;
 }
 
-.site-header__about {
-  padding-inline: .25rem;
-}
-
 .site-header a:hover {
   color: #b7b7bc;
 }
 
 .gallery-home {
-  color: #f8f7f5;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  color: #f5f5f7;
   background: #050506;
 }
 
-.gallery-section {
-  display: flex;
-  min-height: calc(100svh - 3.5rem);
-  align-items: center;
-  justify-content: center;
-  padding: clamp(3rem, 7vh, 6rem) clamp(1.25rem, 5vw, 5rem);
+.project-chapter {
+  position: relative;
+  min-height: 160svh;
   scroll-margin-top: 3.5rem;
 }
 
-.gallery-project {
+.chapter-stage {
+  position: sticky;
+  top: 3.5rem;
   display: flex;
-  width: min(100%, 960px, 112svh);
-  min-width: 0;
+  height: calc(100svh - 3.5rem);
+  min-height: 32rem;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  color: inherit;
-  border-radius: .75rem;
-  cursor: pointer;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  padding: 2rem clamp(1.25rem, 5vw, 5rem);
+  overflow: clip;
 }
 
-.gallery-project__preview {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .14);
-  border-radius: .75rem;
-  background: #0f0f10;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, .3);
-  transition: transform 220ms ease, border-color 220ms ease;
-}
-
-.gallery-project[data-project='game-promotion'] .gallery-project__preview {
-  aspect-ratio: 16 / 9;
-}
-
-.gallery-project[data-project='ios-prototyping'] .gallery-project__preview {
-  width: min(70vw, 360px, 28svh);
-  aspect-ratio: 1320 / 2723;
-}
-
-.gallery-project__identity {
-  display: flex;
+.chapter-identity {
+  position: relative;
+  z-index: 2;
   max-width: 100%;
-  min-height: 4rem;
+}
+
+.chapter-title-link {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: clamp(.8rem, 2vw, 1.5rem);
+  color: inherit;
+  border-radius: .5rem;
 }
 
-.gallery-project__icon {
-  flex-shrink: 0;
-  width: 3.5rem;
-  height: 3.5rem;
+.chapter-icon {
+  width: clamp(3rem, 5vw, 5rem);
+  height: clamp(3rem, 5vw, 5rem);
   object-fit: contain;
+  flex-shrink: 0;
 }
 
-.gallery-project[data-project='game-promotion'] .gallery-project__icon {
-  width: 5.5rem;
-}
-
-.gallery-project[data-project='ios-prototyping'] .gallery-project__icon {
-  border-radius: .75rem;
-}
-
-.gallery-project__identity h2 {
-  font-size: clamp(1.25rem, 2.5vw, 2rem);
+.chapter-title-link h2 {
+  font-size: clamp(3.5rem, 8vw, 7rem);
   font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -.035em;
+  line-height: 1.05;
+  letter-spacing: -.065em;
   text-wrap: balance;
 }
 
-.gallery-project:hover .gallery-project__preview,
-.gallery-project:focus-visible .gallery-project__preview {
-  border-color: rgba(255, 255, 255, .45);
-  transform: translateY(-3px);
+.chapter-reveal {
+  width: min(100%, 1060px, calc((100svh - 17rem) * 1.488));
+  transform-origin: 50% 70%;
 }
 
-.gallery-project:focus-visible {
-  outline: 2px solid #f8f7f5;
+.chapter-preview {
+  display: block;
+  width: 100%;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.chapter-tilt {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.chapter-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2864 / 1924;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .3);
+  transition: transform 160ms var(--ease-out);
+}
+
+.chapter-preview:active .chapter-screen {
+  transform: scale(.985);
+}
+
+.chapter-cover {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.chapter-cover__image {
+  object-fit: cover;
+}
+
+.chapter-open {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(20, 20, 22, .9);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 160ms ease, transform 160ms var(--ease-out);
+  pointer-events: none;
+}
+
+.chapter-title-link:focus-visible,
+.chapter-preview:focus-visible {
+  outline: 2px solid currentColor;
   outline-offset: 10px;
 }
 
-.gallery-project:active .gallery-project__preview {
-  transform: scale(.99);
+.chapter-preview:focus-visible .chapter-open {
+  opacity: 1;
+  transform: none;
+}
+
+.project-chapter[data-project='game-promotion'] {
+  background: #0b141b;
+}
+
+.project-chapter[data-project='game-promotion'] .chapter-title-link {
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.project-chapter[data-project='game-promotion'] h2 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  letter-spacing: -.05em;
+}
+
+.project-chapter[data-project='game-promotion'] .chapter-icon {
+  width: clamp(7rem, 12vw, 10rem);
+  height: clamp(3.5rem, 6vw, 5rem);
+}
+
+.project-chapter[data-project='game-promotion'] .chapter-reveal {
+  width: min(100%, 1160px, calc((100svh - 19rem) * 1.778));
+}
+
+.project-chapter[data-project='game-promotion'] .chapter-screen {
+  aspect-ratio: 2372 / 1336;
+}
+
+.project-chapter[data-project='ios-prototyping'] {
+  color: #1d1d1f;
+  background: #f5f5f7;
+}
+
+.project-chapter[data-project='ios-prototyping'] .chapter-stage {
+  flex-direction: row;
+  gap: clamp(4rem, 12vw, 12rem);
+}
+
+.project-chapter[data-project='ios-prototyping'] .chapter-title-link {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.project-chapter[data-project='ios-prototyping'] .chapter-icon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1.2rem;
+}
+
+.project-chapter[data-project='ios-prototyping'] h2 {
+  font-size: clamp(4rem, 12vw, 10rem);
+}
+
+.project-chapter[data-project='ios-prototyping'] .chapter-reveal {
+  width: min(30vw, 360px, calc((100svh - 11rem) * .485));
+}
+
+.project-chapter[data-project='ios-prototyping'] .chapter-screen {
+  aspect-ratio: 1320 / 2723;
+  border: 5px solid #242427;
+  border-radius: 2.2rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .15);
 }
 
 .gallery-artwork {
@@ -143,6 +235,17 @@
 
 .gallery-artwork__image--contain {
   object-fit: contain;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chapter-preview:hover .chapter-open {
+    opacity: 1;
+    transform: none;
+  }
+
+  .chapter-title-link:hover {
+    opacity: .8;
+  }
 }
 
 .about-page {
@@ -274,17 +377,40 @@
   color: var(--project-accent);
 }
 
-.about-project__body > p {
-  max-width: 37rem;
-  margin-top: .6rem;
-  color: #cbd0dd;
-  font-size: .92rem;
-  line-height: 1.65;
+@media (max-height: 600px) and (min-width: 701px) {
+  .project-chapter {
+    min-height: 0;
+  }
+
+  .chapter-stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    padding-block: 3rem;
+  }
+
+  .chapter-reveal,
+  .chapter-identity {
+    transform: none !important;
+  }
+
+  .chapter-reveal,
+  .project-chapter[data-project='game-promotion'] .chapter-reveal {
+    width: min(100%, 960px);
+  }
+
+  .project-chapter[data-project='ios-prototyping'] .chapter-reveal {
+    width: min(32vw, 280px);
+  }
+
+  .chapter-cover {
+    display: none;
+  }
 }
 
 @media (max-width: 700px) {
-  .site-header__brand,
-  .site-header__about {
+  .site-header__brand {
     font-size: .78rem;
   }
 
@@ -292,22 +418,81 @@
     gap: .75rem;
   }
 
-  .gallery-section {
-    min-height: min(760px, calc(100svh - 3.5rem));
-    padding-block: 3rem;
+  .project-chapter {
+    min-height: 0;
   }
 
-  .gallery-project__identity {
-    gap: .75rem;
+  .chapter-stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: calc(100svh - 3.5rem);
+    gap: 2.5rem;
+    padding-block: 4rem;
   }
 
-  .gallery-project__icon {
-    width: 2.75rem;
-    height: 2.75rem;
+  .chapter-title-link h2 {
+    font-size: clamp(3rem, 13vw, 5rem);
   }
 
-  .gallery-project[data-project='game-promotion'] .gallery-project__icon {
-    width: 4rem;
+  .chapter-reveal,
+  .project-chapter[data-project='game-promotion'] .chapter-reveal {
+    width: 100%;
+  }
+
+  .chapter-reveal,
+  .chapter-identity,
+  .chapter-tilt {
+    transform: none !important;
+  }
+
+  .chapter-open {
+    right: .75rem;
+    bottom: .75rem;
+    width: 2rem;
+    height: 2rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .chapter-open svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .chapter-cover {
+    display: none;
+  }
+
+  .project-chapter[data-project='game-promotion'] h2 {
+    max-width: 16rem;
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .project-chapter[data-project='ios-prototyping'] .chapter-stage {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .project-chapter[data-project='ios-prototyping'] .chapter-title-link {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .project-chapter[data-project='ios-prototyping'] .chapter-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .project-chapter[data-project='ios-prototyping'] h2 {
+    font-size: 3.5rem;
+  }
+
+  .project-chapter[data-project='ios-prototyping'] .chapter-reveal {
+    width: min(70vw, 290px);
   }
 
   .about-hero {
@@ -333,15 +518,34 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gallery-project__preview,
+  .project-chapter {
+    min-height: 0;
+  }
+
+  .chapter-stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: calc(100svh - 3.5rem);
+    padding-block: 3rem;
+  }
+
+  .chapter-reveal,
+  .chapter-identity,
+  .chapter-tilt,
+  .chapter-preview:active .chapter-screen,
+  .chapter-open {
+    transform: none !important;
+  }
+
+  .chapter-cover {
+    display: none;
+  }
+
+  .chapter-screen,
+  .chapter-open,
   .about-project,
   .about-contact a {
     transition: none;
-  }
-
-  .gallery-project:hover .gallery-project__preview,
-  .gallery-project:focus-visible .gallery-project__preview,
-  .gallery-project:active .gallery-project__preview {
-    transform: none;
   }
 }

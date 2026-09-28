@@ -13,9 +13,9 @@ export const galleryProjects: GalleryProject[] = [
   {
     slug: 'kbpm',
     title: 'KBPM',
-    image: '/images/kbpm-v1-screenshot-1.png',
+    image: '/images/kbpm-v2-screenshot-2.png',
     icon: '/images/project-icons/kbpm.webp',
-    alt: '2025년 KBPM v1의 상품 검색 화면',
+    alt: 'KBPM v2의 KREAM 일반 판매 관리와 가격 유지 대기열 화면',
     accent: '#c9c6bb',
     backdrop: '#242527',
   },
