@@ -7,7 +7,7 @@ import { Header } from '@/components/header'
 export const metadata: Metadata = {
   title: 'Max, the Software Engineer | Portfolio',
   description:
-    '허용석의 프로젝트 갤러리. MCP, 브라우저 자동화, 웹과 앱 개발 작업을 소개합니다.',
+    '허용석의 프로젝트 갤러리. 메이플스토리월드 에버리프, KBPM, 찍술을 소개합니다.',
   metadataBase: new URL('https://missiletoe.github.io'),
   openGraph: {
     title: 'Max, the Software Engineer',

@@ -5,8 +5,8 @@ import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
 
 export const metadata: Metadata = {
-  title: '에버리프 공식 웹사이트와 EverWiki CMS | Max',
-  description: '에버리프 공식 사이트, 콘텐츠 관리 도구와 MapleStory Worlds UI 공동 작업 기록입니다.',
+  title: '메이플스토리월드 에버리프 | Max',
+  description: '덱빌딩 로그라이트 에버리프의 게임 UI 공동 개발과 공식 웹사이트·EverWiki CMS 작업 기록입니다.',
 }
 
 export default function GamePromotionPage() {
@@ -15,7 +15,14 @@ export default function GamePromotionPage() {
 
   return (
     <ProjectLayout project={project} nextProject={nextProject}>
-      <section aria-labelledby="everleaf-web-title">
+      <section aria-labelledby="everleaf-play-title">
+        <h2 id="everleaf-play-title" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">탐험에서 카드 전투로</h2>
+        <p className="mt-4 text-base leading-relaxed text-foreground/80">
+          2D 필드를 탐험하다 적을 만나면 손에 든 카드로 다음 행동을 결정합니다. 적의 의도와 남은 MP를 살피며 공격·방어를 고르고 턴을 넘기는 덱빌딩 로그라이트입니다.
+        </p>
+      </section>
+
+      <section className="mt-10" aria-labelledby="everleaf-web-title">
         <h2 id="everleaf-web-title" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">웹사이트와 콘텐츠 운영</h2>
         <p className="mt-4 text-base leading-relaxed text-foreground/80">
           디자인·프론트엔드 구현·브라우저 확인·배포 스킬을 Codex 작업 흐름에 연결해 공식 사이트를 제작하고 Vercel에 배포했습니다.

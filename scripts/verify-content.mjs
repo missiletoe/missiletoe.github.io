@@ -12,14 +12,14 @@ if (!existsSync(projectFile)) {
 const content = readFileSync(projectFile, 'utf-8')
 
 // Check slugs
-const requiredSlugs = ['kbpm', 'mcp-publishing', 'game-promotion', 'ios-prototyping']
+const requiredSlugs = ['kbpm', 'game-promotion', 'ios-prototyping']
 for (const slug of requiredSlugs) {
   if (!content.includes(`slug: '${slug}'`)) {
     console.error(`FAIL: Missing required project slug "${slug}"`)
     process.exit(1)
   }
 }
-console.log('✓ All 4 required project slugs present')
+console.log('✓ All 3 required project slugs present')
 
 // Check slug uniqueness
 const slugMatches = [...content.matchAll(/slug:\s*'([^']+)'/g)].map((m) => m[1])
@@ -47,7 +47,6 @@ const routeFiles = [
   'app/sitemap.ts',
   'app/robots.ts',
   'app/work/kbpm/page.tsx',
-  'app/work/mcp-publishing/page.tsx',
   'app/work/game-promotion/page.tsx',
   'app/work/ios-prototyping/page.tsx',
 ]
@@ -58,6 +57,6 @@ for (const rf of routeFiles) {
     process.exit(1)
   }
 }
-console.log('✓ All 10 core App Router page files exist')
+console.log('✓ All 9 core App Router page files exist')
 
 console.log('--- Content & Integrity Verification Passed Successfully! ---')

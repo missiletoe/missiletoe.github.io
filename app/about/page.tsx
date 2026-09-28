@@ -8,7 +8,7 @@ import { projects } from '@/data/projects'
 
 export const metadata: Metadata = {
   title: 'About Max | Max, the Software Engineer',
-  description: '허용석의 소개와 YouTube MCP, KBPM, EverLeaf, 찍술 프로젝트.',
+  description: '허용석의 소개와 메이플스토리월드 에버리프, KBPM, 찍술 프로젝트.',
 }
 
 export default function AboutPage() {
@@ -55,9 +55,7 @@ export default function AboutPage() {
                   </div>
                   <div className="about-project__heading">
                     <h2>{project.shortTitle}</h2>
-                    <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <p>{project.preview}</p>
                 </div>
               </Link>
             )

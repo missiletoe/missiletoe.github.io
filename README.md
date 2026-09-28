@@ -2,7 +2,6 @@
 
 - [홈](https://missiletoe.github.io/)
 - [소개](https://missiletoe.github.io/about)
-- [MCP](https://missiletoe.github.io/work/mcp-publishing)
 - [KBPM](https://missiletoe.github.io/work/kbpm)
-- [EverLeaf](https://missiletoe.github.io/work/game-promotion)
+- [메이플스토리월드 에버리프](https://missiletoe.github.io/work/game-promotion)
 - [찍술](https://missiletoe.github.io/work/ios-prototyping)

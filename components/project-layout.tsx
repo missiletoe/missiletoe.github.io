@@ -28,14 +28,14 @@ export function ProjectLayout({ project, nextProject, children }: ProjectLayoutP
   return (
     <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
       <Link
-        href="/about#works"
+        href="/"
         className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
         data-analytics-step="project_back_to_works"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" /> 프로젝트
       </Link>
 
-      <header className="mt-8 border-b border-border pb-9">
+      <header className="mt-8 pb-9">
         <p className="text-sm text-muted-foreground">{project.category} · {project.period}</p>
         <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
           {project.title}
@@ -56,16 +56,16 @@ export function ProjectLayout({ project, nextProject, children }: ProjectLayoutP
         <EvidenceList items={project.evidence} />
       </header>
 
-      <section className="border-b border-border py-10" aria-labelledby="section-outputs">
+      <section className="py-10" aria-labelledby="section-outputs">
         <h2 id="section-outputs" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">구현한 것</h2>
         <ul className="mt-5 list-disc space-y-2.5 pl-5 text-base leading-relaxed text-foreground/85">
           {project.outputs.slice(0, 3).map((output) => <li key={output}>{output}</li>)}
         </ul>
       </section>
 
-      {children && <div className="border-b border-border py-10 [&>section]:my-0">{children}</div>}
+      {children && <div className="space-y-10 py-10">{children}</div>}
 
-      <section className="border-b border-border py-10" aria-labelledby="section-limitations">
+      <section className="py-10" aria-labelledby="section-limitations">
         <h2 id="section-limitations" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">현재 상태</h2>
         <p className="mt-4 text-base leading-relaxed text-foreground/80">{project.limitations[0]}</p>
       </section>

@@ -60,108 +60,22 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'mcp-publishing',
-    title: 'YouTube MCP와 Tistory 글쓰기 흐름',
-    shortTitle: 'YouTube MCP',
-    period: '2026.08 – 현재',
-    status: 'ongoing',
-    statusLabel: '로컬 도구 운영',
-    category: '외부 서비스 연동 · 업무 자동화',
-    preview: 'YouTube 플레이리스트 편집을 위한 MCP 서버를 만들고, Tistory의 기존 오픈소스 MCP를 글 작성에 연결했습니다.',
-    summary:
-      'TypeScript로 YouTube 재생목록을 편집하는 로컬 MCP 서버를 만들었습니다. Tistory 글 작성에는 기존 오픈소스 MCP를 연결해 사용했습니다.',
-    recentUpdate: {
-      date: '2026-09-23',
-      summary: '실제 플레이리스트 정리에 사용했습니다. API 할당량이 소진된 뒤 남은 변경은 YouTube 화면에서 마무리하고, 부분 반영 상태를 다시 확인하는 흐름을 기록했습니다.',
-    },
-    role: [
-      'TypeScript 기반 YouTube MCP stdio 서버 설계·개발',
-      '기존 오픈소스 Tistory MCP 연결과 개인 문체·Markdown 작성 흐름 구성',
-      '계획 확인, 중복·충돌 검사와 실패 뒤 현재 상태를 다시 확인하는 절차 설계',
-    ],
-    context: [
-      '플레이리스트 구성과 기술 블로그 게시물 발행은 한 번 작성하는 것보다 조사, 정리, 메타데이터 입력, 웹 콘솔 복사·붙여넣기, 발행 상태 확인을 반복하는 데 더 많은 시간이 소요되었습니다.',
-      '단순히 AI에게 텍스트를 생성하게 하는 것을 넘어, 사람이 대화 안에서 검토하고 승인하면 실제 외부 서비스 API를 통해 안전하게 발행되는 엔드투엔드 흐름이 필요했습니다.',
-    ],
-    constraints: [
-      'YouTube Data API 할당량과 외부 인증 제약',
-      '재생목록 일괄 변경 시 누락·중복 발생 시 복구가 어려운 문제',
-      '데스크톱 로컬 환경에서의 안전한 OAuth 2.0 PKCE 인증 및 토큰 보안 보관',
-      'Tistory 도구는 직접 구현한 MCP 서버가 아니라 공개된 기존 MCP를 연결해 사용',
-    ],
-    decisions: [
-      'YouTube MCP: TypeScript와 @modelcontextprotocol/sdk를 사용하여 Data API v3 및 Live Streaming API를 다루는 stdio 서버 구현',
-      'Plan / Apply 워크플로: snapshot -> 변경 목록·할당량 확인 -> 사용자 승인 -> apply -> 작업 기록 순으로 진행하고, 실패 뒤 현재 목록을 다시 조회해 반영 상태를 재조정',
-      'OAuth 루프백: 127.0.0.1 로컬 포트와 PKCE를 결합한 데스크톱 OAuth 플로우를 구축하고, 토큰은 환경 변수나 tool 인자로 전달하지 않고 로컬 보안 파일에만 격리',
-      'Tistory 글쓰기: 공개 저장소 kim-se-hee/tistory-mcp를 개인 문체, Markdown, 이미지·출처 확인 절차에 맞춰 연결',
-    ],
-    outputs: [
-      'YouTube 동영상·재생목록 작업을 연결한 로컬 TypeScript stdio MCP 서버',
-      '재생목록 스냅샷·diff·Quota 추정·승인 실행·작업 기록과 부분 실패 뒤 상태 재조회',
-      'Tistory 개인화 흐름에서 초안 작성·수정과 발행 전 검토 수행',
-    ],
-    limitations: [
-      'API 할당량 소진과 부분 적용 시 현재 목록을 다시 확인하고, 남은 작업은 직접 마무리합니다.',
-      '외부 서비스의 인증·할당량·에디터 변경에 따라 실행 흐름을 다시 확인해야 합니다.',
-    ],
-    nextSteps: [
-      '실제 운영에서 확인된 복구·재개 조건을 YouTube MCP 문서와 공개 예제에 반영',
-      'Tistory 발행은 기존 MCP 도구의 제공 범위와 직접 만든 서버의 범위를 명확히 유지',
-    ],
-    stack: [
-      {
-        name: 'TypeScript & Node.js 20+',
-        reason: '타입 안전한 MCP SDK 구현 및 stdio IPC 프로토콜 준수',
-        constraintOrLearning: 'stdio 통신 시 stdout을 프로토콜 전용으로 격리하고 진단 로그는 stderr로 분리',
-      },
-      {
-        name: '@modelcontextprotocol/sdk',
-        reason: 'Claude / Codex / ChatGPT 등 다양한 AI 에이전트 표준 도구 인터페이스',
-        constraintOrLearning: '도구 입출력의 JSON Schema를 엄격히 정의해야 에이전트 오작동 방지 가능',
-      },
-      {
-        name: 'Google YouTube Data API v3',
-        reason: '동영상 및 재생목록 메타데이터 CRUD 연동',
-        constraintOrLearning: '호출 전 예상 Quota를 계산하여 일일 한도 초과 방지',
-      },
-      {
-        name: 'OAuth 2.0 PKCE & Loopback',
-        reason: '로컬 환경에서 안전한 Google 사용자 인증 및 토큰 격리',
-        constraintOrLearning: '설치형 데스크톱 앱의 표준 권장 인증 규격 준수',
-      },
-    ],
-    evidence: [
-      {
-        type: 'article',
-        label: 'Tistory MCP를 활용해 발행한 기술 글',
-        href: 'https://max-dev.tistory.com/28',
-        verified: true,
-      },
-      {
-        type: 'repository',
-        label: 'Tistory MCP 원본 저장소 (기존 오픈소스)',
-        href: 'https://github.com/kim-se-hee/tistory-mcp',
-        verified: true,
-      },
-    ],
-  },
-  {
     slug: 'game-promotion',
-    title: '에버리프: 공식 웹사이트와 EverWiki CMS',
-    shortTitle: 'EverLeaf',
+    title: '메이플스토리월드 에버리프',
+    shortTitle: '메이플스토리월드 에버리프',
     period: '2026.06 – 현재',
     status: 'ongoing',
-    statusLabel: '공식 사이트 운영',
-    category: '풀스택 웹 · 콘텐츠 운영',
-    preview: '게임 공식 사이트를 Vercel에 배포하고, 위키·공지 콘텐츠를 관리하는 CMS를 확장했습니다.',
+    statusLabel: '게임 개발 · 공식 사이트 운영',
+    category: '게임 · 웹사이트 · CMS',
+    preview: '덱빌딩 로그라이트 게임의 UI를 공동 개선하고, 공식 웹사이트와 EverWiki CMS를 개발했습니다.',
     summary:
-      'MapleStory Worlds 게임 에버리프의 공식 사이트와 EverWiki CMS를 만들었습니다. 게임 내 UI는 동료와 함께 개선했습니다.',
+      '2D 필드 탐험과 턴제 카드 전투를 결합한 메이플스토리월드 덱빌딩 로그라이트입니다. 동료와 게임 UI를 개선하고, 공식 웹사이트와 EverWiki CMS를 개발했습니다.',
     recentUpdate: {
       date: '2026-09-18',
       summary: 'Notion 문서 114개와 표지 이미지 106개를 CMS에 반영하고 불완전한 자료는 검토 대기 상태로 남겼습니다. 게임 UI 병합에도 동료와 함께 참여했습니다.',
     },
     role: [
-      'Next.js 공식 웹사이트와 EverWiki CMS 설계·개발',
+      '게임 UI 공동 개발, 공식 웹사이트와 EverWiki CMS 설계·개발',
       'GitHub 로그인, 편집 권한, 콘텐츠 개정 이력과 발행 흐름 구현',
       '게임플레이 미디어 구성, 반응형 랜딩과 소셜 유입 경험 개선',
     ],
@@ -182,14 +96,15 @@ export const projects: Project[] = [
       '이전 Heartbeat·Redis 상태 모니터링을 종료하고 관련 경로는 410 Gone으로 정리',
     ],
     outputs: [
+      '게임 인벤토리·상태창, HUD, 직업 선택과 카드 상세 UX 공동 개선',
       '공개 EverWiki와 게임 소개·뉴스를 연결한 공식 웹사이트',
       '역할별 권한, 초안·발행본 분리, 개정 이력과 발행 충돌 방지를 포함한 CMS',
       '반응형 히어로·갤러리와 개인정보를 최소화한 링크 클릭 분석',
-      'MapleStory Worlds 인벤토리·상태창, HUD, 팝업 순서, 직업 선택 피드백과 단축키·카드 상세 UX 공동 개선',
       'Notion 문서·표지 이관 시 누락 자료는 자동 발행하지 않고 검토 대기 처리',
     ],
     limitations: [
-      'CMS 코드는 병합했고 공개 페이지 응답도 확인했습니다. 관리자 계정의 편집·발행 전 과정과 외부 문서 이관은 별도 확인이 필요합니다.',
+      '게임 UI의 코드 변경과 Maker에서의 실제 플레이 검증을 구분합니다. 웹사이트·CMS 공개 페이지 확인은 게임 전체의 실행 검증을 대신하지 않습니다.',
+      '관리자 계정의 편집·발행 전 과정과 외부 문서 이관은 별도 확인이 필요합니다.',
       '종료한 상태 모니터링은 현재 제공 기능에 포함하지 않습니다.',
     ],
     nextSteps: [
@@ -197,6 +112,7 @@ export const projects: Project[] = [
       '도감·가이드 콘텐츠의 출처와 개정 이력 보완',
     ],
     stack: [
+      { name: 'MapleStory Worlds / Lua', reason: '게임 UI와 카드 전투 상호작용 구성', constraintOrLearning: '코드 확인과 Maker에서의 실제 조작 검증을 구분' },
       { name: 'Next.js 16 & React 19', reason: '공식 사이트와 CMS의 공개·관리자 화면 구성', constraintOrLearning: '공개 콘텐츠와 편집 중인 상태를 분리' },
       { name: 'Supabase / PostgreSQL', reason: '문서·개정 이력·역할과 발행 상태 저장', constraintOrLearning: '권한 검사와 원자적 발행으로 일관성 유지' },
       { name: 'GitHub OAuth', reason: '운영자 로그인과 역할별 편집 권한', constraintOrLearning: '로그인 성공과 콘텐츠 수정 권한을 별도로 확인' },
