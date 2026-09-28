@@ -1,6 +1,4 @@
-import { Project, TechChoice } from '@/lib/types'
-
-export const portfolioUpdatedAt = '2026-09-24'
+import type { Project } from '@/lib/types'
 
 export const projects: Project[] = [
   {
@@ -9,11 +7,11 @@ export const projects: Project[] = [
     shortTitle: 'KBPM',
     period: '2025.05 – 현재',
     status: 'ongoing',
-    statusLabel: 'v2 개발 중 · 최종 거래 실행 비활성',
+    statusLabel: 'v2 개발 중',
     category: '네이티브 데스크톱 · 거래 안전성',
-    heroKicker: '거래 정보를 읽고 비교하는 화면부터, 실행을 멈추는 조건까지 설계',
+    preview: 'SwiftUI·WinUI 3 화면과 Python 실행 계층을 연결한 KREAM 데스크톱 앱을 개발하고 있습니다. 실제 거래 실행은 비활성 상태입니다.',
     summary:
-      '기존 보관판매 자동화 도구를 운영한 뒤, 현재는 거래·보유·발매 정보를 확인하는 무료 네이티브 데스크톱 작업공간 v2를 재설계하고 있습니다. SwiftUI와 WinUI 3 화면에 Python sidecar를 연결하고, 상품 검색·계정 내역·관심 상품·수수료 미리보기를 구현했습니다.',
+      '기존 보관판매 도구를 네이티브 데스크톱 앱으로 재설계하고 있습니다. SwiftUI·WinUI 3 화면과 Python 실행 계층을 연결해 상품 검색, 계정 조회와 비용 미리보기를 구현했습니다.',
     recentUpdate: {
       date: '2026-09-21',
       summary: '첫 출시 범위와 요구사항·검증 순서를 다시 정리했습니다. 이 작업은 계획·문서 정비이며, 최종 거래 제출은 계속 비활성 상태입니다.',
@@ -44,7 +42,7 @@ export const projects: Project[] = [
       '9월 8일 macOS 목록·페이지 이동·창 수명주기 확인 기록',
     ],
     limitations: [
-      '최종 거래 제출은 비활성 상태이며, 일부 macOS 확인 결과를 Windows·전체 KREAM 거래·공개 배포 검증으로 확대하지 않습니다.',
+      '최종 거래 제출은 비활성 상태입니다. macOS 확인 기록은 Windows 실행·실제 거래·공개 배포 검증을 대신하지 않습니다.',
       '외부 서비스의 로그인·데이터 구조가 바뀌면 조회 계약과 화면 표시를 다시 확인해야 합니다.',
     ],
     nextSteps: [
@@ -64,14 +62,14 @@ export const projects: Project[] = [
   {
     slug: 'mcp-publishing',
     title: 'YouTube MCP와 Tistory 글쓰기 흐름',
-    shortTitle: 'MCP Publishing',
+    shortTitle: 'YouTube MCP',
     period: '2026.08 – 현재',
     status: 'ongoing',
-    statusLabel: 'YouTube MCP 직접 개발 · Tistory 기존 MCP 연결',
+    statusLabel: '로컬 도구 운영',
     category: '외부 서비스 연동 · 업무 자동화',
-    heroKicker: '계획 확인과 복구 절차를 갖춘 콘텐츠 작업 도구',
+    preview: 'YouTube 플레이리스트 편집을 위한 MCP 서버를 만들고, Tistory의 기존 오픈소스 MCP를 글 작성에 연결했습니다.',
     summary:
-      'TypeScript로 YouTube 로컬 MCP 서버를 구현해 영상 검색과 플레이리스트 편집을 연결했습니다. Tistory에는 오픈소스 tistory-mcp를 개인 환경과 글쓰기 방식에 맞춰 연결했습니다. 직접 만든 YouTube 서버와 기존 Tistory MCP 활용을 구분하고, 실제 서비스 변경은 검토와 명시적 확인을 거치도록 구성했습니다.',
+      'TypeScript로 YouTube 재생목록을 편집하는 로컬 MCP 서버를 만들었습니다. Tistory 글 작성에는 기존 오픈소스 MCP를 연결해 사용했습니다.',
     recentUpdate: {
       date: '2026-09-23',
       summary: '실제 플레이리스트 정리에 사용했습니다. API 할당량이 소진된 뒤 남은 변경은 YouTube 화면에서 마무리하고, 부분 반영 상태를 다시 확인하는 흐름을 기록했습니다.',
@@ -103,8 +101,7 @@ export const projects: Project[] = [
       'Tistory 개인화 흐름에서 초안 작성·수정과 발행 전 검토 수행',
     ],
     limitations: [
-      '할당량 소진이나 부분 적용 상황에서는 자동 완료로 간주하지 않고, 서비스의 현재 상태를 확인한 뒤 남은 작업을 직접 마무리합니다.',
-      'Tistory API, CDM 변환기, WebMCP를 직접 구현했다고 주장하지 않습니다.',
+      'API 할당량 소진과 부분 적용 시 현재 목록을 다시 확인하고, 남은 작업은 직접 마무리합니다.',
       '외부 서비스의 인증·할당량·에디터 변경에 따라 실행 흐름을 다시 확인해야 합니다.',
     ],
     nextSteps: [
@@ -147,28 +144,6 @@ export const projects: Project[] = [
         verified: true,
       },
     ],
-    diagram: {
-      title: '계획에서 서비스 반영 확인까지',
-      beforeTitle: '자동화 이전 (수동 반복 방식)',
-      before: [
-        '자료 조사 및 초안 작성',
-        '별도 문서/노트에 수동 정리',
-        '브라우저로 YouTube Studio / Tistory 접속',
-        '제목·설명·태그 등 메타데이터 복사·붙여넣기',
-        '수동 업로드 및 레이아웃 깨짐 확인',
-        '수정 필요 시 콘솔에서 다시 수동 편집',
-      ],
-      afterTitle: '도구 연결 이후 (승인형 작업 흐름)',
-      after: [
-        '대화 컨텍스트 안에서 자료 조사 및 구조화',
-        '직접 개발한 YouTube MCP가 변경 목록과 할당량을 포함한 Plan 생성',
-        '사람이 Plan 및 변경 목록 검토 후 명시적 승인',
-        '확인된 변경만 API로 실행하고 저널에 기록',
-        '부분 실패 뒤 상태를 재조회하고 필요하면 화면에서 마무리',
-      ],
-      humanGateNote:
-        '직접 구현한 YouTube 서버의 기능과 기존 Tistory 오픈소스 MCP 활용을 나누어 기록합니다.',
-    },
   },
   {
     slug: 'game-promotion',
@@ -176,11 +151,11 @@ export const projects: Project[] = [
     shortTitle: 'EverLeaf',
     period: '2026.06 – 현재',
     status: 'ongoing',
-    statusLabel: '공식 사이트 공개 · EverWiki CMS 확장',
+    statusLabel: '공식 사이트 운영',
     category: '풀스택 웹 · 콘텐츠 운영',
-    heroKicker: '게임을 소개하는 랜딩에서 운영자가 직접 고치는 도감까지',
+    preview: '게임 공식 사이트를 Vercel에 배포하고, 위키·공지 콘텐츠를 관리하는 CMS를 확장했습니다.',
     summary:
-      'Codex에 디자인·프론트엔드·브라우저 검증·배포 스킬을 연결해 MapleStory Worlds 게임 에버리프의 공식 웹사이트를 제작하고 Vercel에 배포했습니다. EverWiki CMS를 확장하고, MapleStory Worlds 게임 UI 개선에는 동료와 함께 참여했습니다.',
+      'MapleStory Worlds 게임 에버리프의 공식 사이트와 EverWiki CMS를 만들었습니다. 게임 내 UI는 동료와 함께 개선했습니다.',
     recentUpdate: {
       date: '2026-09-18',
       summary: 'Notion 문서 114개와 표지 이미지 106개를 CMS에 반영하고 불완전한 자료는 검토 대기 상태로 남겼습니다. 게임 UI 병합에도 동료와 함께 참여했습니다.',
@@ -214,7 +189,7 @@ export const projects: Project[] = [
       'Notion 문서·표지 이관 시 누락 자료는 자동 발행하지 않고 검토 대기 처리',
     ],
     limitations: [
-      'CMS 병합과 공개 페이지 응답은 확인했으며, 실제 관리자 계정의 전체 편집·발행 흐름 검증과 외부 문서 이관 완료 여부는 별도입니다.',
+      'CMS 코드는 병합했고 공개 페이지 응답도 확인했습니다. 관리자 계정의 편집·발행 전 과정과 외부 문서 이관은 별도 확인이 필요합니다.',
       '종료한 상태 모니터링은 현재 제공 기능에 포함하지 않습니다.',
     ],
     nextSteps: [
@@ -236,14 +211,14 @@ export const projects: Project[] = [
   {
     slug: 'ios-prototyping',
     title: '찍술: iOS와 앱인토스로 이어지는 음주 기록',
-    shortTitle: 'ZzikSool',
+    shortTitle: '찍술',
     period: '2026.07 – 현재',
     status: 'ongoing',
-    statusLabel: '앱인토스 .ait 생성 · 실기기 검증 전',
+    statusLabel: '미니앱 출시 준비',
     category: 'iOS 네이티브 · 앱인토스 미니앱',
-    heroKicker: '미니앱으로 먼저 기록을 시작하고 iOS 경험으로 잇는 흐름',
+    preview: 'iOS 기록 앱과 별도의 앱인토스 미니앱을 개발 중입니다. Toss 실기기 검증과 심사는 진행 전입니다.',
     summary:
-      'SwiftUI 사진 음주 기록 앱을 먼저 만들고, 앱인토스에서 기록을 시작한 뒤 iOS 앱으로 확장하는 별도의 미니앱을 개발하고 있습니다. React·TypeScript·Vite로 Toss 카메라·앨범·저장소 연동, 인식 후보 검토, 실제 음용량 확인과 저장 흐름을 구성하고 .ait 패키지를 생성했습니다. Toss 실기기 검증과 심사 제출은 아직 진행하지 않았습니다.',
+      'SwiftUI 음주 기록 앱과 별도의 앱인토스 미니앱을 개발하고 있습니다. 미니앱의 촬영·후보 확인·기록 저장 흐름과 .ait 패키지 생성을 마쳤고, Toss 실기기 검증과 심사는 진행 전입니다.',
     recentUpdate: {
       date: '2026-09-20',
       summary: '앱인토스 앱을 콘솔에 등록하고 별도 React 미니앱과 로컬 .ait 패키지를 만들었습니다. 심사·출시·실기기 테스트는 진행 전이며, iOS와 미니앱 간 기록 동기화도 구현하지 않았습니다.',
@@ -277,7 +252,7 @@ export const projects: Project[] = [
       'Toss 앱 등록, 카메라·사진 선택·SDK 저장소 흐름과 zziksool.ait 로컬 산출물',
     ],
     limitations: [
-      '앱인토스 미니앱은 Toss 실기기 흐름·비공개 테스트 QR·콘솔 업로드·심사 제출을 아직 수행하지 않았으며 출시된 앱이 아닙니다.',
+      '앱인토스 미니앱은 Toss 실기기 검증, 콘솔 업로드, 심사 전입니다.',
       'iOS와 미니앱은 별도 저장소를 사용하며 기록 동기화는 구현되지 않았습니다.',
       '인식 기능은 기본 앱의 처리 범위와 별도 실험 기능, 미니앱의 로컬 OCR 범위를 나누어 보며 외부 인식 기능은 비활성 상태입니다.',
       '다중 사진 인식은 미병합 PR이며, 내부 TestFlight 업로드를 테스터의 설치·실행 성공이나 App Store 출시로 간주하지 않습니다.',
@@ -295,9 +270,7 @@ export const projects: Project[] = [
       { name: 'AppIntents & PhotosUI', reason: '촬영·사진 선택·직접 입력으로 연결하는 시스템 진입점', constraintOrLearning: '단축어 진입이 기록 저장을 대신하지 않도록 분리' },
       { name: 'Xcode & TestFlight', reason: '빌드·접근성 검사와 내부 배포', constraintOrLearning: '업로드·처리·설치·실행 상태를 각각 기록' },
     ],
-    evidence: [
-      { type: 'image', label: 'ZzikSool 앱 아이콘', image: '/images/zziksool-icon.png', caption: '찍술 iOS 앱을 위해 제작한 아이콘 자산', verified: true },
-    ],
+    evidence: [],
   },
 ]
 
@@ -305,90 +278,19 @@ export const additionalWork = [
   {
     date: '2026-09-21',
     title: 'Codex 개발 스킬 구성과 검증',
-    icon: 'MCP tools',
     summary:
       'Apple·웹·문서·미디어 작업에 필요한 개인 스킬을 정리하고, 중복 진입점을 줄였습니다. 당시 활성화된 21개 스킬과 프로젝트별 검색 흐름의 로컬 검증을 마쳤습니다.',
   },
   {
     date: '2026-09-16',
     title: '제품 문서와 실행 근거 정리',
-    icon: 'Markdown',
     summary:
       'KBPM 개발 문서를 현재 구조, 작업 절차, 과거 기록으로 나누고, 코드에서 확인한 동작과 실제 플랫폼·거래 검증 상태를 구분했습니다.',
   },
   {
     date: '2026-09-05',
     title: 'Python 입문 수업 자료 제작',
-    icon: 'Python',
     summary:
       '초보자용 60분 수업을 위해 Thonny 설치, print·input·변수, 오류 읽기와 작은 실습을 23장 슬라이드와 3쪽 활동지·PDF로 구성하고 렌더링을 확인했습니다.',
   },
 ] as const
-
-export const allTechChoices: TechChoice[] = [
-  { name: 'Python & IPC', reason: 'KBPM 조회·거래 제어 엔진과 네이티브 셸 연결', constraintOrLearning: '프로세스 수명주기와 불완전한 응답을 명시적인 상태로 전달' },
-  { name: 'Swift / SwiftUI & WinUI 3', reason: 'KBPM 데스크톱 셸과 찍술 iPhone 앱', constraintOrLearning: '공통 기능 구현과 OS·실기기 검증을 구분' },
-  { name: 'Apple Vision & SwiftData', reason: '찍술의 기기 내 제품 분석과 개인 기록 저장', constraintOrLearning: '인식 결과와 실제 음용량 확인을 분리' },
-  { name: 'TypeScript & Node.js', reason: 'MCP 서버와 웹사이트의 데이터·도구 계약', constraintOrLearning: '외부 서비스 변경과 실패를 처리할 경계 설계' },
-  { name: 'Next.js & Tailwind CSS', reason: '포트폴리오의 정적 배포와 에버리프 공식 사이트·CMS', constraintOrLearning: '포트폴리오는 Next.js 15 정적 export, 에버리프는 Next.js 16 기반 서버 기능 사용' },
-  { name: 'Supabase & GitHub OAuth', reason: 'EverWiki 콘텐츠·개정 이력과 운영자 권한', constraintOrLearning: '로그인·편집·발행 권한과 공개 버전을 구분' },
-]
-
-export const operatingPrinciples = [
-  {
-    step: '01',
-    title: '사람이 반복하는 작업을 관찰한다',
-    description:
-      '자동화나 제품을 만들기 전, 사람이 수동으로 어떤 단계를 거치며 어디서 병목과 피로가 발생하는지 파악합니다.',
-    linkedProject: 'MCP Publishing',
-    projectSlug: 'mcp-publishing',
-  },
-  {
-    step: '02',
-    title: '실제 실패 조건과 예외를 먼저 수집한다',
-    description:
-      'CSR 지연, 로그인 세션 만료, 난반사, 결로 현상 등 실제 사용자 환경에서 발생하는 실패 요인을 사전에 리스트업합니다.',
-    linkedProject: 'KBPM',
-    projectSlug: 'kbpm',
-  },
-  {
-    step: '03',
-    title: '가장 작은 동작 가능한 흐름을 만든다',
-    description:
-      '모든 기능을 한 번에 만들기보다, 핵심 입력과 출력이 끝까지 연결되는 MVP를 최우선으로 검증합니다.',
-    linkedProject: 'iOS Prototyping (찍술)',
-    projectSlug: 'ios-prototyping',
-  },
-  {
-    step: '04',
-    title: '다른 환경에서 실행해 본다',
-    description:
-      '시뮬레이터와 실제 기기, macOS와 Windows의 확인 결과를 나누어 기록하고 미검증 범위를 남깁니다.',
-    linkedProject: 'KBPM',
-    projectSlug: 'kbpm',
-  },
-  {
-    step: '05',
-    title: '배포와 업데이트 방법을 함께 만든다',
-    description:
-      '코드를 작성하는 것으로 끝내지 않고 GitHub Actions 릴리스, TestFlight, GitHub Pages 등 실제 전달 경로를 구축합니다.',
-    linkedProject: '찍술 & 포트폴리오',
-    projectSlug: 'ios-prototyping',
-  },
-  {
-    step: '06',
-    title: '사용자가 이해할 설명과 홍보물까지 준비한다',
-    description:
-      '소프트웨어만 완성해 두지 않고, 스토리보드 기반 영상, 타이틀 그래픽, 공식 웹페이지로 제품의 가치를 온전히 전달합니다.',
-    linkedProject: 'EverLeaf',
-    projectSlug: 'game-promotion',
-  },
-  {
-    step: '07',
-    title: '실패 기록을 다음 구조 개편에 반영한다',
-    description:
-      '임시 땜질식 코드에 기대지 않고, 런타임 실패와 운영 한계를 다음 버전의 네이티브 아키텍처 재설계에 반영합니다.',
-    linkedProject: 'KBPM v2',
-    projectSlug: 'kbpm',
-  },
-]

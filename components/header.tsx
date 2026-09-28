@@ -15,10 +15,9 @@ import {
 } from '@/components/ui/sheet'
 
 const navItems = [
-  { label: '최근 작업', href: '/#works' },
-  { label: '작업 방식', href: '/#process' },
-  { label: '기술 선택', href: '/#stack' },
-  { label: '현재 진행 중', href: '/#ongoing' },
+  { label: '프로젝트', href: '/#works' },
+  { label: '소개', href: '/#about' },
+  { label: '연락', href: '/#contact' },
 ]
 
 export function Header() {

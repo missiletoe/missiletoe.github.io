@@ -7,11 +7,11 @@ import { Footer } from '@/components/footer'
 export const metadata: Metadata = {
   title: '허용석 · AI Engineer | Max Portfolio',
   description:
-    'MCP와 브라우저 자동화로 AI 도구를 실제 업무에 연결하는 허용석의 AI Engineer 포트폴리오입니다.',
+    '허용석의 AI Engineer 포트폴리오. MCP, 브라우저 자동화, 데스크톱·모바일 앱 개발 사례를 소개합니다.',
   metadataBase: new URL('https://missiletoe.github.io'),
   openGraph: {
     title: '허용석 · AI Engineer',
-    description: '도구를 연결해 실제 업무를 바꿉니다.',
+    description: 'MCP, 브라우저 자동화와 앱 개발 사례를 소개합니다.',
     url: 'https://missiletoe.github.io',
     siteName: 'Max Portfolio',
     locale: 'ko_KR',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '허용석 · AI Engineer',
-    description: 'MCP와 브라우저 자동화로 AI 도구를 실제 업무에 연결합니다.',
+    description: 'MCP, 브라우저 자동화와 앱 개발 사례를 소개합니다.',
   },
   robots: {
     index: true,

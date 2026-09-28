@@ -1,13 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, ShieldCheck, CheckCircle2, AlertCircle, Sparkles, Target, AlertTriangle, Cpu, Rocket } from 'lucide-react'
-import { Project } from '@/lib/types'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
-import { TechTable } from '@/components/tech-table'
+import { ArrowLeft, ArrowUpRight, ChevronDown } from 'lucide-react'
+import type { Project } from '@/lib/types'
 import { EvidenceList } from '@/components/evidence-card'
-import { FlowDiagram } from '@/components/flow-diagram'
+import { TechTable } from '@/components/tech-table'
 
 interface ProjectLayoutProps {
   project: Project
@@ -15,270 +11,106 @@ interface ProjectLayoutProps {
   children?: React.ReactNode
 }
 
-export function ProjectLayout({
-  project,
-  nextProject,
-  children,
-}: ProjectLayoutProps) {
+function DetailList({ title, items }: { title: string; items: string[] }) {
+  if (items.length === 0) return null
+
   return (
-    <article className="mx-auto max-w-4xl px-4 sm:px-6 py-12 flex flex-col gap-12">
-      {/* Top Back Link */}
-      <div>
-        <Link
-          href="/#works"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus-visible:rounded"
-          data-analytics-step="project_back_to_works"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          <span>전체 프로젝트 목록으로 돌아가기</span>
-        </Link>
-      </div>
+    <section>
+      <h3 className="text-sm font-semibold text-foreground">{title}</h3>
+      <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-foreground/80">
+        {items.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+    </section>
+  )
+}
 
-      {/* Header */}
-      <header className="flex flex-col gap-5 border-b border-border pb-8">
-        <div className="flex flex-wrap items-center gap-2.5 text-sm text-muted-foreground">
-          <span className="font-semibold text-foreground">{project.category}</span>
-          <span>·</span>
-          <span className="font-mono">{project.period}</span>
-          <Badge
-            variant={
-              project.status === 'shipped'
-                ? 'shipped'
-                : project.status === 'ongoing'
-                ? 'ongoing'
-                : 'planned'
-            }
-            className="ml-1"
-          >
-            {project.statusLabel}
-          </Badge>
-        </div>
+export function ProjectLayout({ project, nextProject, children }: ProjectLayoutProps) {
+  return (
+    <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
+      <Link
+        href="/#works"
+        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        data-analytics-step="project_back_to_works"
+      >
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" /> 프로젝트
+      </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground leading-[1.2]">
+      <header className="mt-8 border-b border-border pb-9">
+        <p className="text-sm text-muted-foreground">{project.category} · {project.period}</p>
+        <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
           {project.title}
         </h1>
-
-        <p className="text-lg sm:text-xl text-foreground/85 leading-relaxed max-w-3xl">
+        <p className="mt-5 max-w-3xl text-base leading-relaxed text-foreground/80 sm:text-lg">
           {project.summary}
         </p>
-
-        {/* 3초 핵심 요약 배너 (TL;DR Summary Banner) */}
-        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3.5 rounded-xl border border-emerald-500/25 bg-emerald-500/5 dark:bg-emerald-950/20 p-5">
-          <div className="flex items-start gap-3">
-            <Target className="h-5 w-5 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
-                담당 역할
-              </span>
-              <span className="text-sm font-medium text-foreground">
-                {project.role[0]}
-              </span>
-            </div>
+        <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2 sm:gap-6">
+          <div>
+            <dt className="text-muted-foreground">담당</dt>
+            <dd className="mt-1 text-foreground">{project.role[0]}</dd>
           </div>
-
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 font-mono">
-                핵심 제약
-              </span>
-              <span className="text-sm font-medium text-foreground">
-                {project.constraints[0]}
-              </span>
-            </div>
+          <div>
+            <dt className="text-muted-foreground">상태</dt>
+            <dd className="mt-1 text-foreground">{project.statusLabel}</dd>
           </div>
-
-          <div className="flex items-start gap-3">
-            <Cpu className="h-5 w-5 text-indigo-600 dark:text-indigo-400 mt-0.5 shrink-0" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-indigo-800 dark:text-indigo-300 font-mono">
-                해결 아키텍처
-              </span>
-              <span className="text-sm font-medium text-foreground">
-                {project.decisions[0]}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <Rocket className="h-5 w-5 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
-                검증된 결과
-              </span>
-              <span className="text-sm font-medium text-foreground">
-                {project.outputs[0]}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Evidence Links in Header */}
+        </dl>
         <EvidenceList items={project.evidence} />
       </header>
 
-      {/* 1. 내가 맡은 역할 */}
-      <section aria-labelledby="section-role" className="flex flex-col gap-4">
-        <h2 id="section-role" className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-emerald-600 dark:text-emerald-400">01.</span>
-          <span>내가 맡은 역할</span>
-        </h2>
-        <ul className="list-disc list-inside flex flex-col gap-2 text-base text-foreground/90 leading-relaxed">
-          {project.role.map((r, i) => (
-            <li key={i}>{r}</li>
-          ))}
+      <section className="border-b border-border py-10" aria-labelledby="section-outputs">
+        <h2 id="section-outputs" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">구현한 것</h2>
+        <ul className="mt-5 list-disc space-y-2.5 pl-5 text-base leading-relaxed text-foreground/85">
+          {project.outputs.slice(0, 3).map((output) => <li key={output}>{output}</li>)}
         </ul>
       </section>
 
-      <Separator />
+      {children && <div className="border-b border-border py-10 [&>section]:my-0">{children}</div>}
 
-      {/* 2. 시작 당시 상황 */}
-      <section aria-labelledby="section-context" className="flex flex-col gap-4">
-        <h2 id="section-context" className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-emerald-600 dark:text-emerald-400">02.</span>
-          <span>시작 당시 상황</span>
-        </h2>
-        <div className="flex flex-col gap-3.5 text-base text-foreground/90 leading-relaxed">
-          {project.context.map((c, i) => (
-            <p key={i}>{c}</p>
-          ))}
-        </div>
+      <section className="border-b border-border py-10" aria-labelledby="section-limitations">
+        <h2 id="section-limitations" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">현재 상태</h2>
+        <p className="mt-4 text-base leading-relaxed text-foreground/80">{project.limitations[0]}</p>
       </section>
 
-      <Separator />
-
-      {/* 3. 실제로 마주친 제약 */}
-      <section aria-labelledby="section-constraints" className="flex flex-col gap-4">
-        <h2 id="section-constraints" className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-amber-600 dark:text-amber-400">03.</span>
-          <span>실제로 마주친 제약</span>
-        </h2>
-        <div className="rounded-xl border border-border/80 bg-muted/25 p-6 flex flex-col gap-3">
-          {project.constraints.map((constraint, i) => (
-            <div key={i} className="flex items-start gap-3 text-base text-foreground/90 leading-relaxed">
-              <span className="font-mono text-sm font-bold text-amber-700 dark:text-amber-400 mt-0.5 shrink-0">
-                [{i + 1}]
-              </span>
-              <span>{constraint}</span>
+      <details className="group border-b border-border py-5">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-medium text-foreground marker:hidden [&::-webkit-details-marker]:hidden">
+          설계 과정과 추가 정보
+          <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div className="space-y-9 pb-7 pt-5">
+          {project.recentUpdate && (
+            <section>
+              <h3 className="text-sm font-semibold text-foreground">최근 작업</h3>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/80">
+                <time dateTime={project.recentUpdate.date}>{project.recentUpdate.date.replaceAll('-', '.')}</time> · {project.recentUpdate.summary}
+              </p>
+            </section>
+          )}
+          <DetailList title="추가 담당 범위" items={project.role.slice(1)} />
+          <section>
+            <h3 className="text-sm font-semibold text-foreground">배경</h3>
+            <div className="mt-3 space-y-2 text-sm leading-relaxed text-foreground/80">
+              {project.context.map((item) => <p key={item}>{item}</p>)}
             </div>
-          ))}
+          </section>
+          <DetailList title="제약" items={project.constraints} />
+          <DetailList title="주요 판단" items={project.decisions} />
+          <DetailList title="추가 구현" items={project.outputs.slice(3)} />
+          <DetailList title="남은 한계" items={project.limitations.slice(1)} />
+          <DetailList title="다음 작업" items={project.nextSteps} />
+          <section>
+            <h3 className="mb-4 text-sm font-semibold text-foreground">기술 선택</h3>
+            <TechTable items={project.stack} />
+          </section>
         </div>
-      </section>
+      </details>
 
-      <Separator />
-
-      {/* 4. 내가 내린 주요 판단 */}
-      <section aria-labelledby="section-decisions" className="flex flex-col gap-4">
-        <h2 id="section-decisions" className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-emerald-600 dark:text-emerald-400">04.</span>
-          <span>내가 내린 주요 판단</span>
-        </h2>
-        <div className="flex flex-col gap-3.5 text-base text-foreground/90 leading-relaxed">
-          {project.decisions.map((decision, i) => (
-            <div key={i} className="flex items-start gap-3.5">
-              <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
-              <span>{decision}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Optional Flow Diagram */}
-      {project.diagram && (
-        <FlowDiagram
-          title={project.diagram.title}
-          beforeTitle={project.diagram.beforeTitle}
-          before={project.diagram.before}
-          afterTitle={project.diagram.afterTitle}
-          after={project.diagram.after}
-          humanGateNote={project.diagram.humanGateNote}
-        />
-      )}
-
-      {/* Custom Body / Injected Media */}
-      {children}
-
-      <Separator />
-
-      {/* 5. 구현하거나 배포한 결과 */}
-      <section aria-labelledby="section-outputs" className="flex flex-col gap-4">
-        <h2 id="section-outputs" className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-emerald-600 dark:text-emerald-400">05.</span>
-          <span>구현하거나 배포한 결과</span>
-        </h2>
-        <ul className="list-disc list-inside flex flex-col gap-2.5 text-base text-foreground/90 leading-relaxed">
-          {project.outputs.map((output, i) => (
-            <li key={i}>{output}</li>
-          ))}
-        </ul>
-      </section>
-
-      <Separator />
-
-      {/* 6. 실패하거나 예상과 달랐던 부분 & 그 경험으로 바뀐 다음 설계 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <section aria-labelledby="section-limitations" className="flex flex-col gap-3 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-          <h2 id="section-limitations" className="text-base font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2">
-            <AlertCircle className="h-5 w-5" />
-            <span>06. 실패 또는 남은 한계</span>
-          </h2>
-          <ul className="list-disc list-inside flex flex-col gap-2 text-sm text-foreground/90 leading-relaxed">
-            {project.limitations.map((lim, i) => (
-              <li key={i}>{lim}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section aria-labelledby="section-nextsteps" className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6">
-          <h2 id="section-nextsteps" className="text-base font-bold text-foreground flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-            <span>07. 다음 설계 및 개편 계획</span>
-          </h2>
-          <ul className="list-disc list-inside flex flex-col gap-2 text-sm text-foreground/90 leading-relaxed">
-            {project.nextSteps.map((step, i) => (
-              <li key={i}>{step}</li>
-            ))}
-          </ul>
-        </section>
-      </div>
-
-      <Separator />
-
-      {/* 7. 사용 기술과 선택 이유 */}
-      <section aria-labelledby="section-stack" className="flex flex-col gap-4">
-        <h2 id="section-stack" className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-          <span className="font-mono text-emerald-600 dark:text-emerald-400">08.</span>
-          <span>사용 기술과 선택 이유</span>
-        </h2>
-        <TechTable items={project.stack} />
-      </section>
-
-      <Separator />
-
-      {/* Next Project Footer */}
       {nextProject && (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-border">
-          <div className="flex flex-col gap-1">
-            <span className="text-xs font-bold text-muted-foreground uppercase font-mono tracking-wider">다음 프로젝트</span>
-            <span className="text-base font-bold text-foreground">
-              {nextProject.shortTitle} — {nextProject.heroKicker}
-            </span>
-          </div>
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="text-sm font-semibold"
-            aria-label={`다음 사례 연구: ${nextProject.shortTitle} 보기`}
-            data-analytics-step="next_project_cta"
-          >
-            <Link href={`/work/${nextProject.slug}`} className="flex items-center gap-2">
-              <span>사례 연구 보기</span>
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              <span className="sr-only">{`다음 프로젝트: ${nextProject.shortTitle}`}</span>
-            </Link>
-          </Button>
-        </div>
+        <Link
+          href={'/work/' + nextProject.slug}
+          className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground hover:underline"
+          data-analytics-step="next_project_cta"
+        >
+          다음 프로젝트: {nextProject.shortTitle} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       )}
     </article>
   )

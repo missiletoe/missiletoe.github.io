@@ -32,8 +32,8 @@ export interface Project {
   status: ProjectStatus
   statusLabel: string
   category: string
+  preview: string
   summary: string
-  heroKicker: string
   role: string[]
   collaboration?: string[]
   context: string[]
@@ -47,13 +47,5 @@ export interface Project {
   recentUpdate?: {
     date: string
     summary: string
-  }
-  diagram?: {
-    title?: string
-    beforeTitle?: string
-    before: string[]
-    afterTitle?: string
-    after: string[]
-    humanGateNote?: string
   }
 }
