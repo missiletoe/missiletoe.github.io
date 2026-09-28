@@ -28,7 +28,7 @@ export function ProjectLayout({ project, nextProject, children }: ProjectLayoutP
   return (
     <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
       <Link
-        href="/#works"
+        href="/about#works"
         className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
         data-analytics-step="project_back_to_works"
       >

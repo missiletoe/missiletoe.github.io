@@ -41,6 +41,7 @@ console.log('✓ docs/content-evidence.md verified')
 // Check required route pages exist
 const routeFiles = [
   'app/page.tsx',
+  'app/about/page.tsx',
   'app/layout.tsx',
   'app/not-found.tsx',
   'app/sitemap.ts',
@@ -57,6 +58,6 @@ for (const rf of routeFiles) {
     process.exit(1)
   }
 }
-console.log('✓ All 9 core App Router page files exist')
+console.log('✓ All 10 core App Router page files exist')
 
 console.log('--- Content & Integrity Verification Passed Successfully! ---')
