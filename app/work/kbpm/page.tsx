@@ -31,13 +31,13 @@ export default function KbpmPage() {
           <div className="grid gap-5 pb-2 pt-4 sm:grid-cols-2">
             <figure>
               <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-muted">
-                <Image src="/images/1.png" alt="KBPM v1 상품 검색 결과 화면" fill className="object-cover" />
+                <Image src="/images/kbpm-v1-screenshot-1.png" alt="KBPM v1 상품 검색 결과 화면" fill className="object-cover" />
               </div>
               <figcaption className="mt-2 text-xs text-muted-foreground">2025년 v1 · 상품 검색</figcaption>
             </figure>
             <figure>
               <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-muted">
-                <Image src="/images/2.png" alt="KBPM v1 보관판매 대기열 화면" fill className="object-cover" />
+                <Image src="/images/kbpm-v1-screenshot-2.png" alt="KBPM v1 보관판매 대기열 화면" fill className="object-cover" />
               </div>
               <figcaption className="mt-2 text-xs text-muted-foreground">2025년 v1 · 보관판매 대기열</figcaption>
             </figure>

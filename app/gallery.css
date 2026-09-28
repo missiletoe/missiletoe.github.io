@@ -79,8 +79,8 @@
 }
 
 .gallery-project[data-project='ios-prototyping'] .gallery-project__preview {
-  width: min(70vw, 400px, 52svh);
-  aspect-ratio: 1;
+  width: min(70vw, 360px, 28svh);
+  aspect-ratio: 1320 / 2723;
 }
 
 .gallery-project__identity {

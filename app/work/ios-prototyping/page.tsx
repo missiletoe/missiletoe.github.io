@@ -17,7 +17,7 @@ export default function IosPrototypingPage() {
         <div className="mt-5 grid gap-6 sm:grid-cols-[112px_1fr] sm:items-start">
           <figure>
             <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
-              <Image src="/images/zziksool-icon.png" alt="찍술 앱 아이콘" fill className="object-contain" />
+              <Image src="/images/project-icons/zziksool.webp" alt="찍술 앱 아이콘" fill className="object-contain" />
             </div>
           </figure>
           <div className="space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
