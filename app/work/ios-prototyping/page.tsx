@@ -1,46 +1,42 @@
-import Image from 'next/image'
+import { Grid2X2, Smartphone } from 'lucide-react'
 import { projects } from '@/data/projects'
-import { ProjectLayout } from '@/components/project-layout'
+import { productIntros } from '@/data/product-intros'
+import { ProjectLayout, ProductAvailability, ProductFaq, ProductHero, ProductImage, ProductWorkflow } from '@/components/project-layout'
 import { createPageMetadata } from '@/lib/metadata'
 
 export const metadata = createPageMetadata({
   path: '/work/ios-prototyping',
-  title: '찍술: iOS 앱과 앱인토스 미니앱 | Max',
-  description: '찍술의 iOS 기록 앱과 별도 앱인토스 미니앱 개발 기록입니다.',
-  image: {
-    url: '/images/zziksool-logo.png',
-    width: 1254,
-    height: 1254,
-    alt: '찍술 앱 로고',
-  },
+  title: '찍술 | 사진으로 정리하는 나의 음주 기록',
+  description: '사진에서 제품을 확인하고 실제로 마신 양을 기록해요. 찍술의 기록 방법과 iPhone 앱·앱인토스 미니앱 준비 상태를 확인하세요.',
+  image: { url: '/images/zziksool-logo.png', width: 1254, height: 1254, alt: '찍술 앱 로고' },
 })
 
 export default function IosPrototypingPage() {
   const project = projects.find((item) => item.slug === 'ios-prototyping')!
+  const intro = productIntros.zziksool
   return (
-    <ProjectLayout project={project}>
-      <section aria-labelledby="zziksool-ios-title">
-        <h2 id="zziksool-ios-title" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">iOS 기록 앱</h2>
-        <div className="mt-5 grid gap-6 sm:grid-cols-[112px_1fr] sm:items-start">
-          <figure>
-            <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
-              <Image src="/images/project-icons/zziksool.webp" alt="찍술 앱 아이콘" fill className="object-contain" />
-            </div>
-          </figure>
-          <div className="space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
-            <p>SwiftUI와 Apple Vision으로 라벨·바코드를 분석합니다. 제품 후보와 실제 마신 양은 사용자가 확인한 뒤 저장하며, 기록은 Today와 캘린더에 표시됩니다.</p>
-            <p>다중 사진 인식은 별도 개발 작업입니다. 내부 TestFlight 업로드 기록은 있으나 테스터 설치·실행과 실제 기기 촬영 검증은 남아 있습니다.</p>
-          </div>
+    <ProjectLayout project={project} intro={intro}>
+      <ProductHero intro={intro} />
+      <ProductWorkflow intro={intro}>
+        <a href="#faq" className="product-text-link" data-analytics-step="product_manual_entry">사진 없이 직접 입력할 수도 있어요.</a>
+      </ProductWorkflow>
+      <section className="product-feature product-section product-container zziksool-calendar">
+        <div className="product-feature__copy">
+          <h2>하루씩 쌓인 기록을,<br />달력에서 다시 봐요.</h2>
+          <p>날짜를 눌러 기록을 확인하고, 필요하면 수정하거나 삭제하세요.</p>
+          <p>기록하지 않은 날은 미기록으로 구분해요. 비어 있는 날짜가 술을 마시지 않은 날을 뜻하지는 않아요.</p>
         </div>
+        <ProductImage media={intro.hero} />
       </section>
-
-      <section className="mt-10" aria-labelledby="zziksool-toss-title">
-        <h2 id="zziksool-toss-title" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">앱인토스 미니앱</h2>
-        <div className="mt-4 space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
-          <p>기존 iOS 앱과 별도로 React·TypeScript·Vite 미니앱을 만들었습니다. Toss SDK의 카메라·사진 선택·저장소를 연결해 사진 선택, 후보 검토, 음용량 확인, 저장으로 이어집니다.</p>
-          <p>콘솔에 앱을 등록하고 로컬 .ait 패키지를 생성했습니다. Toss 실기기 테스트와 심사·출시는 진행 전입니다. 두 앱의 기록은 동기화되지 않으며, 클라우드 이미지 분석은 비활성 상태입니다.</p>
-        </div>
-      </section>
+      <ProductAvailability title="어디에서 사용할 수 있나요?">
+        <p className="product-section__intro">지금은 두 플랫폼에서 준비 중이에요. 아직 공개 설치 링크는 없어요.</p>
+        <dl className="product-info-list product-platforms">
+          <div><dt><Smartphone size={24} strokeWidth={1.5} aria-hidden="true" />iPhone 앱</dt><dd>내부 테스트 중 · 공개 설치 링크 준비 중</dd></div>
+          <div><dt><Grid2X2 size={24} strokeWidth={1.5} aria-hidden="true" />앱인토스 미니앱</dt><dd>실기기 검증과 심사·출시 준비 중</dd></div>
+        </dl>
+        <p className="product-availability__note">두 앱의 기록은 따로 보관되며 서로 동기화되지 않습니다.</p>
+      </ProductAvailability>
+      <ProductFaq intro={intro} />
     </ProjectLayout>
   )
 }

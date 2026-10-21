@@ -2,6 +2,7 @@
 
 import { useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import { contactLinks } from '@/data/contact-links'
@@ -9,9 +10,13 @@ import './contact-menu.css'
 
 export function Header() {
   const firstLink = useRef<HTMLAnchorElement>(null)
+  const pathname = usePathname()
+  const productTheme = pathname === '/work/kbpm' ? 'kbpm'
+    : pathname === '/work/game-promotion' ? 'everleaf'
+      : pathname === '/work/ios-prototyping' ? 'zziksool' : undefined
 
   return (
-    <header className="site-header">
+    <header className="site-header" data-product={productTheme}>
       <nav className="site-header__inner" aria-label="주 메뉴">
         <Link href="/" className="site-header__brand" data-analytics-step="header_logo">
           Max, the Software Engineer

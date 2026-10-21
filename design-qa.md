@@ -1,43 +1,69 @@
-# Design QA
+# Product introduction QA
 
-## Visual truth
+Date: 2026-10-22 (Asia/Seoul).
+Scope: the three product detail pages and their shared header variants. This supersedes the older homepage-only QA record.
 
-- Selected source: `/Users/max/.codex/generated_images/01a02d8b-32bd-7c83-baff-11e14ce4e574/exec-4c284070-752a-4035-aece-e5353d33d2e6.png`
-- Source dimensions: 1487 × 1058.
-- Evaluated state: dark system appearance, opening wallpaper.
-- Latest user-directed overrides: Edu NSW ACT Hand Cursive title, icon-only system appearance indicator, and `back to top` return label.
-- Comparison viewport: 1440 × 1024 CSS pixels. The browser reported `devicePixelRatio: 2`; the screenshot API produced a 1440 × 1024 raster.
-- Normalization: the source was scaled to 1440 × 1024 for like-for-like comparison.
+## Visual truth and capture normalization
 
-## Evidence
+The three user-approved concept paths are recorded in `DESIGN.md`. Source raster sizes are KBPM 881×1785, EverLeaf 807×1949, and 찍술 824×1908.
 
-- Final implementation capture: `artifacts/design-qa/home-dark-v2.png`
-- Full-view comparison, source left and implementation right: `artifacts/design-qa/home-dark-comparison-v2.png`
-- Focused top-corner comparison: `artifacts/design-qa/home-dark-top-comparison-v2.png`
-- Supporting responsive captures: `artifacts/design-qa/home-light-v1.png`, `artifacts/design-qa/home-mobile-dark.png`, and `artifacts/design-qa/about-mobile-dark.png`
+Browser evidence is saved under:
 
-## Comparison history
+`/Users/max/.codex/visualizations/2026/10/21/01a16019-1a7d-7693-9d5e-425075795092/product-pages/`
 
-1. The first implementation matched the four-corner composition, dark surface, social placement, and bottom prompts, but the title was visually oversized at about 43.2 px and 369.7 px wide.
-2. The title was reduced to 36 px and about 308.1 px wide, bringing its scale and corner balance in line with the source.
-3. The post-fix full-view and focused comparisons show no remaining P0, P1, or P2 mismatch.
+Desktop CSS viewport: 1440×900. Full-page browser captures have a 1440px raster width: KBPM 1440×3251, EverLeaf 1440×2542, 찍술 1440×3572. Each concept is proportionally normalized to the same width before comparison. Full-view comparisons use two 650px-wide columns without stretching page height. Focused hero comparisons use the first 900px of the full-page capture; the viewport-only capture API sometimes returned a mismatched raster width and was not used for final comparison.
+
+Final implementation evidence:
+
+- `kbpm-desktop.png`, `everleaf-desktop.png`, `zziksool-desktop.png`.
+- Full-view concept/implementation pairs: `kbpm-comparison.png`, `everleaf-comparison.png`, `zziksool-comparison.png`.
+- Focused pairs: `kbpm-hero-comparison.png`, `everleaf-hero-comparison.png`, `zziksool-hero-comparison.png`.
+- Responsive captures: each product's `-tablet.png` at 768×1024 and `-mobile.png` at 390×844, plus `mobile-overview.png`.
+- Interaction evidence: `layout-checks.json`, `interaction-checks.json`, `contact-light-mobile.png`, `zziksool-story-mobile.png` and the three `-reflow.png` captures.
+
+## Findings and comparison history
+
+1. Initial comparison found a P2 first-view issue: KBPM's real workspace appeared too far below the headline, and EverLeaf's primary action extended below a 1280×720 viewport. The KBPM availability line now sits beside the actions on desktop, screenshot-only outer margins are cropped in CSS, and the game hero's logo/spacing are reduced. Final primary-action bottoms at 1280×720 are 477px, 689px and 622px respectively.
+2. Initial EverLeaf detail showed too much of the whole scene rather than the hand of cards. A P2 crop adjustment now emphasizes the original cards without recreating game UI. The cropped original remains paired with explanatory text and an actual-play screenshot caption.
+3. Initial 찍술 workflow heading wrapped at an awkward point. An explicit semantic line break now follows the opening clause; the source miniapp screenshot has a larger desktop presentation and an explicit platform caption.
+4. Post-fix full-view, focused and mobile comparisons were opened and reviewed together with the source. No unresolved P0/P1/P2 issue remains within the approved product-page direction and corrections.
+
+### Required fidelity surfaces
+
+- **Typography:** Korean Pretendard remains the body/display family, with original EverLeaf and 찍술 brand artwork. Explicit title/control sizes, deliberate heading breaks and a 16px mobile body remain legible. Desktop type is restrained relative to the generated concept so the primary action fits a small laptop.
+- **Spacing/layout:** the broad KBPM workspace, split game hero, pale game workflow band, white calendar-led 찍술 page and shared lower disclosure retain the approved hierarchy. Navigation wraps on narrow screens; no document-level horizontal overflow was observed.
+- **Colors/tokens:** page-local graphite/mint, blue/red and white/red identities are implemented by shared product tokens. Action-label contrast is 9.24:1 for KBPM, 5.25:1 for EverLeaf and 5.59:1 for 찍술. Muted 찍술 text is 5.41:1 against white.
+- **Image quality:** all product screenshots and logos use original repository assets. The wrong generated KBPM icon is replaced. Game backgrounds use the existing game pixels rather than invented scenery; screenshots are cropped but not recolored or redrawn. 찍술 is explicitly captioned as an Apps-in-Toss development screen.
+- **Copy/content:** purpose and available next actions lead. Public installation readiness, explicit user confirmation and separate app storage remain visible. Role, stack, implementation constraints and historical verification evidence remain inside the closed development disclosure.
+
+Intentional differences: the global brand text and existing Contact menu are preserved; original game art replaces generated scenery; existing Lucide icons replace illustrative concept icons; the FAQ starts closed and includes the requested synchronization answer. The implementation follows the approved direction and corrections, not an assertion of identical generated pixels.
 
 ## Functional verification
 
-- Production build served from `docs/` at `/KBPM/` with no browser console warnings or errors.
-- One desktop wheel gesture moved the internal scroller from 0 to 1024 px and aligned the introduction at the top of the viewport.
-- The accessible return button moved the scroller from 1024 px back to 0.
-- At 390 × 844, one scroll moved from 0 to 844 px; all four fixed-corner elements remained inside the viewport and the introduction stayed between them without overlap.
-- System appearance resolved to `rgb(10, 10, 10)` in dark mode and `rgb(244, 241, 234)` in light mode.
-- Edu NSW ACT Cursive loaded as the computed title font, matching the Google Fonts family behind the Edu NSW ACT Hand Cursive display name.
-- LinkedIn and GitHub links resolved to the intended profiles, opened in a new tab, and used `noopener noreferrer`.
-- The icon-only system appearance indicator uses the existing daisyUI ghost/circle component styling and retains an accessible label and title.
-- The introduction control still reads `scroll to meet me`; its return state now reads `back to top` and returns the scroller to 0.
+PASS:
 
-## Remaining differences
+- `npm run check`: TypeScript, content integrity, static export and all five pages' OG/Twitter/canonical metadata; 404 remains noindex.
+- `git diff --check`.
+- `designmd lint DESIGN.md`: zero errors. The linter reports 21 warnings for independent product palettes/no single primary and tokens referenced by runtime CSS rather than its generated component graph. The documented CSS mapping remains the owner; no palette is auto-generated.
+- Desktop 1440×900, tablet 768×1024 and mobile 390×844: all three pages have no document overflow, broken loaded images, invalid fragment targets or initially expanded development stories.
+- All nine product navigation links: valid destinations, with section tops below the 56px sticky header. External actions retain explicit destinations, new-window names and `noopener noreferrer`.
+- Native development disclosure opens/closes with Enter. On mobile its technology table scrolls internally without widening the document. FAQ opens with Enter and closes with Space.
+- Contact on light mobile and dark product pages: initial GitHub focus, forward/backward focus wrapping, scroll lock, Escape/button close and trigger-focus restoration.
+- Return to the gallery clears the product theme; About retains three project links; its KBPM link opens the correct product route and header theme.
+- Reduced-motion emulation: ordinary document scrolling, `scroll-behavior: auto`, correct anchor offset. Emulation was cleared afterward.
+- 720×450 CSS-pixel reflow as a 200%-equivalent layout check: headings and primary actions fit, with no horizontal document overflow. This is a reflow simulation, not a claim of native browser zoom testing.
+- Current production-preview browser tab reported no console warnings/errors after route and interaction checks.
 
-- P3, intentional: the mock has a barely perceptible raster grain. The implementation keeps the wallpaper flat and asset-free so the light/dark system surface remains crisp, matching the requested simple wallpaper direction.
-- P3, user-directed override: the title now uses Edu NSW ACT Hand Cursive rather than the script face shown in the selected mock.
-- The selected visual source shows only the opening screen. The introduction screen was therefore checked against the explicit user brief and the desktop/mobile responsive captures rather than a second source image.
+NOT_RUN: physical mobile devices, Safari/VoiceOver, native browser zoom, actual KREAM transactions, game-client launch, iPhone/Toss execution and public deployment. These are outside the page-redesign evidence boundary.
+
+The preview server uses an absolute export directory so rebuilding `out/` does not invalidate its working directory. A stale browser error tab encountered during the first rebuild was replaced before final browser verification.
+
+## Implementation checklist
+
+- [x] User-facing introductions and product-specific visual identities.
+- [x] Honest actions/readiness, original assets and retained development evidence.
+- [x] Responsive, keyboard, Contact, navigation and reduced-motion checks.
+- [x] Full-view and focused source/render comparisons after fixes.
+- [x] Build, metadata, content and final diff checks.
 
 final result: passed

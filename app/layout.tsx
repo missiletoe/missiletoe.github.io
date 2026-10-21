@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import './gallery.css'
+import './products.css'
 import { AnalyticsListener } from '@/components/analytics/analytics-listener'
 import { Header } from '@/components/header'
 import { siteUrl } from '@/lib/metadata'

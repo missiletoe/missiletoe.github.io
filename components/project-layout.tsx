@@ -1,117 +1,182 @@
-import React from 'react'
+import type { ReactNode } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, ArrowUpRight, ChevronDown } from 'lucide-react'
-import type { Project } from '@/lib/types'
+import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown, Layers, Map, Swords } from 'lucide-react'
+import type { ProductAction, ProductIntroduction, ProductMedia, Project } from '@/lib/types'
 import { EvidenceList } from '@/components/evidence-card'
 import { TechTable } from '@/components/tech-table'
 
-interface ProjectLayoutProps {
-  project: Project
-  nextProject?: Project
-  children?: React.ReactNode
+export function ProductActions({ actions }: { actions: ProductAction[] }) {
+  return (
+    <div className="product-actions">
+      {actions.map((action) => (
+        <a
+          key={action.href}
+          href={action.href}
+          className={action.primary ? 'product-action product-action--primary' : 'product-action'}
+          target={action.external ? '_blank' : undefined}
+          rel={action.external ? 'noopener noreferrer' : undefined}
+          aria-label={action.external ? action.label + ' (새 창에서 열림)' : undefined}
+          data-analytics-step="product_action"
+        >
+          {action.label}
+          {action.external ? <ArrowUpRight size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}
+        </a>
+      ))}
+    </div>
+  )
 }
 
-function DetailList({ title, items }: { title: string; items: string[] }) {
-  if (items.length === 0) return null
-
+export function ProductImage({ media, className = '', priority = false }: { media: ProductMedia; className?: string; priority?: boolean }) {
   return (
-    <section>
-      <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-      <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-foreground/80">
-        {items.map((item) => <li key={item}>{item}</li>)}
-      </ul>
+    <figure className={'product-media ' + className}>
+      <div className="product-media__frame">
+        <Image
+          src={media.src}
+          alt={media.alt}
+          width={media.width}
+          height={media.height}
+          sizes="(max-width: 700px) 100vw, (max-width: 1100px) 80vw, 1200px"
+          priority={priority}
+        />
+      </div>
+      {media.caption && <figcaption>{media.caption}</figcaption>}
+    </figure>
+  )
+}
+
+export function ProductHero({ intro }: { intro: ProductIntroduction }) {
+  return (
+    <section className="product-hero product-container">
+      <div className="product-hero__copy">
+        {intro.theme === 'everleaf' && (
+          <Image className="product-hero__logo" src={intro.logo.src} width={intro.logo.width} height={intro.logo.height} alt="" priority />
+        )}
+        <h1>
+          <span className="sr-only">{intro.name}: </span>
+          {intro.headline[0]}<br />
+          <span>{intro.headline[1]}</span>
+        </h1>
+        <p className="product-hero__description">{intro.description}</p>
+        <ProductActions actions={intro.actions} />
+        <p className="product-hero__availability">{intro.availability}</p>
+      </div>
+      <ProductImage media={intro.hero} className="product-hero__media" priority />
     </section>
   )
 }
 
-export function ProjectLayout({ project, nextProject, children }: ProjectLayoutProps) {
+const adventureIcons = [Map, Layers, Swords]
+
+export function ProductWorkflow({ intro, children }: { intro: ProductIntroduction; children?: ReactNode }) {
   return (
-    <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
-      <Link
-        href="/"
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-        data-analytics-step="project_back_to_works"
-      >
-        <ArrowLeft className="h-4 w-4" aria-hidden="true" /> 프로젝트
-      </Link>
+    <section id="workflow" className="product-workflow product-section">
+      <div className="product-container">
+        <h2>{intro.workflow.title}</h2>
+        {intro.workflow.description && <p className="product-section__intro">{intro.workflow.description}</p>}
+        {children}
+        <ol className="product-steps" role="list">
+          {intro.workflow.steps.map((step, index) => {
+            const Icon = adventureIcons[index]
+            return (
+              <li key={step.title}>
+                <div className="product-steps__marker" aria-hidden="true">
+                  {intro.theme === 'everleaf' && Icon ? <Icon size={42} strokeWidth={1.5} /> : String(index + 1).padStart(2, '0')}
+                </div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+                {index < intro.workflow.steps.length - 1 && <ArrowRight className="product-steps__arrow" size={23} aria-hidden="true" />}
+              </li>
+            )
+          })}
+        </ol>
+      </div>
+    </section>
+  )
+}
 
-      <header className="mt-8 pb-9">
-        <p className="text-sm text-muted-foreground">{project.category} · {project.period}</p>
-        <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
-          {project.title}
-        </h1>
-        <p className="mt-5 max-w-3xl text-base leading-relaxed text-foreground/80 sm:text-lg">
-          {project.summary}
-        </p>
-        <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2 sm:gap-6">
-          <div>
-            <dt className="text-muted-foreground">담당</dt>
-            <dd className="mt-1 text-foreground">{project.role[0]}</dd>
-          </div>
-          <div>
-            <dt className="text-muted-foreground">상태</dt>
-            <dd className="mt-1 text-foreground">{project.statusLabel}</dd>
-          </div>
-        </dl>
-        <EvidenceList items={project.evidence} />
-      </header>
+export function ProductAvailability({ title, id = 'availability', children }: { title: string; id?: string; children: ReactNode }) {
+  return (
+    <section id={id} className="product-availability product-section product-container">
+      <h2>{title}</h2>
+      {children}
+    </section>
+  )
+}
 
-      <section className="py-10" aria-labelledby="section-outputs">
-        <h2 id="section-outputs" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">구현한 것</h2>
-        <ul className="mt-5 list-disc space-y-2.5 pl-5 text-base leading-relaxed text-foreground/85">
-          {project.outputs.slice(0, 3).map((output) => <li key={output}>{output}</li>)}
-        </ul>
-      </section>
+export function ProductFaq({ intro }: { intro: ProductIntroduction }) {
+  if (intro.faq.length === 0) return null
+  return (
+    <section id="faq" className="product-faq product-container">
+      <h2>자주 묻는 질문</h2>
+      <div>
+        {intro.faq.map((item) => (
+          <details key={item.question} className="product-disclosure">
+            <summary>{item.question}<ChevronDown size={18} aria-hidden="true" /></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-      {children && <div className="space-y-10 py-10">{children}</div>}
+function DetailList({ title, items }: { title: string; items: string[] }) {
+  if (items.length === 0) return null
+  return (
+    <section>
+      <h3>{title}</h3>
+      <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+    </section>
+  )
+}
 
-      <section className="py-10" aria-labelledby="section-limitations">
-        <h2 id="section-limitations" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">현재 상태</h2>
-        <p className="mt-4 text-base leading-relaxed text-foreground/80">{project.limitations[0]}</p>
-      </section>
-
-      <details className="group border-b border-border py-5">
-        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-medium text-foreground marker:hidden [&::-webkit-details-marker]:hidden">
-          설계 과정과 추가 정보
-          <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
-        </summary>
-        <div className="space-y-9 pb-7 pt-5">
-          {project.recentUpdate && (
-            <section>
-              <h3 className="text-sm font-semibold text-foreground">최근 작업</h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/80">
-                <time dateTime={project.recentUpdate.date}>{project.recentUpdate.date.replaceAll('-', '.')}</time> · {project.recentUpdate.summary}
-              </p>
-            </section>
-          )}
-          <DetailList title="추가 담당 범위" items={project.role.slice(1)} />
-          <section>
-            <h3 className="text-sm font-semibold text-foreground">배경</h3>
-            <div className="mt-3 space-y-2 text-sm leading-relaxed text-foreground/80">
-              {project.context.map((item) => <p key={item}>{item}</p>)}
-            </div>
-          </section>
-          <DetailList title="제약" items={project.constraints} />
-          <DetailList title="주요 판단" items={project.decisions} />
-          <DetailList title="추가 구현" items={project.outputs.slice(3)} />
-          <DetailList title="남은 한계" items={project.limitations.slice(1)} />
-          <DetailList title="다음 작업" items={project.nextSteps} />
-          <section>
-            <h3 className="mb-4 text-sm font-semibold text-foreground">기술 선택</h3>
-            <TechTable items={project.stack} />
-          </section>
+export function ProjectLayout({ project, intro, children, storyChildren }: {
+  project: Project
+  intro: ProductIntroduction
+  children: ReactNode
+  storyChildren?: ReactNode
+}) {
+  return (
+    <article className="product-page" data-product={intro.theme}>
+      <nav className="product-nav product-container" aria-label={intro.name + ' 소개'}>
+        <a href="#product-top" className="product-nav__brand" aria-label={intro.name + ' 소개 처음으로'}>
+          <Image src={intro.logo.src} alt="" width={intro.logo.width} height={intro.logo.height} />
+          {intro.theme === 'kbpm' ? <span>KBPM</span> : <span className="sr-only">{intro.name}</span>}
+        </a>
+        <div className="product-nav__links">
+          {intro.navigation.map((link) => <a key={link.href} href={link.href} data-analytics-step="product_section">{link.label}</a>)}
         </div>
-      </details>
-
-      {nextProject && (
-        <Link
-          href={'/work/' + nextProject.slug}
-          className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground hover:underline"
-          data-analytics-step="next_project_cta"
-        >
-          다음 프로젝트: {nextProject.shortTitle} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      )}
+      </nav>
+      <div id="product-top">{children}</div>
+      <div className="product-container">
+        <details className="product-disclosure product-story">
+          <summary>만든 과정과 기술 이야기<ChevronDown size={19} aria-hidden="true" /></summary>
+          <div className="product-story__content">
+            <p className="product-story__meta">{project.category} · {project.period} · {project.statusLabel}</p>
+            <p>{project.summary}</p>
+            <DetailList title="담당한 일" items={project.role} />
+            {project.recentUpdate && (
+              <section>
+                <h3>개발 기록</h3>
+                <p><time dateTime={project.recentUpdate.date}>{project.recentUpdate.date.replaceAll('-', '.')}</time> · {project.recentUpdate.summary}</p>
+              </section>
+            )}
+            <section><h3>배경</h3>{project.context.map((item) => <p key={item}>{item}</p>)}</section>
+            <DetailList title="구현한 것" items={project.outputs} />
+            <DetailList title="제약과 주요 판단" items={[...project.constraints, ...project.decisions]} />
+            <DetailList title="검증 범위와 남은 한계" items={project.limitations} />
+            <DetailList title="다음 작업" items={project.nextSteps} />
+            <section><h3>기술 선택</h3><TechTable items={project.stack} /></section>
+            {storyChildren}
+            <EvidenceList items={project.evidence} />
+          </div>
+        </details>
+        <footer className="product-footer">
+          <Link href="/" data-analytics-step="project_back_to_works"><ArrowLeft size={17} aria-hidden="true" /> 다른 프로젝트 보기</Link>
+          <span>{intro.name}</span>
+        </footer>
+      </div>
     </article>
   )
 }
