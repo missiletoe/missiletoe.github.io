@@ -3,25 +3,10 @@ import './globals.css'
 import './gallery.css'
 import { AnalyticsListener } from '@/components/analytics/analytics-listener'
 import { Header } from '@/components/header'
+import { siteUrl } from '@/lib/metadata'
 
 export const metadata: Metadata = {
-  title: 'Max, the Software Engineer | Portfolio',
-  description:
-    '허용석의 프로젝트 갤러리. 메이플스토리월드 에버리프, KBPM, 찍술을 소개합니다.',
-  metadataBase: new URL('https://missiletoe.github.io'),
-  openGraph: {
-    title: 'Max, the Software Engineer',
-    description: '허용석의 프로젝트 갤러리.',
-    url: 'https://missiletoe.github.io',
-    siteName: 'Max Portfolio',
-    locale: 'ko_KR',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Max, the Software Engineer',
-    description: '허용석의 프로젝트 갤러리.',
-  },
+  metadataBase: new URL(siteUrl),
   robots: {
     index: true,
     follow: true,

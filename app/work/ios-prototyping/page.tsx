@@ -1,12 +1,19 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
 import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
+import { createPageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
+  path: '/work/ios-prototyping',
   title: '찍술: iOS 앱과 앱인토스 미니앱 | Max',
   description: '찍술의 iOS 기록 앱과 별도 앱인토스 미니앱 개발 기록입니다.',
-}
+  image: {
+    url: '/images/zziksool-logo.png',
+    width: 1254,
+    height: 1254,
+    alt: '찍술 앱 로고',
+  },
+})
 
 export default function IosPrototypingPage() {
   const project = projects.find((item) => item.slug === 'ios-prototyping')!

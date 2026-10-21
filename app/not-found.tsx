@@ -1,6 +1,13 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+
+export const metadata: Metadata = {
+  title: '페이지를 찾을 수 없습니다 | Max',
+  description: '요청하신 페이지가 존재하지 않거나 경로가 변경되었습니다. 홈에서 프로젝트 목록을 확인하세요.',
+  robots: { index: false, follow: false },
+}
 
 export default function NotFound() {
   return (

@@ -1,13 +1,20 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
+import { createPageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
+  path: '/work/game-promotion',
   title: '메이플스토리월드 에버리프 | Max',
   description: '덱빌딩 로그라이트 에버리프의 게임 UI 공동 개발과 공식 웹사이트·EverWiki CMS 작업 기록입니다.',
-}
+  image: {
+    url: '/images/everleaf-logo.png',
+    width: 1672,
+    height: 941,
+    alt: '메이플스토리월드 에버리프 로고',
+  },
+})
 
 export default function GamePromotionPage() {
   const project = projects.find((item) => item.slug === 'game-promotion')!

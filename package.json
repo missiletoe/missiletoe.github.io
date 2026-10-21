@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "npm run test:metadata",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "node scripts/verify-content.mjs",
+    "test:metadata": "node scripts/verify-metadata.mjs",
     "check": "npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {

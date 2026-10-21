@@ -1,13 +1,20 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { ProjectLayout } from '@/components/project-layout'
+import { createPageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
+  path: '/work/kbpm',
   title: 'KBPM: KREAM 데스크톱 작업공간 | Max',
   description: '실제 KREAM 브라우저와 보관신청·가격 관리를 연결한 Electron 기반 KBPM v2 개발 기록입니다.',
-}
+  image: {
+    url: '/images/kbpm-v2-screenshot-2.png',
+    width: 2864,
+    height: 1924,
+    alt: '실제 KREAM 페이지와 작업 패널을 함께 배치한 KBPM v2 화면',
+  },
+})
 
 export default function KbpmPage() {
   const project = projects.find((item) => item.slug === 'kbpm')!

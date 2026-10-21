@@ -1,16 +1,23 @@
 import type { CSSProperties } from 'react'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { GalleryArtwork } from '@/components/gallery-artwork'
 import { galleryProjects } from '@/data/gallery'
 import { projects } from '@/data/projects'
 import { contactLinks } from '@/data/contact-links'
+import { createPageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
+  path: '/about',
   title: 'About Max | Max, the Software Engineer',
   description: '허용석의 소개와 메이플스토리월드 에버리프, KBPM, 찍술 프로젝트.',
-}
+  image: {
+    url: '/web-app-manifest-512x512.png',
+    width: 512,
+    height: 512,
+    alt: '허용석의 Max Portfolio 사이트 아이콘',
+  },
+})
 
 export default function AboutPage() {
   return (
